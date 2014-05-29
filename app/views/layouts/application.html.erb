@@ -1,26 +1,63 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>BreadCoop</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
+  <head>
+    <meta/>
+    <meta/>
+    <meta/>
+    <title>
+      "Leeds Bread Co-Op"
+    </title>
+    <%= csrf_meta_tags %>
+    <!--[if lt IE 9]
+      <%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" %>
+    -->
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+    <%= javascript_include_tag "application" %>
+  </head>
+  <body>
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar">(data-target=".nav-collapse" data-toggle="collapse")
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <div class="container nav-collapse">
+            <ul class="nav">
+              <% if current_subscriber%>
+                <li>
+                <%= link_to 'Logout', destroy_subscriber_session_path, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+              </li>
+              <li>
+                <%= link_to "Edit password / email", edit_subscriber_registration_path %>
+              </li>
+            <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span3"></div>
-    <div class="span9">
+
       <% flash.each do |key, value| %>
         <div class="<%= flash_class(key) %>">
           <%= value %>
         </div>
       <% end %>
       <%= yield %>
+      <footer>
+        <p>&copy; Leeds Bread Co-Op 2014</p>
+      </footer>
     </div>
   </div>
 </div>
-
-</body>
 </html>
