@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529150836) do
+ActiveRecord::Schema.define(version: 20140529151500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20140529150836) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.text     "notes"
   end
 
   add_index "subscribers", ["bread_type_id"], name: "index_subscribers_on_bread_type_id", using: :btree
