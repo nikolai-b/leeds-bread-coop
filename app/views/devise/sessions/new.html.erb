@@ -17,8 +17,8 @@
     <%= f.phone_field :phone %>
   </div>
   <div class="field">
-    <%= f.label :collection_point_id %><br>
-    <%= f.text_field :collection_point_id %>
+    <%= f.label :collection_point %><br>
+    <%= collection_select(:subscriber, :collection_point_id, CollectionPoint.all, :id, :name) %>
   </div>
   <div class="field">
     <%= f.label :start_date %><br>

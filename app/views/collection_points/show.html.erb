@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @collection_point.address %>
+</p>
+
+<p>
+  <strong>Post code:</strong>
+  <%= @collection_point.post_code %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @collection_point.notes %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @collection_point.name %>
+</p>
+
+<%= link_to 'Edit', edit_collection_point_path(@collection_point) %> |
+<%= link_to 'Back', collection_points_path %>

@@ -1,0 +1,31 @@
+<h1>Listing collection_points</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Address</th>
+      <th>Post code</th>
+      <th>Notes</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @collection_points.each do |collection_point| %>
+      <tr>
+        <td><%= collection_point.address %></td>
+        <td><%= collection_point.post_code %></td>
+        <td><%= collection_point.notes %></td>
+        <td><%= collection_point.name %></td>
+        <td><%= link_to 'Show', collection_point %></td>
+        <td><%= link_to 'Edit', edit_collection_point_path(collection_point) %></td>
+        <td><%= link_to 'Destroy', collection_point, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Collection point', new_collection_point_path %>
