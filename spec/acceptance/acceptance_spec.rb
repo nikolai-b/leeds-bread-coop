@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 feature "New user, new sign-up", type: :feature do
+  before do
+    create :collection_point
+    create :bread_type
+  end
+
   scenario "New subscription" do
     visit '/'
 
@@ -28,9 +33,9 @@ feature "New user, new sign-up", type: :feature do
     fill_in "Email",      with: 'lizzie@example.com'
     fill_in "Address",    with: 'Somewhere in Leeds'
     fill_in "Phone",      with: '01132222222'
-    select 'Green Action', from: 'Collection Point'
+    select 'Green Action', from: :subscriber_collection_point_id
     fill_in "Start date", with: (Date.current + 14.days).at_beginning_of_week.strftime # future Monday
-    select 'Rye Sour Loaf', from: 'Bread Type'
+    select 'Rye Sour Loaf', from: :subscriber_bread_type_id
     fill_in "Quantity",   with: 1
     fill_in "Password",   with: 'password'
     fill_in "Notes",      with: 'Thanks!'
