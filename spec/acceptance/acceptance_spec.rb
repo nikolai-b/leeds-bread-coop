@@ -30,7 +30,7 @@ feature "New user, new sign-up", type: :feature do
     fill_in "Phone",      with: '01132222222'
     select 'Green Action', from: 'Collection Point'
     fill_in "Start date", with: (Date.current + 14.days).at_beginning_of_week.strftime # future Monday
-    select 'Sour Dough Rye', from: 'Bread Type'
+    select 'Rye Sour Loaf', from: 'Bread Type'
     fill_in "Quantity",   with: 1
     fill_in "Password",   with: 'password'
     fill_in "Notes",      with: 'Thanks!'
