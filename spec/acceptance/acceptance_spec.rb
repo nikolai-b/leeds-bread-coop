@@ -20,19 +20,20 @@ feature "New user, new sign-up", type: :feature do
   def see_new_user_details
     expect(page).to have_content "Name"
     expect(page).to have_content "Phone"
-    expect(page).to have_content "Bread Type"
+    expect(page).to have_content "Bread type"
   end
 
   def fill_in_details
-    fill_in :name,    with: 'Lizzie'
-    fill_in :email,   with: 'lizzie@example.com'
-    fill_in :address, with: 'Somewhere in Leeds'
-    fill_in :phone,   with: '01132222222'
+    fill_in 'Name',       with: 'Lizzie'
+    fill_in "Email",      with: 'lizzie@example.com'
+    fill_in "Address",    with: 'Somewhere in Leeds'
+    fill_in "Phone",      with: '01132222222'
     select 'Green Action', from: 'Collection Point'
-    fill_in :start_date, with: (Date.current + 14.days).at_beginning_of_week.strftime # future Monday
+    fill_in "Start date", with: (Date.current + 14.days).at_beginning_of_week.strftime # future Monday
     select 'Sour Dough Rye', from: 'Bread Type'
-    fill_in :quantity, with: 1
-    fill_in :notes, with: 'Thanks!'
+    fill_in "Quantity",   with: 1
+    fill_in "Password",   with: 'password'
+    fill_in "Notes",      with: 'Thanks!'
 
     click_on 'Subscribe'
   end
