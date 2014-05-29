@@ -13,11 +13,6 @@ class SubscribersController < ApplicationController
   def show
   end
 
-  # GET /subscribers/new
-  def new
-    @subscriber = Subscriber.new
-  end
-
   # GET /subscribers/1/edit
   def edit
   end

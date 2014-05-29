@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :collection_points
 
   devise_for :subscribers
-  resources :subscribers
+  resources :subscribers, except: [:new]
 
   root 'welcome#index'
 
