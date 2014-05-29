@@ -1,0 +1,29 @@
+<%= form_for(@bread_type) do |f| %>
+  <% if @bread_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bread_type.errors.count, "error") %> prohibited this bread_type from being saved:</h2>
+
+      <ul>
+      <% @bread_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_area :name %>
+  </div>
+  <div class="field">
+    <%= f.label :sour_dough %><br>
+    <%= f.check_box :sour_dough %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br>
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

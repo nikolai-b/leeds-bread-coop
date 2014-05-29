@@ -1,0 +1,29 @@
+<h1>Listing bread_types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Sour dough</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bread_types.each do |bread_type| %>
+      <tr>
+        <td><%= bread_type.name %></td>
+        <td><%= bread_type.sour_dough %></td>
+        <td><%= bread_type.notes %></td>
+        <td><%= link_to 'Show', bread_type %></td>
+        <td><%= link_to 'Edit', edit_bread_type_path(bread_type) %></td>
+        <td><%= link_to 'Destroy', bread_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Bread type', new_bread_type_path %>

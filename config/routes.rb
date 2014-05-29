@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :bread_types
+
   resources :collection_points
 
   devise_for :subscribers
