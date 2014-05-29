@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby "2.1.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.1'
@@ -30,8 +30,37 @@ gem 'spring',        group: :development
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'thin'
+gem 'devise'
+gem 'virtus'
 
+gem "therubyracer"
+gem "less-rails"
+gem "twitter-bootstrap-rails"
+gem 'bootstrap-datepicker-rails'
+gem 'stripe-rails'
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'byebug'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'launchy'
+  gem 'capybara-email'
+end
+
+group :development do
+  gem "letter_opener"
+  gem "binding_of_caller"
+  gem "better_errors"
+  gem "xray-rails"
+end
+
+group :production do
+  gem "rails_12factor"
+end
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
