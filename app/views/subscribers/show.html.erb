@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @subscriber.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @subscriber.address %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @subscriber.phone %>
+</p>
+
+<p>
+  <strong>Collection point:</strong>
+  <%= @subscriber.collection_point %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @subscriber.start_date %>
+</p>
+
+<p>
+  <strong>Paid until:</strong>
+  <%= @subscriber.paid_until %>
+</p>
+
+<p>
+  <strong>Bread type:</strong>
+  <%= @subscriber.bread_type %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @subscriber.quantity %>
+</p>
+
+<%= link_to 'Edit', edit_subscriber_path(@subscriber) %> |
+<%= link_to 'Back', subscribers_path %>
