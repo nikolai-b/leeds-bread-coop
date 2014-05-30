@@ -1,0 +1,15 @@
+
+<%= form_tag subscriber_subs_path(@subscriber) do %>
+
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          data-description="Start a subscription"
+          data-amount="1000"
+          data-currency="gbp"
+          data-allow-remember-me="false"
+          data-label="Pay for the bread"
+          data-panel-label="Pay £10 every 4 weeks"
+          data-email=<%= @subscriber.email %>
+          data->
+  </script>
+<% end %>

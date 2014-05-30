@@ -2,10 +2,11 @@ Rails.application.routes.draw do
   resources :bread_types
 
   resources :collection_points
-  resources :charges, only: [:new, :create]
 
-  devise_for :subscribers
-  resources :subscribers
+  devise_for :subscribers, :controllers => { :registrations => "registrations" }
+  resources :subscribers do
+    resources :subs, only: [:new, :create]
+  end
 
   root 'welcome#index'
 
