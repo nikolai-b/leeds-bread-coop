@@ -1,14 +1,10 @@
 <h2>Subscribe</h2>
-<%= render :partial => 'stripe/js' %>
 <%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name), layout: :vertical) do |f| %>
   <% if @subscriber.errors.any? %>
     <div class="error_messages">
       <ul>
     </div>
   <% end %>
-
-  <%= f.hidden_field :stripe_card_token %>
-  <%= f.hidden_field :plan_id %>
 
   <div class="form-group">
     <%= f.email_field :email, autofocus: true %>
