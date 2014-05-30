@@ -49,6 +49,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'poltergeist'
   gem 'launchy'
   gem 'capybara-email'
   gem 'factory_girl_rails'
