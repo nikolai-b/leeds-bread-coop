@@ -5,4 +5,5 @@ class Subscriber < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :collection_point
   belongs_to :bread_type
+
 end
