@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-feature "New user, new sign-up", type: :feature do
-  before do
+feature "New user, new sign-up", type: :feature,  js: true  do
+  before :each do
     create :collection_point
     create :bread_type
   end
@@ -45,8 +45,12 @@ feature "New user, new sign-up", type: :feature do
   end
 
   def pay_stripe
-    byebug
-    click_on "Pay for the bread"
+    find('button').click
+    page.driver.browser.switch_to.frame 'stripe_checkout_app'
+    fill_in "card_number", with: "4242424242424242"
+    fill_in "cc-exp", with: (Date.current + 1.month).strftime('%m%y')
+    fill_in "cc-csc", with: '123'
+    click_on 'Pay £10 every 4 weeks'
   end
 
 end
