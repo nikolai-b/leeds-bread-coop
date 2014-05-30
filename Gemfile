@@ -37,7 +37,9 @@ gem 'virtus'
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
+
 gem 'bootstrap-datepicker-rails'
+gem 'bootstrap_form'
 gem 'stripe-rails'
 
 group :development, :test do

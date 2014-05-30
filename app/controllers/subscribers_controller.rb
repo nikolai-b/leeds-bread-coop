@@ -8,6 +8,10 @@ class SubscribersController < ApplicationController
     @subscribers = Subscriber.all
   end
 
+  def new
+    @subscriber = Subscriber.new
+  end
+
   # GET /subscribers/1
   # GET /subscribers/1.json
   def show

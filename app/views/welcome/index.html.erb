@@ -1,3 +1,11 @@
 &emsp;
-<%= link_to 'Sign up', new_subscriber_registration_path %>
+<li>
+  <%= link_to 'Sign up', new_subscriber_registration_path %>
+</li>
+<% if current_subscriber%>
+  &emsp;
+  <li>
+    <%= link_to 'Pay Subscription', new_charge_path%>
+  </li>
+<% end %>
 

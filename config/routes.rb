@@ -2,9 +2,10 @@ Rails.application.routes.draw do
   resources :bread_types
 
   resources :collection_points
+  resources :charges, only: [:new, :create]
 
   devise_for :subscribers
-  resources :subscribers, except: [:new]
+  resources :subscribers
 
   root 'welcome#index'
 

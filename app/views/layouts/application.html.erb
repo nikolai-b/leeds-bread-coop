@@ -12,11 +12,6 @@
       <%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" %>
     -->
     <%= stylesheet_link_tag "application", :media => "all" %>
-    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
-    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
-    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
-    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
-    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
     <%= javascript_include_tag "application" %>
   </head>
   <body>
@@ -43,21 +38,22 @@
         </div>
       </div>
     </div>
-  </body>
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span3"></div>
-
-      <% flash.each do |key, value| %>
-        <div class="<%= flash_class(key) %>">
-          <%= value %>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2">
+          <% flash.each do |key, value| %>
+            <div class="<%= flash_class(key) %>">
+              <%= value %>
+            </div>
+          <% end %>
         </div>
-      <% end %>
-      <%= yield %>
-      <footer>
-        <p>&copy; Leeds Bread Co-Op 2014</p>
-      </footer>
+        <%= yield %>
+        <footer>
+          <p>&copy; Leeds Bread Co-Op 2014</p>
+        </footer>
+      </div>
+
     </div>
   </div>
-</div>
+</body>
 </html>

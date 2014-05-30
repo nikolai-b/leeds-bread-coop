@@ -1,29 +1,39 @@
-<h2>Sign up</h2>
+<h2>Subscribe</h2>
+<%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name), layout: :vertical) do |f| %>
+  <% if @subscriber.errors.any? %>
+    <div class="error_messages">
+      <ul>
+    </div>
+  <% end %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+  <%= f.hidden_field :stripe_card_token %>
+  <%= f.hidden_field :plan_id %>
 
-  <div class="field">
-    <%= f.label :name %><br>
+  <div class="form-group">
+    <%= f.email_field :email, autofocus: true %>
+  </div>
+
+  <div class="form-group">
     <%= f.text_field :name %>
   </div>
-  <div class="field">
-    <%= f.label :address %><br>
+
+  <div class="form-group">
     <%= f.text_area :address %>
   </div>
-  <div class="field">
-    <%= f.label :phone %><br>
+
+  <div class="form-group">
     <%= f.phone_field :phone %>
   </div>
-  <div class="field">
-    <%= f.label :collection_point %><br>
+
+  <div class="form-group">
+    <%= f.label :collection_point %>
     <%= collection_select(:subscriber, :collection_point_id, CollectionPoint.all, :id, :name) %>
   </div>
-  <div class="field">
+
+  <div class="form-group">
     <div class="input-append date">
       <%= f.label :start_date, "Start date" %>
-      <input class="span12" data-behaviour='datepicker' value="<%= (Date.current + 7.days).beginning_of_week.try(:strftime, "%d/%m/%Y") %>" id="subscriber_start_date" name="subscriber[start_date]" type="text">
+      <input class="col-sm-4" data-behaviour='datepicker' value="<%= (Date.current + 7.days).beginning_of_week.try(:strftime, "%d/%m/%Y") %>" id="subscriber_start_date" name="subscriber[start_date]" type="text">
       </input>
       <span class="add-on">
         <i class="icon-th"></i>
@@ -31,34 +41,67 @@
     </div>
     <script type="text/javascript">
       $('#subscriber_start_date').datepicker({
-          format: "dd/mm/yyyy",
-          weekStart: 1,
-          todayBtn: "linked",
-          daysOfWeekDisabled: "0,2,4,5,6"
-      });
+         format: "dd/mm/yyyy",
+         weekStart: 1,
+         todayBtn: "linked",
+         daysOfWeekDisabled: "0,2,4,5,6"
+         });
     </script>
   </div>
-  <div class="field">
-    <%= f.label :bread_type_id %><br>
+
+  <div class="form-group">
+    <%= f.label :bread_type_id %>
     <%= collection_select(:subscriber, :bread_type_id, BreadType.all, :id, :name) %>
   </div>
-  <div class="field">
-    <%= f.label :quantity %><br>
-    <%= f.number_field :quantity %>
+
+  <div class="form-group">
+    <%= f.text_area :notes %>
   </div>
 
-  <div><%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
+  <div class="top-buffer bottom-buffer">
+    Please note: your credit card details will be sent directly to our payment processor
+  </div>
 
-  <div class="field">
-    <%= f.label :notes %><br>
-    <%= f.text_area :notes %>
+  <div class="form-group">
+    <%= label_tag :card_number, "Card Number", class: "control-label" %>
+    <%= text_field_tag :card_number, nil, name: nil, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :card_code, "CVV", class: "control-label" %>
+    <%= text_field_tag :card_code, nil, name: nil, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :card_month, "Card Expiration" %>
+    <div class="col-sm-5 small">
+      <%= select_month nil, {add_month_numbers_true: true}, {name: nil, id: "card_month", class: "form-control"} %>
+    </div>
+    <div class="col-sm-5">
+      <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year", class: "form-control"} %>
+    </div>
+  </div>
+
+  <div id="stripe_error">
+    <noscript> JavaScript is not enabled and is required for this form. First enable it in your web browser settings </noscript>
+  </div>
 
   <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+    <div><%= f.check_box :remember_me %> </div>
   <% end -%>
 
-  <div><%= f.submit "Subscribe" %></div>
-<% end %>
+  <div class="form-group">
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
 
-<%= render "devise/shared/links" %>
+  <div>
+    <%= f.submit "Subscribe - £10 every 4 weeks", class: "btn btn-success" %>
+  </div>
+
+  <div class="actions pull-right">
+    <div class="soft">
+      £10 every 4 weeks
+    </div>
+  </div>
+
+<% end %>

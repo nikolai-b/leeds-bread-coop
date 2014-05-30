@@ -15,6 +15,8 @@ Bundler.require(*Rails.groups)
 
 module BreadCoop
   class Application < Rails::Application
+    config.stripe.secret_key = Rails.env.production? ?  ENV["STRIPE_API_KEY"] : "sk_test_DqjO0gKgUXChnkZ7379iu6dw"
+    config.stripe.publishable_key = Rails.env.production? ?  ENV["STRIPE_PUBLIC_KEY"] : "pk_test_VERKszwCAQv7IqZALmcmQzIU"
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
