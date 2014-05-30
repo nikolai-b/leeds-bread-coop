@@ -47,9 +47,11 @@ group :development, :test do
   gem 'byebug'
 end
 
+
 group :test do
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
   gem 'capybara'
-  gem 'poltergeist'
   gem 'launchy'
   gem 'capybara-email'
   gem 'factory_girl_rails'
@@ -59,7 +61,6 @@ group :development do
   gem "letter_opener"
   gem "binding_of_caller"
   gem "better_errors"
-  gem "xray-rails"
 end
 
 group :production do
