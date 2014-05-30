@@ -45,7 +45,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   end
 
   def pay_stripe
-    find('button').click
+    click_on 'Pay for the bread'
     page.driver.browser.switch_to.frame 'stripe_checkout_app'
     fill_in "card_number", with: "4242424242424242"
     fill_in "cc-exp", with: (Date.current + 1.month).strftime('%m%y')
