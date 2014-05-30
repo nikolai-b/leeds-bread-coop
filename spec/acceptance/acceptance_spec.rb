@@ -15,6 +15,8 @@ feature "New user, new sign-up", type: :feature do
 
     fill_in_details
 
+    expect(page).to have_content "You have signed up successfully."
+
     pay_stripe
 
     see_success
@@ -34,9 +36,8 @@ feature "New user, new sign-up", type: :feature do
     fill_in "Address",    with: 'Somewhere in Leeds'
     fill_in "Phone",      with: '01132222222'
     select 'Green Action', from: :subscriber_collection_point_id
-    fill_in "Start date", with: (Date.current + 14.days).at_beginning_of_week.strftime # future Monday
+    fill_in "Start date", with: ((Date.current + 14.days).at_beginning_of_week + 2.days).strftime # future Wed
     select 'Rye Sour Loaf', from: :subscriber_bread_type_id
-    fill_in "Quantity",   with: 1
     fill_in "Password",   with: 'password'
     fill_in "Notes",      with: 'Thanks!'
 
@@ -44,6 +45,8 @@ feature "New user, new sign-up", type: :feature do
   end
 
   def pay_stripe
+    byebug
+    click_on "Pay for the bread"
   end
 
 end
