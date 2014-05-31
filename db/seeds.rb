@@ -16,4 +16,7 @@ bread_types = BreadType.create([
   {name: "Chabata", sour_dough: false, notes: "I doubt it is spelt like this"}
 ])
 
-email_templates = EmailTemplate.create([name: "new_sub", body: "Welcome!"])
+email_templates = EmailTemplate.create([name: "new_sub", body: "Welcome {{subscriber.email}}!
+  Let us know if your details are incorrect: phone {{subscriber.phone}}, address: {{subscriber.address}}
+  You will be getting your bread {{bread_type}} from {{collection_point.name}}, {{collection_point.address}}, {{collection_point.post_code}} on {{subscriber.day_of_week}} starting on {{subscriber.start_date}}".gsub(/^\s*/,'')
+ ])
