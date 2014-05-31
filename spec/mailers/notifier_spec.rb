@@ -13,7 +13,9 @@ describe Notifier do
     it "sends a templated email to the subscriber" do
       subject.new_sub(subscriber)
       email = ActionMailer::Base.deliveries.last
-      email.body = "Welcome Lizzie!\nLet us know if your details are incorrect, phone: 0113 ..., address: \nYou will be getting your bread Rye Sour Loaf from Green Action, LUU, LS2 .. on Wednesday starting on 2014-06-04\n"
+      expect(email.body).to include("Welcome Lizzie!")
+      expect(email.body).to include("0113 ...")
+      expect(email.body).to include("Rye Sour Loaf")
     end
   end
 end

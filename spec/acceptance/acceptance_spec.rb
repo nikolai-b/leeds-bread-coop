@@ -60,13 +60,16 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   end
 
   def see_success
-    byebug
-    open_email "lizzie@example.com"
-    expect(current_email).to have_content "Somewhere in Leeds"
-    expect(current_email).to have_content "Green Action"
-
+    sleep(6)
     expect(page).to have_content 'Lizzie'
     expect(page).to have_content 'Rye Sour Loaf'
   end
+
+  def get_email
+    open_email "lizzie@example.com"
+    expect(current_email).to have_content "Somewhere in Leeds"
+    expect(current_email).to have_content "Green Action"
+  end
+
 
 end
