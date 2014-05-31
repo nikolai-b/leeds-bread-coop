@@ -37,6 +37,7 @@ gem 'virtus'
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
+gem 'mustache'
 
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap_form'

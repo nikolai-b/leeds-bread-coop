@@ -119,6 +119,7 @@ GEM
     mini_portile (0.6.0)
     minitest (5.3.4)
     multi_json (1.10.1)
+    mustache (0.99.5)
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
     orm_adapter (0.5.0)
@@ -253,6 +254,7 @@ DEPENDENCIES
   launchy
   less-rails
   letter_opener
+  mustache
   pg
   rails (= 4.1.1)
   rails_12factor
