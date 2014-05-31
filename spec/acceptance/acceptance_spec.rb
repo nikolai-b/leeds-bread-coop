@@ -9,6 +9,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   before :each do
     create :collection_point
     create :bread_type
+    create :new_sub_template
   end
 
   scenario "New subscription" do
