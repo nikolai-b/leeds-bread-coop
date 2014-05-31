@@ -32,4 +32,9 @@ unless (EmailTemplate.find_by name: 'stripe_invoice' )
                                          This covers you untill {{invoice.period_end}}.
                                          Thanks!".gsub(/^\s*/,'')})
 end
-
+unless (EmailTemplate.find_by name: 'sub_deleted' )
+  stripe_invoice = EmailTemplate.create({name: 'sub_deleted', body: "Hi {{subscriber.name}},
+                                         Sorry to hear you are leaving.  We hoped you liked your {{bread_type}}.  If this is unexpected then maybe there
+                                         has been some issues with your card - please email or call us.
+                                         Thanks!".gsub(/^\s*/,'')})
+end

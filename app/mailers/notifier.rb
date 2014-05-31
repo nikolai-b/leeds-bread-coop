@@ -100,6 +100,4 @@ class Notifier < ActionMailer::Base
       @invoice.next_payment_attempt || Time.new.to_i
     end
   end
-
-
 end
