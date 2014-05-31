@@ -1,6 +1,6 @@
 class SubscribersController < ApplicationController
   before_action :set_subscriber, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authenticate_admin
+  skip_before_action :authenticate_admin, only: [:show]
 
   # GET /subscribers
   # GET /subscribers.json
