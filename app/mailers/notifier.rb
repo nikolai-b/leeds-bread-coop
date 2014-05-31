@@ -1,7 +1,6 @@
-require 'mustache'
-
 class Notifier < ActionMailer::Base
   default from: "info@leedsbread.coop"
+  require 'mustache'
 
   def new_sub(subscriber)
     template = EmailTemplate.find_by name: 'new_sub'

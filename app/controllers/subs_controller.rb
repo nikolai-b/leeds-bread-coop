@@ -1,10 +1,12 @@
-class SubsController < NotAdminApplicationController
+class SubsController < ApplicationController
   before_action :set_subscriber
+  skip_before_action :authenticate_admin
 
   def new
   end
 
   def create
+    byebug
     begin
       customer = Stripe::Customer.create(
         :email => @subscriber.email,
@@ -19,10 +21,10 @@ class SubsController < NotAdminApplicationController
 
     @subscriber.update ({stripe_customer_id: customer.id} )
 
+    Notifier.new_sub(@subscriber)
+
     redirect_to @subscriber
   end
-
-
 
   private
 
