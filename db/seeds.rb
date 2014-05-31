@@ -15,3 +15,5 @@ bread_types = BreadType.create([
   {name: "Rye Sour Loaf", sour_dough: true, notes: "Tates great!"},
   {name: "Chabata", sour_dough: false, notes: "I doubt it is spelt like this"}
 ])
+
+email_templates = EmailTemplate.create([name: "new_sub", body: "Welcome!"])

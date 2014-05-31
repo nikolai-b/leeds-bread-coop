@@ -11,10 +11,15 @@ FactoryGirl.define do
     name "Lizzie"
     email "lizzie@test.com"
     phone "0113 ..."
-    collection_point_id 1
-    start ((Date.current + 7.days).beginning_of_week + 2.days) # next Wendsday
-    bread_type_id 1
+    collection_point
+    start_date ((Date.current + 7.days).beginning_of_week + 2.days) # next Wendsday
+    bread_type
     password "password"
+  end
+
+  factory :email_template do
+    name 'new_sub'
+    body 'Welcome!'
   end
 end
 

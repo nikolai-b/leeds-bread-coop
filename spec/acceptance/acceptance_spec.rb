@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 feature "New user, new sign-up", type: :feature,  js: true  do
+  setup do
+    Capybara.current_driver = :selenium
+    Capybara.javascript_driver = :selenium
+  end
+
   before :each do
     create :collection_point
     create :bread_type
