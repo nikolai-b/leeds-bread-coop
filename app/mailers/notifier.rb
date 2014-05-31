@@ -55,7 +55,7 @@ class Notifier < ActionMailer::Base
   end
 
   def stripe_dispute(subscriber)
-    email = mail(to: "info@leedsbread.coop",
+    email = mail(to: "alex.frost.dev@gmail.com",
                  subject: "Stripe Dispute!",
                  body: "#{subscriber.name} : #{subscriber.email} is disputing a payment on Stipe, best log into the Stipe account to find out more"
                 )
