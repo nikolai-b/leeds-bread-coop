@@ -33,6 +33,8 @@
                 <%= link_to "Edit password / email", edit_subscriber_registration_path %>
               </li>
             <% end %>
+            <% if current_subscriber.admin%>
+              
             </ul>
           </div>
         </div>

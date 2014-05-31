@@ -12,10 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.label :name %>
+    <%= @email_template.name %>
+    <br><br>
   </div>
-  <div class="field">
+  <div class="field" rows='15'>
     <%= f.label :body %><br>
     <%= f.text_area :body %>
   </div>
