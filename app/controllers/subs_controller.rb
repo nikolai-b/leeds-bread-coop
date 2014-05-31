@@ -6,7 +6,6 @@ class SubsController < ApplicationController
   end
 
   def create
-    byebug
     begin
       customer = Stripe::Customer.create(
         :email => @subscriber.email,

@@ -59,4 +59,14 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     click_on 'Pay £10 every 4 weeks'
   end
 
+  def see_success
+    byebug
+    open_email "lizzie@example.com"
+    expect(current_email).to have_content "Somewhere in Leeds"
+    expect(current_email).to have_content "Green Action"
+
+    expect(page).to have_content 'Lizzie'
+    expect(page).to have_content 'Rye Sour Loaf'
+  end
+
 end
