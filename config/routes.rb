@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :email_templates
+  resources :email_templates, only: [:index, :edit, :show, :update]
 
   resources :bread_types
 

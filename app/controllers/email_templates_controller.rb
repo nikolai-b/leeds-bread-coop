@@ -12,30 +12,10 @@ class EmailTemplatesController < ApplicationController
   def show
   end
 
-  # GET /email_templates/new
-  def new
-    @email_template = EmailTemplate.new
-  end
-
   # GET /email_templates/1/edit
   def edit
   end
 
-  # POST /email_templates
-  # POST /email_templates.json
-  def create
-    @email_template = EmailTemplate.new(email_template_params)
-
-    respond_to do |format|
-      if @email_template.save
-        format.html { redirect_to @email_template, notice: 'Email template was successfully created.' }
-        format.json { render :show, status: :created, location: @email_template }
-      else
-        format.html { render :new }
-        format.json { render json: @email_template.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # PATCH/PUT /email_templates/1
   # PATCH/PUT /email_templates/1.json
@@ -51,15 +31,6 @@ class EmailTemplatesController < ApplicationController
     end
   end
 
-  # DELETE /email_templates/1
-  # DELETE /email_templates/1.json
-  def destroy
-    @email_template.destroy
-    respond_to do |format|
-      format.html { redirect_to email_templates_url, notice: 'Email template was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
