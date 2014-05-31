@@ -18,4 +18,8 @@ module ApplicationHelper
       name.to_s
     end
   end
+
+  def admin?
+    current_subscriber && current_subscriber.admin
+  end
 end
