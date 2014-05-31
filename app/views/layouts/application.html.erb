@@ -30,10 +30,16 @@
                 <%= link_to 'Logout', destroy_subscriber_session_path, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
               </li>
               <li>
-                <%= link_to "Edit password / email", edit_subscriber_registration_path %>
+                <%= link_to "Edit Account", edit_subscriber_registration_path %>
+              </li>
+              <li>
+                <%= link_to "Payment", new_subscriber_sub_path(current_subscriber) %>
               </li>
             <% end %>
             <% if admin?%>
+              <li>
+               <%= link_to 'Subscribers', subscribers_path %>
+             </li>
               <li>
                <%= link_to 'Collection Points', collection_points_path %>
              </li>

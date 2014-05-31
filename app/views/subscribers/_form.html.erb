@@ -16,6 +16,10 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
+    <%= f.label :email %><br>
+    <%= f.email_field :email %>
+  </div>
+  <div class="field">
     <%= f.label :address %><br>
     <%= f.text_area :address %>
   </div>
@@ -23,25 +27,13 @@
     <%= f.label :phone %><br>
     <%= f.phone_field :phone %>
   </div>
-  <div class="field">
-    <%= f.label :collection_point_id %><br>
-    <%= f.text_field :collection_point_id %>
+  <div class="form-group">
+    <%= f.label :collection_point %>
+    <%= collection_select(:subscriber, :collection_point_id, CollectionPoint.all, :id, :name) %>
   </div>
-  <div class="field">
-    <%= f.label :start_date %><br>
-    <%= f.date_select :start_date %>
-  </div>
-  <div class="field">
-    <%= f.label :paid_until %><br>
-    <%= f.date_select :paid_until %>
-  </div>
-  <div class="field">
-    <%= f.label :bread_type_id %><br>
-    <%= f.text_field :bread_type_id %>
-  </div>
-  <div class="field">
-    <%= f.label :quantity %><br>
-    <%= f.number_field :quantity %>
+  <div class="form-group">
+    <%= f.label :bread_type %>
+    <%= collection_select(:subscriber, :bread_type_id, BreadType.all, :id, :name) %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -1,38 +1,53 @@
-<h1>Listing subscribers</h1>
-
-<table>
+<% model_class = Subscriber %>
+<div class="page-header">
+  <h1>
+    <%= t '.title', :default => "Subscribers" %>
+  </h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Address</th>
-      <th>Phone</th>
-      <th>Collection point</th>
-      <th>Start date</th>
-      <th>Paid until</th>
-      <th>Bread type</th>
-      <th>Quantity</th>
-      <th colspan="3"></th>
+      <th>
+        <%= model_class.human_attribute_name(:name) %>
+      </th>
+      <th>
+        <%= model_class.human_attribute_name(:bread_type) %>
+      </th>
+      <th>
+        <%= model_class.human_attribute_name(:collection_point) %>
+      </th>
+      <th>
+        <%= model_class.human_attribute_name(:email) %>
+      </th>
+      <th>
+        <%= model_class.human_attribute_name(:phone) %>
+      </th>
+      <th>
+        <%= t '.actions', :default => t("helpers.actions") %>
+      </th>
     </tr>
   </thead>
-
   <tbody>
     <% @subscribers.each do |subscriber| %>
       <tr>
-        <td><%= subscriber.name %></td>
-        <td><%= subscriber.address %></td>
-        <td><%= subscriber.phone %></td>
-        <td><%= subscriber.collection_point %></td>
-        <td><%= subscriber.start_date %></td>
-        <td><%= subscriber.paid_until %></td>
-        <td><%= subscriber.bread_type %></td>
-        <td><%= subscriber.quantity %></td>
-        <td><%= link_to 'Show', subscriber %></td>
-        <td><%= link_to 'Edit', edit_subscriber_path(subscriber) %></td>
-        <td><%= link_to 'Destroy', subscriber, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to subscriber.name, subscriber_path(subscriber) %>
+        </td>
+        <td>
+          <%= subscriber.bread_type.name %>
+        </td>
+        <td>
+          <%= subscriber.collection_point.name %>
+        </td>
+        <td>
+          <%= subscriber.email %>
+        </td>
+        <td>
+          <%= subscriber.phone %>
+        </td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_subscriber_path(subscriber), :class => 'btn btn-mini' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
-</table>
-
-<br>
-
