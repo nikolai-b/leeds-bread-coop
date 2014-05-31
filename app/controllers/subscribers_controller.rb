@@ -1,4 +1,4 @@
-class SubscribersController < ApplicationController
+class SubscribersController < NotAdminApplicationController
   before_action :set_subscriber, only: [:show, :edit, :update, :destroy]
 
   # GET /subscribers

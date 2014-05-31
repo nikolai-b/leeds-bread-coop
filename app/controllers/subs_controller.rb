@@ -1,4 +1,4 @@
-class SubsController < ApplicationController
+class SubsController < NotAdminApplicationController
   before_action :set_subscriber
 
   def new
