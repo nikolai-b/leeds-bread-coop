@@ -6,7 +6,7 @@ class Subscriber < ActiveRecord::Base
   belongs_to :collection_point
   belongs_to :bread_type
 
-  def day_of_week
+  def day_of_the_week
     start_date.strftime('%A')
   end
 end
