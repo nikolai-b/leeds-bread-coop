@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140530120126) do
+ActiveRecord::Schema.define(version: 20140531084021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,11 +56,15 @@ ActiveRecord::Schema.define(version: 20140530120126) do
     t.string   "last_sign_in_ip"
     t.text     "notes"
     t.integer  "stripe_customer_id"
+    t.integer  "failed_attempts",        default: 0,  null: false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
   end
 
   add_index "subscribers", ["bread_type_id"], name: "index_subscribers_on_bread_type_id", using: :btree
   add_index "subscribers", ["collection_point_id"], name: "index_subscribers_on_collection_point_id", using: :btree
   add_index "subscribers", ["email"], name: "index_subscribers_on_email", unique: true, using: :btree
   add_index "subscribers", ["reset_password_token"], name: "index_subscribers_on_reset_password_token", unique: true, using: :btree
+  add_index "subscribers", ["unlock_token"], name: "index_subscribers_on_unlock_token", unique: true, using: :btree
 
 end
