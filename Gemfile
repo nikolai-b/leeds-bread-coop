@@ -42,6 +42,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'bootstrap_form'
 gem 'stripe-rails'
 
+gem 'pony'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'byebug'
