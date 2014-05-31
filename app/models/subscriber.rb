@@ -14,6 +14,8 @@ class Subscriber < ActiveRecord::Base
 
     subscriber.has_active_sub = false
     subscriber.save!
+
+    Notifier.sub_deleted(subscriber)
   end
 
 

@@ -20,8 +20,16 @@ unless (BreadType.find_by name: 'Rye Sour Loaf' )
 end
 
 unless (EmailTemplate.find_by name: 'new_sub' )
-  email_templates = EmailTemplate.create([name: "new_sub", body: "Welcome {{subscriber.email}}!
+  new_sub = EmailTemplate.create({name: "new_sub", body: "Welcome {{subscriber.name}}!
   Let us know if your details are incorrect: phone {{subscriber.phone}}, address: {{subscriber.address}}
-  You will be getting your bread {{bread_type}} from {{collection_point.name}}, {{collection_point.address}}, {{collection_point.post_code}} on {{subscriber.day_of_week}} starting on {{subscriber.start_date}}".gsub(/^\s*/,'')
-  ])
+  You will be getting your bread {{bread_type}} from {{collection_point.name}}, {{collection_point.address}}, {{collection_point.post_code}} on {{subscriber.day_of_week}} starting on {{subscriber.start_date}}".gsub(/^\s*/,'')}
+  )
 end
+
+unless (EmailTemplate.find_by name: 'stripe_invoice' )
+  stripe_invoice = EmailTemplate.create({name: 'stripe_invoice', body: "Hi {{subscriber.name}},
+                                         on {{invoice.next_payment_attempt}} you will be charged £{{invoice.total}} for your {{bread_type}}.
+                                         This covers you untill {{invoice.period_end}}.
+                                         Thanks!".gsub(/^\s*/,'')})
+end
+

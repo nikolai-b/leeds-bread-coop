@@ -20,23 +20,17 @@ class Notifier < ActionMailer::Base
   after_invoice_created! do |invoice, event|
     stripe_customer_id = invoice.customer
 
+
     subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
 
-    stripe_invoice(
-      subscriber,
-      {
-        period_start: invoice.period_start,
-        period_end: invoice.period_end,
-        next_payment_attempt: invoice.next_payment_attempt,
-        total: invoice.total
-      })
+
+    formatted_invoice = Invoice.new(invoice )
+
+    stripe_invoice(subscriber, formatted_invoice)
   end
 
   after_charge_dispute_created! do |charge, event|
-    stripe_customer_id = charge.customer
-    subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
-
-    stripe_dispute(subscriber)
+    stripe_dispute(charge)
   end
 
   def stripe_invoice(subscriber, invoice)
@@ -54,10 +48,58 @@ class Notifier < ActionMailer::Base
     email.deliver
   end
 
-  def stripe_dispute(subscriber)
-    email = mail(to: "alex.frost.dev@gmail.com",
-                 subject: "Stripe Dispute!",
-                 body: "#{subscriber.name} : #{subscriber.email} is disputing a payment on Stipe, best log into the Stipe account to find out more"
-                )
+  def sub_deleted(subscriber)
+    template = EmailTemplate.find_by name: 'sub_deleted'
+    email = mail(to: subscriber.email,
+         subject: 'Leeds Bread Co-op Invoice',
+         body: Mustache.render(
+           template.body,
+           subscriber: subscriber,
+           bread_type: subscriber.bread_type.name,
+           collection_point: subscriber.collection_point,
+           invoice: invoice
+         ),
+         content_type: 'text/html; charset=UTF-8')
+    email.deliver
   end
+
+  def stripe_dispute(charge)
+    email = mail(to: "info@leedsbread.coop",
+                 subject: "Stripe Dispute!",
+                 body: "Someone is disputing a payment on Stipe, best log into the Stipe account to find out more -\n #{charge}"
+                )
+    email.deliver
+  end
+
+  class Invoice
+    def initialize(invoice)
+      @invoice = invoice
+    end
+
+    def total
+      (@invoice.total.to_f / 100.0).to_s
+    end
+
+    def amount_due
+      (@invoice.amount_due.to_f / 100.0).to_s
+    end
+
+    def period_start
+      Time.at(@invoice.lines.data[0].period.start).strftime("%d/%m/%Y") #maybe @invoice.period_start
+    end
+
+    def period_end
+      Time.at(@invoice.lines.data[0].period.end).strftime("%d/%m/%Y") #maybe invoice.lines.data[0].period.end
+    end
+
+    def next_payment_attempt
+      Time.at(next_payment_attempt_raw).strftime("%d/%m/%Y")
+    end
+
+    def next_payment_attempt_raw
+      @invoice.next_payment_attempt || Time.new.to_i
+    end
+  end
+
+
 end
