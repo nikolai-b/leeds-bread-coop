@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140531172356) do
+ActiveRecord::Schema.define(version: 20140531195550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20140531172356) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.boolean  "admin"
+    t.boolean  "has_active_sub"
   end
 
   add_index "subscribers", ["bread_type_id"], name: "index_subscribers_on_bread_type_id", using: :btree
