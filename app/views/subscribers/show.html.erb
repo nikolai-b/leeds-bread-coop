@@ -6,6 +6,11 @@
 </p>
 
 <p>
+  <strong>Email:</strong>
+  <%= @subscriber.email %>
+</p>
+
+<p>
   <strong>Address:</strong>
   <%= @subscriber.address %>
 </p>
@@ -17,28 +22,24 @@
 
 <p>
   <strong>Collection point:</strong>
-  <%= @subscriber.collection_point %>
+  <%= @subscriber.collection_point.name %><br>
+  <%= @subscriber.collection_point.address + ", " + @subscriber.collection_point.post_code %>
 </p>
 
 <p>
-  <strong>Start date:</strong>
-  <%= @subscriber.start_date %>
-</p>
+  <strong>Pick-up day:</strong>
+  <%= @subscriber.day_of_the_week.to_s %>
+  <% if (Time.zone.today < @subscriber.start_date) %>
+    (with your first collction on the <%= @subscriber.start_date.strftime("#{@subscriber.start_date.day.ordinalize} of %B") %>)
+  <% end %>
 
-<p>
-  <strong>Paid until:</strong>
-  <%= @subscriber.paid_until %>
 </p>
 
 <p>
   <strong>Bread type:</strong>
-  <%= @subscriber.bread_type %>
-</p>
+  <%= @subscriber.bread_type.name %>
+  </p>
 
-<p>
-  <strong>Quantity:</strong>
-  <%= @subscriber.quantity %>
-</p>
 
 <%= link_to 'Edit', edit_subscriber_path(@subscriber) %> |
 <%= link_to 'Back', subscribers_path %>
