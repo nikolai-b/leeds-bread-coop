@@ -18,7 +18,7 @@ class SubsController < ApplicationController
       redirect_to subscriptions_path
     end
 
-    @subscriber.update ({stripe_customer_id: customer.id} )
+    @subscriber.update ({stripe_customer_id: customer.id, has_active_sub: true} )
 
     Notifier.new_sub(@subscriber)
 
@@ -28,6 +28,6 @@ class SubsController < ApplicationController
   private
 
   def set_subscriber
-    @subscriber = Subscriber.find params[:subscriber_id]
+    @subscriber = current_subscriber
   end
 end

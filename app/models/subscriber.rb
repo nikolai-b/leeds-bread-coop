@@ -5,6 +5,18 @@ class Subscriber < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :lockable
   belongs_to :collection_point
   belongs_to :bread_type
+  include Stripe::Callbacks
+
+  after_customer_subscription_deleted! do |subscription, event|
+    stripe_customer_id = subscription.customer
+
+    subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
+
+    subscriber.has_active_sub = false
+    subscriber.save!
+  end
+
+
 
   def day_of_the_week
     start_date.strftime('%A')
