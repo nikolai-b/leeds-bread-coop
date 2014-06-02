@@ -1,0 +1,28 @@
+<h1>Delivary Report<h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Collection Point</th>
+      <th>Subscriber</th>
+      <th>Bread Type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @delivary_report.each do |delivary| %>
+      <tr>
+        <td><strong><%= delivary[0].collection_point.name %></strong></td>
+      </tr>
+      <% delivary.each do |subscriber| %>
+        <tr>
+          <td><%= subscriber.name %></td>
+          <td><%= subscriber.bread_type.name %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
