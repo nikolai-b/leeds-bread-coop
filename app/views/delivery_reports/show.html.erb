@@ -1,5 +1,10 @@
 <h1>Delivary Report</h1>
 
+<%= link_to('Yesterday <', delivery_reports_path(date: (@delivery_report.date - 1.day).to_s)) %> 
+&emsp;
+<%= @delivery_report.date.strftime("%a #{@delivery_report.date.day.ordinalize} %b %y") %>
+&emsp;
+<%= link_to('> Tomorrow', delivery_reports_path(date: (@delivery_report.date + 1.day).to_s)) %>
 <table>
   <thead>
     <tr>
@@ -11,7 +16,7 @@
   </thead>
 
   <tbody>
-    <% @delivery_report.try(:each) do |delivery| %>
+    <% @delivery_report.show.try(:each) do |delivery| %>
       <% next unless delivery.any? %>
       <tr>
         <td><strong><%= delivery[0].collection_point.name %></strong></td>

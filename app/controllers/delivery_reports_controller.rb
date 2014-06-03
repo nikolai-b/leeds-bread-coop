@@ -1,5 +1,5 @@
 class DeliveryReportsController < ApplicationController
   def show
-    @delivery_report = DeliveryReport.new(Date.parse(params[:date])).show
+    @delivery_report = DeliveryReport.new(Date.parse(params[:date]))
   end
 end

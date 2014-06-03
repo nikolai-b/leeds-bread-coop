@@ -29,6 +29,7 @@
                 <li>
                 <%= link_to 'Logout', destroy_subscriber_session_path, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
               </li>
+              <% unless admin? %>
               <li>
                 <%= link_to "Edit Account", edit_subscriber_registration_path %>
               </li>
@@ -36,6 +37,7 @@
                 <%= link_to "Payment", new_subscriber_sub_path(current_subscriber) %>
               </li>
             <% end %>
+          <% end %>
             <% if admin?%>
               <li>
                <%= link_to 'Subscribers', subscribers_path %>
@@ -48,6 +50,9 @@
              </li>
               <li>
                <%= link_to 'Email Templates', email_templates_path %>
+             </li>
+              <li>
+               <%= link_to 'Delivery Reports', delivery_reports_path %>
              </li>
            <% end %>
             </ul>

@@ -1,4 +1,5 @@
 class DeliveryReport
+  attr_reader :date
   def initialize(date = Date.current)
     @date = date
   end
