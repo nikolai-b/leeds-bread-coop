@@ -1,0 +1,5 @@
+name,email,address,phone,collection_point_id,bread_type_id,start_date
+"L, Isaac",isaac@test.com,"Leeds",07777 222222,I,SS,Fri
+"M, George",george@test.com ,"Leeds",,D,SP,Wed
+"K, Ursula ",ursula@test.com,"Leeds",07777 111111,I,RY,Wed
+"P, Rachel ",rachel@test.com,,07777 555555,D,SP,Fri
