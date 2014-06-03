@@ -12,13 +12,13 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
   end
 
   factory :bread_type do
-    name "Rye Sour Loaf"
+    name "White sour"
     sour_dough true
 
   end
 
   factory :yeast_bread, class: BreadType do
-    name "Chabata"
+    name "Ciabatta"
     sour_dough false
   end
 

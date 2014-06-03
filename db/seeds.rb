@@ -12,12 +12,39 @@ unless (CollectionPoint.find_by name: 'Green Action')
   ])
 end
 
-unless (BreadType.find_by name: 'Rye Sour Loaf' )
-  bread_types = BreadType.create([
-    {name: "Rye Sour Loaf", sour_dough: true, notes: "Tates great!"},
-    {name: "Chabata", sour_dough: false, notes: "I doubt it is spelt like this"}
-  ])
+def create_collection_point(name)
+  unless (CollectionPoint.find_by name: name)
+    CollectionPoint.create( {name: name } )
+  end
 end
+
+[
+  "Wharf Chambers",
+  "Greenhouse",
+  "Fabrication",
+  "Woodhouse",
+  "Haley&Cliff",
+  "Opposite",
+  "Cafe 164"
+].each {|c| create_collection_point(c) }
+
+
+unless (BreadType.find_by name: 'White sour' )
+  BreadType.create( {name: "White Sour", sour_dough: true, notes: "Tates great!"} )
+end
+
+unless (BreadType.find_by name: 'Seedy sour' )
+  BreadType.create( {name: "Seedy Sour", sour_dough: true, notes: "Lots of seeds"} )
+end
+
+unless (BreadType.find_by name: '100% Rye' )
+  BreadType.create( {name: '100% Rye', sour_dough: false, notes: "Not sure if this is sour or not"} )
+end
+
+unless (BreadType.find_by name: 'Special' )
+  BreadType.create( {name: 'Special', sour_dough: false, notes: "Not sure if this is sour or not"} )
+end
+
 
 unless (EmailTemplate.find_by name: 'new_sub' )
   new_sub = EmailTemplate.create({name: "new_sub", body: "Welcome {{subscriber.name}}!

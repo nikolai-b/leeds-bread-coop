@@ -15,7 +15,7 @@ describe Notifier do
       email = ActionMailer::Base.deliveries.last
       expect(email.body).to include("Welcome Lizzie!")
       expect(email.body).to include("0113 ...")
-      expect(email.body).to include("Rye Sour Loaf")
+      expect(email.body).to include("White sour")
     end
   end
 end

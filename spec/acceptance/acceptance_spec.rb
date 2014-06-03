@@ -43,7 +43,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     fill_in "Phone",      with: '01132222222'
     select 'Green Action', from: :subscriber_collection_point_id
     fill_in "Start date", with: ((Date.current + 14.days).at_beginning_of_week + 2.days).strftime # future Wed
-    select 'Rye Sour Loaf', from: :subscriber_bread_type_id
+    select 'White sour', from: :subscriber_bread_type_id
     fill_in "Password",   with: 'password'
     fill_in "Notes",      with: 'Thanks!'
 
@@ -62,7 +62,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   def see_success
     sleep(6)
     expect(page).to have_content 'Lizzie'
-    expect(page).to have_content 'Rye Sour Loaf'
+    expect(page).to have_content 'White sour'
   end
 
   def get_email

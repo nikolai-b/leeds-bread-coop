@@ -19,7 +19,7 @@ describe DeliveryReport do
 
         expect(first_delivery[0].collection_point.name).to eq('Green Action')
         expect(first_delivery[0].name).to include('Lizzie')
-        expect(first_delivery[0].bread_type.name).to eq('Rye Sour Loaf')
+        expect(first_delivery[0].bread_type.name).to eq('White sour')
       end
 
       it 'excludes subscriber who have not paid' do
