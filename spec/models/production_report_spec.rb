@@ -3,6 +3,7 @@ describe ProductionReport do
 
   describe '#show' do
     let(:today) { Date.parse('2014-06-02') }
+
     before do
       yeast_bread = create :yeast_bread
       (1..3).each do |add|
@@ -10,7 +11,6 @@ describe ProductionReport do
         create(:subscriber, :paid, start_date: (today + add.days) )
       end
     end
-
 
     it 'production has all breads for tomorrow (n+1)' do
       expect(subject.production.select{ |p| p.any? }.size ).to eq(2)

@@ -1,4 +1,5 @@
 class ProductionReport
+  attr_reader :date
 
   def initialize(date = Date.current)
     @date = date
@@ -17,14 +18,12 @@ class ProductionReport
   end
 
   def ferment
-    ret = BreadType.where(sour_dough: false).find_each.map do |bread_type|
-      bread_type.subscribers.active_sub.delivery_day(@date + 3.days)
+    BreadType.find_each.map do |bread_type|
+      if bread_type.sour_dough
+        bread_type.subscribers.active_sub.delivery_day(@date + 3.days)
+      else
+        bread_type.subscribers.active_sub.delivery_day(@date + 2.days)
+      end
     end
-
-    ret << BreadType.where(sour_dough: false).find_each.map do |bread_type|
-      bread_type.subscribers.active_sub.delivery_day(@date + 2.days)
-    end
-
-    ret
   end
 end
