@@ -1,4 +1,4 @@
-<h1>Delivary Report<h1>
+<h1>Delivary Report</h1>
 
 <table>
   <thead>
@@ -11,13 +11,15 @@
   </thead>
 
   <tbody>
-    <% @delivary_report.each do |delivary| %>
+    <% @delivery_report.try(:each) do |delivery| %>
+      <% next unless delivery.any? %>
       <tr>
-        <td><strong><%= delivary[0].collection_point.name %></strong></td>
+        <td><strong><%= delivery[0].collection_point.name %></strong></td>
       </tr>
-      <% delivary.each do |subscriber| %>
+      <% delivery.try(:each) do |subscriber| %>
         <tr>
-          <td><%= subscriber.name %></td>
+          <td> </td>
+          <td><%= link_to(subscriber.name, subscriber) %></td>
           <td><%= subscriber.bread_type.name %></td>
         </tr>
       <% end %>

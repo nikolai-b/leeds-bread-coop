@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   end
 
   root 'welcome#index'
-  get '/devivery_reports', to: 'devivery_reports#show'
-
+  get "/delivery_report/:date", :to => "delivery_reports#show", defaults: { date: Date.current.strftime }
+  get "/delivery_report/", :to => "delivery_reports#show", defaults: { date: Date.current.strftime }, as: :delivery_report
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
