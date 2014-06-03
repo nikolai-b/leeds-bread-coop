@@ -1,0 +1,57 @@
+<h1>Production Report</h1>
+
+<%= link_to('Yesterday <', production_reports_path(date: (@production_report.date - 1.day).to_s)) %> 
+&emsp;
+<%= @production_report.date.strftime("%a #{@production_report.date.day.ordinalize} %b %y") %>
+&emsp;
+<%= link_to('> Tomorrow', production_reports_path(date: (@production_report.date + 1.day).to_s)) %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Proccess</th>
+      <th>Bread Type</th>
+      <th>Quantity (subscribers)</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td><strong>Baking Today</strong></td>
+      </tr>
+      <% @production_report.production.each do |subscriber| %>
+        <% next unless subscriber.any? %>
+      <tr>
+        <td></td>
+        <td><%= subscriber[0].bread_type.name %></td>
+        <td><%= subscriber.count %></td>
+      </tr>
+      <% end %>
+      <tr>
+        <td><strong>Pre - Production</strong></td>
+      </tr>
+      <% @production_report.preproduction.each do |subscriber| %>
+        <% next unless subscriber.any? %>
+      <tr>
+        <td></td>
+        <td><%= subscriber[0].bread_type.name %></td>
+        <td><%= subscriber.count %></td>
+      </tr>
+      <% end %>
+      <tr>
+        <td><strong>Per - Ferment</strong></td>
+      </tr>
+      <% @production_report.ferment.each do |subscriber| %>
+        <% next unless subscriber.any? %>
+      <tr>
+        <td></td>
+        <td><%= subscriber[0].bread_type.name %></td>
+        <td><%= subscriber.count %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<br>
+
