@@ -4,7 +4,7 @@ describe DeliveryReport do
   describe '#show' do
     before do
       4.times {create(:subscriber, :paid)}
-      create(:subscriber, :paid, has_active_sub: false, name: 'NotPaid')
+      create(:subscriber, :paid, active_sub: false, name: 'NotPaid')
     end
 
     context 'on Friday' do

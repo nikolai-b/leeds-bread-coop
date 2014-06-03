@@ -5,11 +5,13 @@ class Subscriber < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :lockable
   belongs_to :collection_point
   belongs_to :bread_type
-  include Stripe::Callbacks
-  scope :active_sub, -> { where(has_active_sub: true) }
+
+  scope :active_sub, -> { where(active_sub: true) }
   scope :delivery_day, ->(date) { where("TO_CHAR(start_date,'D') = ?", (date + 1.day).strftime("%w")) } # %w has Sun at 0, Postgres frm D has Sun as 1
   scope :has_sour_dough, -> {bread_type.where(sour_dough: true) }
   scope :has_yeast_dough, -> {bread_type.where.not(sour_dough: true) }
+
+  include Stripe::Callbacks
 
 
 
@@ -18,7 +20,7 @@ class Subscriber < ActiveRecord::Base
 
     subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
 
-    subscriber.has_active_sub = false
+    subscriber.active_sub = false
     subscriber.save!
 
     Notifier.sub_deleted(subscriber)
