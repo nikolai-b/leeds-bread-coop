@@ -6,7 +6,7 @@ class DeliveryReport
 
   def show
     CollectionPoint.find_each.map do |collection_point|
-      collection_point.subscribers.where("TO_CHAR(start_date,'D') = ?", (@date + 1.day).strftime("%w")) # %w has Sun at 0, Postgres frm D has Sun as 1
+      collection_point.subscribers.active_sub.delivery_day(@date)
     end
   end
 end

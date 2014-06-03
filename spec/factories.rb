@@ -23,7 +23,7 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
   end
 
   factory :subscriber do
-    sequence(:name) {|n| "Lizzie #{n}"}
+    sequence(:name) {|n| "Lizzie"}
     sequence(:email) {|n| "lizzie#{n}@test.com"}
     phone "0113 ..."
     collection_point
