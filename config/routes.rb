@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   devise_for :subscribers, :controllers => { :registrations => "registrations" }
   resources :subscribers do
     resources :subs, only: [:new, :create]
+    collection { post :import }
   end
 
   root 'welcome#index'

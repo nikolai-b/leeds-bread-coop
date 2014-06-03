@@ -61,6 +61,11 @@ class SubscribersController < ApplicationController
     end
   end
 
+  def import
+    Subscriber.import(params[:file])
+    redirect_to subscribers_path, notice: "Products imported."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_subscriber
