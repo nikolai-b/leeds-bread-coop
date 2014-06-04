@@ -62,8 +62,12 @@ class SubscribersController < ApplicationController
   end
 
   def import
-    Subscriber.import(params[:file])
-    redirect_to subscribers_path, notice: "Products imported."
+    if params[:file]
+      Subscriber.import(params[:file])
+      redirect_to subscribers_path, notice: "Subscribers imported!"
+    else
+      redirect_to subscribers_path, notice: "No file attached"
+    end
   end
 
   private
