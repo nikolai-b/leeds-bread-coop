@@ -31,5 +31,9 @@
     <% end %>
   </tbody>
 </table>
+<p>
+  Download:
+  <%= link_to "CSV", delivery_reports_path(date: (@delivery_report.date), format: "csv") %>
+</p>
 
 <br>

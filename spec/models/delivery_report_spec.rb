@@ -1,17 +1,19 @@
 describe DeliveryReport do
   subject { DeliveryReport.new(date) }
 
+  before do
+    collection_point = create :collection_point
+    4.times {create(:subscriber, :paid, collection_point: collection_point)}
+    create(:subscriber, :paid, active_sub: false, name: 'NotPaid')
+  end
+
   describe '#show' do
-    before do
-      4.times {create(:subscriber, :paid)}
-      create(:subscriber, :paid, active_sub: false, name: 'NotPaid')
-    end
 
     context 'on Friday' do
       let(:date) { Date.parse("2014-06-06") }
 
       it "returns an array with size of delivaries" do
-        expect(subject.show.select{ |s| s.any? }.size).to eq(4)
+        expect(subject.show[0].size).to eq(4)
       end
 
       it "each delivery has the collection point, bread_type, and subscriber name" do
@@ -27,6 +29,18 @@ describe DeliveryReport do
 
         expect(names).not_to include('NotPaid')
         expect(names).to include('Lizzie')
+      end
+    end
+  end
+
+  describe '#to_csv' do
+
+    context 'on Friday' do
+      let(:date) { Date.parse("2014-06-06") }
+
+      it "outputs a csv with subscriber info" do
+        csv = CSV.parse(subject.to_csv)
+        expect(csv[2]).to eq([nil, "Lizzie", "White sour"])
       end
     end
   end
