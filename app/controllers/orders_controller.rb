@@ -27,28 +27,20 @@ class OrdersController < ApplicationController
   def create
     @order = @wholesale_customer.orders.new(order_params)
 
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render :show, status: :created, location: @order }
-      else
-        format.html { render :new }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
+    if @order.save(order_params)
+      redirect_to [@wholesale_customer, @order], notice: 'Order was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
-    respond_to do |format|
-      if @order.update(order_params)
-        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
-        format.json { render :show, status: :ok, location: @order }
-      else
-        format.html { render :edit }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
+    if @order.update(order_params)
+      redirect_to [@wholesale_customer, @order], notice: 'Order was successfully updated.'
+    else
+      render :edit
     end
   end
 
