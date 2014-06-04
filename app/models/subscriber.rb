@@ -4,6 +4,13 @@ class Subscriber < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
+
+  validates :bread_type_id, numericality: { only_integer: true }
+  validates :collection_point_id, numericality: { only_integer: true }
+  validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
+  validates :name, length: {minimum: 4}
+  validates :phone, length: {in: 10..13}
+
   belongs_to :collection_point
   belongs_to :bread_type
 
@@ -13,8 +20,6 @@ class Subscriber < ActiveRecord::Base
   scope :has_yeast_dough, -> {bread_type.where.not(sour_dough: true) }
 
   include Stripe::Callbacks
-
-
 
   after_customer_subscription_deleted! do |subscription, event|
     stripe_customer_id = subscription.customer
@@ -27,24 +32,29 @@ class Subscriber < ActiveRecord::Base
     Notifier.sub_deleted(subscriber)
   end
 
-
-
   def day_of_the_week
     start_date.strftime('%A')
   end
 
   def self.import(file)
-    csv = CSV.parse(file, headers: true)
-    csv.each do |row|
-      row['collection_point_id'] = CollectionPoint.find_by( name: csv_collection_point[row["collection_point_id"]] ).id
-      row['bread_type_id'] = BreadType.find_by( name: csv_bread_type[row["bread_type_id"]] ).id
-      row['start_date'] = csv_start_date[row['start_date']]
+    CSV.foreach(file.path, headers: true) do |row|
+      row['Email'].gsub!(/(.*)@(.*)/,'\1@example.com')
+      row['Email'].downcase!
+      next if find_by( email: row["Email"].strip)
 
-      subscriber = find_by( email: row["email"]) || new
-      subscriber.attributes = row.to_hash
-      subscriber.password = row['email']
+      subscriber = new
 
-      subscriber.save!
+      subscriber.collection_point = CollectionPoint.find_by( name: csv_collection_point[row["Drop-off"]] )
+      subscriber.bread_type = BreadType.find_by( name: csv_bread_type[row["Bread"]] )
+      subscriber.start_date = csv_start_date[row['Days']]
+      subscriber.email = row['Email']
+      subscriber.phone = '0777 777777' #row['Phone']
+      subscriber.password = subscriber.email
+      subscriber.active_sub = true
+      subscriber.address = 'Leeds' #row['Address']
+      subscriber.name = row['Name']
+
+      subscriber.save
     end
   end
 
@@ -76,7 +86,7 @@ class Subscriber < ActiveRecord::Base
   def self.csv_start_date
     {
       "Wed" => Date.parse('2014-06-04'),
-      "Fri" => Date.parse('2014-06-04'),
+      "Fri" => Date.parse('2014-06-06'),
     }
   end
 
