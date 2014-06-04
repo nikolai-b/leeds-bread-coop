@@ -26,7 +26,7 @@
       <fieldset class="item">
       <div class="field">
         <%= f.label :bread_type %>
-        <%= collection_select(:line_item, :bread_type_id, BreadType.all, :id, :name) %>
+        <%= f.collection_select(:bread_type_id, BreadType.all, :id, :name) %>
       </div>
 
       <div class="field">

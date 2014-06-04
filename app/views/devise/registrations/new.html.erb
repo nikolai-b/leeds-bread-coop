@@ -24,7 +24,7 @@
 
   <div class="form-group">
     <%= f.label :collection_point %>
-    <%= collection_select(:subscriber, :collection_point_id, CollectionPoint.all, :id, :name) %>
+    <%= f.collection_select(:collection_point_id, CollectionPoint.all, :id, :name) %>
   </div>
 
   <div class="form-group">
@@ -48,7 +48,7 @@
 
   <div class="form-group">
     <%= f.label :bread_type_id %>
-    <%= collection_select(:subscriber, :bread_type_id, BreadType.all, :id, :name) %>
+    <%= f.collection_select(:bread_type_id, BreadType.all, :id, :name) %>
   </div>
 
   <div class="form-group">
