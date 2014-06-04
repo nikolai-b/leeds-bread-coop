@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @order = @wholesale_customer.order.new(order_params)
+    @order = @wholesale_customer.orders.new(order_params)
 
     respond_to do |format|
       if @order.save
@@ -70,7 +70,7 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:wholesale_id, :date, :paid)
+      params.require(:order).permit(:date, :paid, line_items_attributes: [:id, :bread_type_id, :quantity])
     end
 
     def set_wholesale_customer
