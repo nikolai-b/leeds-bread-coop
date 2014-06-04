@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  resources :orders
 
-  resources :wholesale_customers
+  resources :wholesale_customers do
+    resources :orders
+  end
 
   resources :email_templates, only: [:index, :edit, :show, :update]
 
