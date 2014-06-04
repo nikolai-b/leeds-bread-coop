@@ -35,6 +35,11 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
       active_sub true
       sequence(:start_date) {|n| Date.current.beginning_of_week - 10.days - n.weeks } # Fri
     end
+
+    trait :admin do
+      admin true
+      email "admin@example.com"
+    end
   end
 
   factory :email_template do
@@ -47,7 +52,9 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
     body NEW_SUB_BODY
   end
 
-
+  factory :wholesale_customer do
+    name "Lanes"
+  end
 
 end
 
