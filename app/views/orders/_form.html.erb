@@ -20,7 +20,7 @@
         <i class="icon-th"></i>
       </span>
     </div>
-  <h2>Order Lines</h2>
+  <h2>Lines Items</h2>
   <div class="items">
     <%= f.nested_fields_for :line_items do |f| %>
       <fieldset class="item">
@@ -41,7 +41,7 @@
     </fieldset>
   <% end %>
   </div>
-  <a href="#" class="add">add line itme</a>
+  <a href="#" class="add">add line item</a>
   <script type="text/javascript">
     $(document).ready(function(e) {
         $('FORM').nestedFields();
