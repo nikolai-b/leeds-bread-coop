@@ -11,19 +11,53 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :wholesale_id %><br>
-    <%= f.text_field :wholesale_id %>
+  <div class="form-group">
+    <div class="input-append date">
+      <%= f.label :date %>
+      <input class="col-sm-4" data-behaviour='datepicker' value="<%= Date.current.strftime("%d/%m/%Y") %>" id="order_date" name="order[date]" type="text">
+      </input>
+      <span class="add-on">
+        <i class="icon-th"></i>
+      </span>
+    </div>
+  <h2>Order Lines</h2>
+  <div class="items">
+    <%= f.nested_fields_for :line_items do |f| %>
+      <fieldset class="item">
+      <div class="field">
+        <%= f.label :bread_type %>
+        <%= collection_select(:line_item, :bread_type_id, BreadType.all, :id, :name) %>
+      </div>
+
+      <div class="field">
+        <%= f.label :quantity %>
+        <%= f.number_field :quantity %>
+      </div>
+
+      <a href="#" class="remove">remove</a>
+
+      <%= f.hidden_field :id %>
+      <%= f.hidden_field :_destroy %>
+    </fieldset>
+  <% end %>
   </div>
-  <div class="field">
-    <%= f.label :date %><br>
-    <%= f.date_select :date %>
-  </div>
-  <div class="field">
-    <%= f.label :paid %><br>
-    <%= f.check_box :paid %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <a href="#" class="add">add line itme</a>
+  <script type="text/javascript">
+    $(document).ready(function(e) {
+        $('FORM').nestedFields();
+        });
+
+$('#order_date').datepicker({
+format: "dd/mm/yyyy",
+weekStart: 1,
+todayBtn: "linked"
+});
+  </script>
+<div class="field">
+<%= f.label :paid %>
+<%= f.check_box :paid %>
+</div>
+<div class="actions">
+<%= f.submit %>
+</div>
 <% end %>

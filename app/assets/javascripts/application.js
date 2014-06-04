@@ -15,5 +15,6 @@
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
 //= require turbolinks
+//= require jquery.nested-fields
 //= require_tree .
 //
