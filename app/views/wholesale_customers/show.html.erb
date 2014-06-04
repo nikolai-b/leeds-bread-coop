@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @wholesale_customer.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @wholesale_customer.address %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @wholesale_customer.phone %>
+</p>
+
+<p>
+  <strong>Opening time:</strong>
+  <%= @wholesale_customer.opening_time %>
+</p>
+
+<%= link_to 'Edit', edit_wholesale_customer_path(@wholesale_customer) %> |
+<%= link_to 'Back', wholesale_customers_path %>

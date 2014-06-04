@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :wholesale_customers
+
   resources :email_templates, only: [:index, :edit, :show, :update]
 
   resources :bread_types

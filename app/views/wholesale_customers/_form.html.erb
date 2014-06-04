@@ -1,0 +1,33 @@
+<%= form_for(@wholesale_customer) do |f| %>
+  <% if @wholesale_customer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@wholesale_customer.errors.count, "error") %> prohibited this wholesale_customer from being saved:</h2>
+
+      <ul>
+      <% @wholesale_customer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br>
+    <%= f.text_area :address %>
+  </div>
+  <div class="field">
+    <%= f.label :phone %><br>
+    <%= f.text_field :phone %>
+  </div>
+  <div class="field">
+    <%= f.label :opening_time %><br>
+    <%= f.time_select :opening_time %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

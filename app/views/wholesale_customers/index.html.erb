@@ -1,0 +1,31 @@
+<h1>Listing wholesale_customers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Phone</th>
+      <th>Opening time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wholesale_customers.each do |wholesale_customer| %>
+      <tr>
+        <td><%= wholesale_customer.name %></td>
+        <td><%= wholesale_customer.address %></td>
+        <td><%= wholesale_customer.phone %></td>
+        <td><%= wholesale_customer.opening_time %></td>
+        <td><%= link_to 'Show', wholesale_customer %></td>
+        <td><%= link_to 'Edit', edit_wholesale_customer_path(wholesale_customer) %></td>
+        <td><%= link_to 'Destroy', wholesale_customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Wholesale customer', new_wholesale_customer_path %>
