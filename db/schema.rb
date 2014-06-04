@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140603133315) do
+ActiveRecord::Schema.define(version: 20140604130637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(version: 20140603133315) do
   end
 
   add_index "email_templates", ["name"], name: "index_email_templates_on_name", unique: true, using: :btree
+
+  create_table "orders", force: true do |t|
+    t.integer  "wholesale_id"
+    t.date     "date"
+    t.boolean  "paid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["wholesale_id"], name: "index_orders_on_wholesale_id", using: :btree
 
   create_table "subscribers", force: true do |t|
     t.string   "name"
@@ -75,5 +85,14 @@ ActiveRecord::Schema.define(version: 20140603133315) do
   add_index "subscribers", ["email"], name: "index_subscribers_on_email", unique: true, using: :btree
   add_index "subscribers", ["reset_password_token"], name: "index_subscribers_on_reset_password_token", unique: true, using: :btree
   add_index "subscribers", ["unlock_token"], name: "index_subscribers_on_unlock_token", unique: true, using: :btree
+
+  create_table "wholesale_customers", force: true do |t|
+    t.string   "name"
+    t.text     "address"
+    t.string   "phone"
+    t.time     "opening_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
