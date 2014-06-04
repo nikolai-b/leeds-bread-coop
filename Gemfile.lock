@@ -29,6 +29,8 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
+    awesome_nested_fields (0.6.4)
+      rails (>= 3.0.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -238,6 +240,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_nested_fields
   better_errors
   binding_of_caller
   bootstrap-datepicker-rails

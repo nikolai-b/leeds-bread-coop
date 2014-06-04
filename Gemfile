@@ -43,6 +43,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'bootstrap_form'
 gem 'stripe-rails'
 
+gem 'awesome_nested_fields'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'byebug'
