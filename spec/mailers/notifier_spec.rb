@@ -14,7 +14,7 @@ describe Notifier do
       subject.new_sub(subscriber)
       email = ActionMailer::Base.deliveries.last
       expect(email.body).to include("Welcome Lizzie!")
-      expect(email.body).to include("0113 ...")
+      expect(email.body).to include("0113 0000000")
       expect(email.body).to include("White sour")
     end
   end

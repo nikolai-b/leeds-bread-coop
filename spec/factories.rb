@@ -25,7 +25,7 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
   factory :subscriber do
     sequence(:name) {|n| "Lizzie"}
     sequence(:email) {|n| "lizzie#{n}@test.com"}
-    phone "0113 ..."
+    phone "0113 0000000"
     collection_point
     start_date ((Date.current + 7.days).beginning_of_week + 2.days) # next Wendsday
     bread_type
