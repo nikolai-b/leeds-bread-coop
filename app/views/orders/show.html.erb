@@ -2,7 +2,7 @@
 
 <p>
   <strong>Wholesale Customer:</strong>
-  <%= @order.wholesale_customer %>
+  <%= @order.wholesale_customer.name %>
 </p>
 
 <p>
@@ -15,5 +15,11 @@
   <%= @order.paid %>
 </p>
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+<h2>Line Items</h2>
+
+<% @order.line_items.try(:each) do |line_item| %>
+  <p><%= "#{line_item.bread_type.name}: #{line_item.quantity}" %></p>
+<% end %>
+
+<%= link_to 'Edit', edit_wholesale_customer_order_path(@wholesale_customer, @order) %> |
+<%= link_to 'Back', wholesale_customer_orders_path(@wholesale_customer) %>

@@ -22,7 +22,7 @@
           <%= link_to wholesale_customer.name, wholesale_customer_path(wholesale_customer) %>
         </td>
         <td>
-          <%= link_to "Create Order", new_wholesale_customer_order_path(wholesale_customer), class: "btn btn-mini"; %>
+          <%= link_to "New Order", new_wholesale_customer_order_path(wholesale_customer), class: "btn btn-mini"; %>
           <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_wholesale_customer_path(wholesale_customer), :class => 'btn btn-mini' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")), wholesale_customer_path(wholesale_customer), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger' %>
         </td>
