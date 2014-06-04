@@ -37,7 +37,10 @@ class Subscriber < ActiveRecord::Base
   end
 
   def self.import(file)
+    logger.info "file.path = #{file.path}"
     CSV.foreach(file.path, headers: true) do |row|
+      logger.info "row = #{row}"
+
       row['Email'].gsub!(/(.*)@(.*)/,'\1@example.com')
       row['Email'].downcase!
       next if find_by( email: row["Email"].strip)
