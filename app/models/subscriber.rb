@@ -5,19 +5,19 @@ class Subscriber < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
-  validates :bread_type_id, numericality: { only_integer: true }
   validates :collection_point_id, numericality: { only_integer: true }
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
   validates :name, length: {minimum: 4}
   validates :phone, length: {in: 10..13}
 
   belongs_to :collection_point
-  belongs_to :bread_type
+
+  has_many :subscriber_items
+  accepts_nested_attributes_for :subscriber_items, allow_destroy: true
+  has_many :bread_types, through: :subscriber_items
 
   scope :active_sub, -> { where(active_sub: true) }
   scope :delivery_day, ->(date) { where("TO_CHAR(start_date,'D') = ?", (date + 1.day).strftime("%w")) } # %w has Sun at 0, Postgres frm D has Sun as 1
-  scope :has_sour_dough, -> {bread_type.where(sour_dough: true) }
-  scope :has_yeast_dough, -> {bread_type.where.not(sour_dough: true) }
 
   include Stripe::Callbacks
 
