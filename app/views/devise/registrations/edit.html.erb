@@ -25,10 +25,34 @@
     <%= f.collection_select(:collection_point_id, CollectionPoint.all, :id, :name) %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :bread_type %>
-    <%= f.collection_select(:bread_type_id, BreadType.all, :id, :name) %>
+  <div class="items">
+    <%= f.nested_fields_for :subscriber_items do |f| %>
+      <fieldset class="item">
+      <div class="field">
+        <%= f.label "Bread Type" %>
+        <%= f.collection_select(:bread_type_id, BreadType.all, :id, :name) %>
+      </div>
+
+      <a href="#" class="remove">remove</a>
+      <%= f.hidden_field :id %>
+      <%= f.hidden_field :_destroy %>
+    </fieldset>
+  <% end %>
   </div>
+  <a href="#" class="add">add a bread subscription</a>
+  <script type="text/javascript">
+    $(document).ready(function(e) {
+        $('FORM').nestedFields();
+        });
+
+$('#order_date').datepicker({
+format: "dd/mm/yyyy",
+weekStart: 1,
+todayBtn: "linked",
+daysOfWeekDisabled: "0,1,2,4,6"
+});
+  </script>
+
 
   <div class="form-group">
     <%= f.label :notes %>
@@ -45,7 +69,7 @@
   <div><%= f.label :new_password_confirmation %>
     <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
 
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+  <div><%= f.label :current_password %> <i>(only if your changing your username or password)</i><br />
     <%= f.password_field :current_password, autocomplete: "off" %></div>
 
   <div><%= f.submit "Update" %></div>
