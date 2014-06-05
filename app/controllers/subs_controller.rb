@@ -10,7 +10,7 @@ class SubsController < ApplicationController
       customer = Stripe::Customer.create(
         :email => @subscriber.email,
         :card  => params[:stripeToken],
-        :plan        => 'weekly-bread',
+        :plan        => "weekly-bread-#{@subscriber.bread_types.size}",
       )
 
     rescue Stripe::CardError => e
