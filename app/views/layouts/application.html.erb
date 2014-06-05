@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta/>
-    <meta/>
-    <meta/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
       "Leeds Bread Co-op"
     </title>
@@ -27,61 +27,56 @@
             <ul class="nav">
               <% if current_subscriber%>
                 <li>
-                <%= link_to 'Logout', destroy_subscriber_session_path, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-              </li>
-              <% unless admin? %>
-              <li>
-                <%= link_to "Edit Account", edit_subscriber_registration_path %>
-              </li>
-              <li>
-                <%= link_to "Payment", new_subscriber_sub_path(current_subscriber) %>
-              </li>
-            <% end %>
-          <% end %>
-            <% if admin?%>
-              <li>
-               <%= link_to 'Subscribers', subscribers_path %>
-             </li>
-              <li>
-               <%= link_to 'Collection Points', collection_points_path %>
-             </li>
-              <li>
-               <%= link_to 'Bread Types', bread_types_path %>
-             </li>
-              <li>
-               <%= link_to 'Email Templates', email_templates_path %>
-             </li>
-              <li>
-               <%= link_to 'Wholesale', wholesale_customers_path %>
-             </li>
-              <li>
-               <%= link_to 'Delivery', delivery_reports_path %>
-             </li>
-              <li>
-               <%= link_to 'Production', production_reports_path %>
-             </li>
-           <% end %>
-            </ul>
+                  <%= link_to 'Logout', destroy_subscriber_session_path, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+                </li>
+                <% unless admin? %>
+                  <li>
+                  <%= link_to "Edit Account", edit_subscriber_registration_path %>
+                </li>
+                <li>
+                  <%= link_to "Payment", new_subscriber_sub_path(current_subscriber) %>
+                </li>
+              <% end %>
+              <% end %>
+                <% if admin?%>
+                  <li>
+                    <%= link_to 'Subscribers', subscribers_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'Collection Points', collection_points_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'Bread Types', bread_types_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'Email Templates', email_templates_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'Wholesale', wholesale_customers_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'Delivery', delivery_reports_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'Production', production_reports_path %>
+                  </li>
+                <% end %>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-2">
-          <% flash.each do |key, value| %>
-            <div class="<%= flash_class(key) %>">
-              <%= value %>
-            </div>
-          <% end %>
+        <div class="container">
+          <%= render 'layouts/messages' %>
+          <div class="row">
+            <%= render_breadcrumbs %>
+            <%= yield %>
+          </div>
+          <footer>
+            <p>&copy; Leeds Bread Co-Op 2014</p>
+          </footer>
         </div>
-        <%= yield %>
-        <footer>
-          <p>&copy; Leeds Bread Co-Op 2014</p>
-        </footer>
       </div>
-
     </div>
-  </div>
-</body>
+  </body>
 </html>
