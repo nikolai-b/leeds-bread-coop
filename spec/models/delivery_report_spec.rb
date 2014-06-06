@@ -1,10 +1,14 @@
 describe DeliveryReport do
   subject { DeliveryReport.new(date) }
+  let(:collection_point) { create :collection_point }
 
   before do
-    collection_point = create :collection_point
-    4.times {create(:subscriber, :paid, collection_point: collection_point)}
-    create(:subscriber, :paid, active_sub: nil, name: 'NotPaid')
+    4.times {
+      subscriber = create(:subscriber, :paid, collection_point: collection_point)
+      create :subscriber_item, subscriber: subscriber
+    }
+    unpaid_subscriber = create :subscriber, name: 'NotPaid'
+    create :subscriber_item, subscriber: unpaid_subscriber
   end
 
   describe '#show' do
@@ -21,7 +25,7 @@ describe DeliveryReport do
 
         expect(first_delivery[0].collection_point.name).to eq('Green Action')
         expect(first_delivery[0].name).to include('Lizzie')
-        expect(first_delivery[0].bread_type.name).to eq('White sour')
+        expect(first_delivery[0].bread_types[0].name).to eq('White sour')
       end
 
       it 'excludes subscriber who have not paid' do

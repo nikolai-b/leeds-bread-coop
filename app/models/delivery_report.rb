@@ -19,7 +19,9 @@ class DeliveryReport
         csv << [delivery[0].collection_point.name, nil, nil]
 
         delivery.each do |subscriber|
-          csv << [nil, subscriber.name, subscriber.bread_type.name]
+          subscriber.paid_bread_subs.try(:each) do |bread_type|
+            csv << [nil, subscriber.name, bread_type.name]
+          end
         end
       end
     end
