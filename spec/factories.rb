@@ -23,12 +23,11 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
   end
 
   factory :subscriber do
-    sequence(:name) {|n| "Lizzie"}
+    name "Lizzie"
     sequence(:email) {|n| "lizzie#{n}@test.com"}
     phone "0113 0000000"
     collection_point
     start_date ((Date.current + 7.days).beginning_of_week + 2.days) # next Wendsday
-    bread_type
     password "password"
 
     trait :paid do
@@ -40,6 +39,11 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
       admin true
       email "admin@example.com"
     end
+  end
+
+  factory :subscriber_item do
+    bread_type
+    subscriber
   end
 
   factory :email_template do
