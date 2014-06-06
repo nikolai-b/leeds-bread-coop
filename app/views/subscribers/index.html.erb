@@ -11,9 +11,6 @@
         <%= model_class.human_attribute_name(:name) %>
       </th>
       <th>
-        <%= model_class.human_attribute_name(:bread_type) %>
-      </th>
-      <th>
         <%= model_class.human_attribute_name(:collection_point) %>
       </th>
       <th>
@@ -32,9 +29,6 @@
       <tr>
         <td>
           <%= link_to subscriber.name, subscriber_path(subscriber) %>
-        </td>
-        <td>
-          <%= subscriber.bread_type.name %>
         </td>
         <td>
           <%= subscriber.collection_point.name %>

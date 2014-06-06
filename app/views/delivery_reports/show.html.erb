@@ -5,6 +5,7 @@
 <%= @delivery_report.date.strftime("%a #{@delivery_report.date.day.ordinalize} %b %y") %>
 &emsp;
 <%= link_to('> Tomorrow', delivery_reports_path(date: (@delivery_report.date + 1.day).to_s)) %>
+
 <table>
   <thead>
     <tr>
@@ -22,11 +23,13 @@
         <td><strong><%= delivery[0].collection_point.name %></strong></td>
       </tr>
       <% delivery.try(:each) do |subscriber| %>
-        <tr>
-          <td> </td>
-          <td><%= link_to(subscriber.name, subscriber) %></td>
-          <td><%= subscriber.bread_type.name %></td>
-        </tr>
+        <% subscriber.paid_bread_subs.try(:each) do |bread_type| %>
+          <tr>
+            <td> </td>
+            <td><%= link_to(subscriber.name, subscriber) %></td>
+            <td><%= bread_type.name %></td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   </tbody>

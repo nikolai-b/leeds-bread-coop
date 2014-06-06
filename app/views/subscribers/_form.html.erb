@@ -37,22 +37,8 @@
   </div>
 
   <div class="form-group">
-    <div class="input-append date">
-      <%= f.label :start_date, "Start date" %>
-      <input class="col-sm-4" data-behaviour='datepicker' value="<%= ((Date.current + 7.days).beginning_of_week + 2.days).try(:strftime, "%d/%m/%Y") %>" id="subscriber_start_date" name="subscriber[start_date]" type="text">
-      </input>
-      <span class="add-on">
-        <i class="icon-th"></i>
-      </span>
-    </div>
-    <script type="text/javascript">
-      $('#subscriber_start_date').datepicker({
-         format: "dd/mm/yyyy",
-         weekStart: 1,
-         todayBtn: "linked",
-         daysOfWeekDisabled: "0,1,2,4,6"
-         });
-    </script>
+    <%= f.label :collection_day %>
+    <%= f.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]]) ) %>
   </div>
   <div class="form-group">
     <%= f.label :num_paid_subs %>

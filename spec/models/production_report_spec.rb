@@ -7,8 +7,8 @@ describe ProductionReport do
     before do
       yeast_bread = create :yeast_bread
       (1..3).each do |add|
-        create(:subscriber, :paid, bread_type: yeast_bread, start_date: (today + add.days) )
-        create(:subscriber, :paid, start_date: (today + add.days) )
+        create(:subscriber, :paid, bread_type: yeast_bread, collection_day: (1 + add) )
+        create(:subscriber, :paid, start_date: (1 + add) )
       end
     end
 

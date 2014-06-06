@@ -2,8 +2,7 @@ FactoryGirl.define do
 
 NEW_SUB_BODY ="Welcome {{subscriber.name}}!
   Let us know if your details are incorrect, phone: {{subscriber.phone}}, address: {{subscriber.address}}
-  You will be getting your bread {{bread_type}} from {{collection_point.name}}, {{collection_point.address}}, {{collection_point.post_code}} on {{subscriber.day_of_week}} starting on {{subscriber.start_date}}
-".gsub(/^\s*/,'')
+  You will be getting your bread {{bread_type}} from {{collection_point.name}}, {{collection_point.address}}, {{collection_point.post_code}} on {{subscriber.collection_day_name}}, but we need three days to get an order started so if its closer than 3 days it will be next week.".gsub(/^\s*/,'')
 
   factory :collection_point do
     name "Green Action"
@@ -27,12 +26,12 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
     sequence(:email) {|n| "lizzie#{n}@test.com"}
     phone "0113 0000000"
     collection_point
-    start_date ((Date.current + 7.days).beginning_of_week + 2.days) # next Wendsday
+    collection_day ((Date.current + 7.days).beginning_of_week + 2.days) # next Wendsday
     password "password"
 
     trait :paid do
       num_paid_subs 1
-      sequence(:start_date) {|n| Date.current.beginning_of_week - 10.days - n.weeks } # Fri
+      sequence(:collection_day) {|n| Date.current.beginning_of_week - 10.days - n.weeks } # Fri
     end
 
     trait :admin do

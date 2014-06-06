@@ -1,10 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
 unless (CollectionPoint.find_by name: 'Green Action')
   collection_points = CollectionPoint.create([
     {name: "Green Action", address: "LUU", post_code: 'LS2 ...', notes: "Nice students"},
@@ -45,11 +38,11 @@ unless (BreadType.find_by name: 'Special' )
   BreadType.create( {name: 'Special', sour_dough: false, notes: "Not sure if this is sour or not"} )
 end
 
-
 unless (EmailTemplate.find_by name: 'new_sub' )
   new_sub = EmailTemplate.create({name: "new_sub", body: "Welcome {{subscriber.name}}!
   Let us know if your details are incorrect: phone {{subscriber.phone}}, address: {{subscriber.address}}
-  You will be getting your bread {{bread_type}} from {{collection_point.name}}, {{collection_point.address}}, {{collection_point.post_code}} on {{subscriber.day_of_week}} starting on {{subscriber.start_date}}".gsub(/^\s*/,'')}
+  You will be getting your bread {{bread_type}} from {{collection_point.name}}, {{collection_point.address}}, {{collection_point.post_code}} on
+  {{subscriber.day_of_week}} starting on {{subscriber.collection_day_name}}, but we need three days to get an order started so if its closer than 3 days it will be next week.".gsub(/^\s*/,'')}
   )
 end
 

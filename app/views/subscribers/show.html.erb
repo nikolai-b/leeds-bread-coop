@@ -28,14 +28,10 @@
 
 <p>
   <strong>Pick-up day:</strong>
-  <%= @subscriber.day_of_the_week.to_s %>
-  <% if (Time.zone.today < @subscriber.start_date) %>
-    (with your first collction on the <%= @subscriber.start_date.strftime("#{@subscriber.start_date.day.ordinalize} of %B") %>)
-  <% end %>
-
+  <%= @subscriber.collection_day_name %>
 </p>
 
 <p>
-  <strong>Bread type:</strong>
-  <%= @subscriber.bread_type.name %>
+  <strong>Bread subscripts:</strong>
+  <%= @subscriber.paid_bread_subs.try(:map) {|bread_type| bread_type.name}.join(', ') %>
   </p>

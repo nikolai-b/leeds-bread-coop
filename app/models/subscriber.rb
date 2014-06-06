@@ -16,10 +16,10 @@ class Subscriber < ActiveRecord::Base
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
   has_many :bread_types, through: :subscriber_items
 
-  scope :delivery_day, ->(date) { where("TO_CHAR(start_date,'D') = ?", (date + 1.day).strftime("%w")) } # %w has Sun at 0, Postgres frm D has Sun as 1
+  scope :delivery_day, ->(date) { where(collection_day: date.wday).where("collection_day_updated_at > ?", (date - 3.days))  }
 
-  def day_of_the_week
-    start_date.strftime('%A')
+  def collection_day_name
+    Date::DAYNAMES[collection_day]
   end
 
   def paid_bread_subs
@@ -38,7 +38,7 @@ class Subscriber < ActiveRecord::Base
 
       subscriber.collection_point = CollectionPoint.find_by( name: csv_collection_point[row["Drop-off"]] )
       subscriber.bread_type = BreadType.find_by( name: csv_bread_type[row["Bread"]] )
-      subscriber.start_date = csv_start_date[row['Days']]
+      subscriber.collection_day = csv_collection_day[row['Days']]
       subscriber.email = row['Email']
       subscriber.phone = '0777 777777' #row['Phone']
       subscriber.password = subscriber.email
@@ -75,10 +75,10 @@ class Subscriber < ActiveRecord::Base
     }
   end
 
-  def self.csv_start_date
+  def self.csv_collection_day
     {
-      "Wed" => Date.parse('2014-06-04'),
-      "Fri" => Date.parse('2014-06-06'),
+      "Wed" => 3,
+      "Fri" => 5,
     }
   end
 

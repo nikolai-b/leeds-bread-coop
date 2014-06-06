@@ -46,6 +46,18 @@ describe DeliveryReport do
         csv = CSV.parse(subject.to_csv)
         expect(csv[2]).to eq([nil, "Lizzie", "White sour"])
       end
+
+      context 'a subscriber with more bread_types than paid subs' do
+        before do
+          subscriber = Subscriber.last
+          bread_type = create :bread_type, name: '100% Rye'
+          create :subscriber_item, bread_type: bread_type
+        end
+
+        it "doesn't show the unpaid breads" do
+          expect(subject.to_csv).to_not include('100% Rye')
+        end
+      end
     end
   end
 end
