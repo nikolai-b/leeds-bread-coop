@@ -32,7 +32,7 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
     password "password"
 
     trait :paid do
-      active_sub true
+      active_sub 1
       sequence(:start_date) {|n| Date.current.beginning_of_week - 10.days - n.weeks } # Fri
     end
 

@@ -26,7 +26,7 @@ class Subscriber < ActiveRecord::Base
 
     subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
 
-    subscriber.active_sub = false
+    subscriber.active_sub = nil
     subscriber.save!
 
     Notifier.sub_deleted(subscriber)
@@ -52,7 +52,7 @@ class Subscriber < ActiveRecord::Base
       subscriber.email = row['Email']
       subscriber.phone = '0777 777777' #row['Phone']
       subscriber.password = subscriber.email
-      subscriber.active_sub = true
+      subscriber.active_sub = 1
       subscriber.address = 'Leeds' #row['Address']
       subscriber.name = row['Name']
 

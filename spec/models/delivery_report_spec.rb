@@ -4,7 +4,7 @@ describe DeliveryReport do
   before do
     collection_point = create :collection_point
     4.times {create(:subscriber, :paid, collection_point: collection_point)}
-    create(:subscriber, :paid, active_sub: false, name: 'NotPaid')
+    create(:subscriber, :paid, active_sub: nil, name: 'NotPaid')
   end
 
   describe '#show' do
