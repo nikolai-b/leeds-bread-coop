@@ -2,7 +2,7 @@ class SubsController < ApplicationController
   before_action :set_subscriber
   skip_before_action :authenticate_admin
 
-  def new
+  def edit
   end
 
   def create
@@ -15,14 +15,17 @@ class SubsController < ApplicationController
 
     rescue Stripe::CardError => e
       flash[:error] = e.message
-      redirect_to subscriptions_path
+      redirect_to edit_subscriber_subs_path(@subscriber)
     end
 
-    @subscriber.update ({stripe_customer_id: customer.id, active_sub: true} )
+    @subscriber.update ({stripe_customer_id: customer.id, active_sub: @subscriber.bread_types.size} )
 
     Notifier.new_sub(@subscriber)
 
     redirect_to @subscriber
+  end
+
+  def destroy
   end
 
   private

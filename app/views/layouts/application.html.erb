@@ -34,7 +34,7 @@
                   <%= link_to "Edit Account", edit_subscriber_registration_path %>
                 </li>
                 <li>
-                  <%= link_to "Payment", new_subscriber_sub_path(current_subscriber) %>
+                  <%= link_to "Payment", edit_subscriber_subs_path(current_subscriber) %>
                 </li>
               <% end %>
               <% end %>
@@ -73,7 +73,7 @@
             <%= yield %>
           </div>
           <footer>
-            <p>&copy; Leeds Bread Co-Op 2014</p>
+            <p>&copy; Leeds Bread Co-op 2014</p>
           </footer>
         </div>
       </div>

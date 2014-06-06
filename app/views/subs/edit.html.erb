@@ -1,6 +1,5 @@
-
+You are currently paying for <%= pluralize(@subscriber.active_sub, "loaf") %> of bread.
 <%= form_tag subscriber_subs_path(@subscriber) do %>
-
   <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
           data-description="Start a subscription"
@@ -12,4 +11,8 @@
           data-email=<%= @subscriber.email %>
           data->
   </script>
+<% end %>
+
+<% unless @subscriber.active_sub %>
+  <p><%= link_to "Cancel my payments", subscriber_subs_path(@subscriber), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %></p>
 <% end %>
