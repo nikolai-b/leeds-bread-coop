@@ -23,22 +23,27 @@
     </span>
   </div>
   <div class="items">
-    <%= f.nested_fields_for :subscriber_items do |f| %>
+    <%= f.nested_fields_for :subscriber_items do |g| %>
       <fieldset class="item">
       <div class="field">
-        <%= f.collection_select(:bread_type_id, BreadType.all, :id, :name) %>
+        <%= g.collection_select(:bread_type_id, BreadType.all, :id, :name) %>
       </div>
 
-      <a href="#" class="remove">remove</a>
+      <a href="#" class="remove">remove subscription</a>
 
-      <%= f.hidden_field :_destroy %>
+      <%= g.hidden_field :_destroy %>
     </fieldset>
   <% end %>
   </div>
-  <a href="#" class="add">add a bread subscription</a>
+  <a href="#" class="add">add another bread subscription</a>
   <script type="text/javascript">
     $(document).ready(function(e) {
         $('FORM').nestedFields();
+
+        if ($('.item').size() == 1) {
+          $('.items').nestedFields('insert', function(item) {
+            }, {skipBefore: false});
+        }
         });
 
 $('#order_date').datepicker({
