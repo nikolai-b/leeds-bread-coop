@@ -14,7 +14,7 @@ describe DeliveryReport do
   describe '#show' do
 
     context 'on Friday' do
-      let(:date) { Date.parse("2014-06-06") }
+      let(:date) { Date.today.next_week.advance(days: 4) }
 
       it "returns an array with size of delivaries" do
         expect(subject.show[0].size).to eq(4)

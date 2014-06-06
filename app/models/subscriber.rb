@@ -16,7 +16,7 @@ class Subscriber < ActiveRecord::Base
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
   has_many :bread_types, through: :subscriber_items
 
-  scope :delivery_day, ->(date) { where(collection_day: date.wday).where("collection_day_updated_at > ?", (date - 3.days))  }
+  scope :delivery_day, ->(date) { where(collection_day: date.wday).where("collection_day_updated_at < ?", (date - 3.days))  }
 
   def collection_day_name
     Date::DAYNAMES[collection_day]
