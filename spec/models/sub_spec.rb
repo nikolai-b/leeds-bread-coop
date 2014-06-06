@@ -22,7 +22,7 @@ describe Sub do
         subject.add('stripe_token')
 
         expect(subscriber.stripe_customer_id).to eq('customer_id')
-        expect(subscriber.active_sub).to eq(1)
+        expect(subscriber.num_paid_subs).to eq(1)
       end
 
       it 'returns true' do
@@ -58,10 +58,10 @@ describe Sub do
         Stripe::Customer.stub(:retrieve).and_return(stripe_customer)
       end
 
-      it 'updates active_sub to nil' do
-        expect(subscriber.active_sub).to_not be_nil
+      it 'updates num_paid_subs to nil' do
+        expect(subscriber.num_paid_subs).to_not be_nil
         subject.cancel
-        expect(subscriber.active_sub).to be_nil
+        expect(subscriber.num_paid_subs).to be_nil
       end
 
       it 'returns true' do

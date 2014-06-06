@@ -6,7 +6,7 @@ class DeliveryReport
 
   def show
     CollectionPoint.find_each.map do |collection_point|
-      collection_point.subscribers.active_sub.delivery_day(@date)
+      collection_point.subscribers.delivery_day(@date)
     end
   end
 

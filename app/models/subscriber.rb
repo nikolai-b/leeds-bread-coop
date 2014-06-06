@@ -16,7 +16,6 @@ class Subscriber < ActiveRecord::Base
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
   has_many :bread_types, through: :subscriber_items
 
-  scope :active_sub, -> { where(active_sub: true) }
   scope :delivery_day, ->(date) { where("TO_CHAR(start_date,'D') = ?", (date + 1.day).strftime("%w")) } # %w has Sun at 0, Postgres frm D has Sun as 1
 
   def day_of_the_week
@@ -39,7 +38,7 @@ class Subscriber < ActiveRecord::Base
       subscriber.email = row['Email']
       subscriber.phone = '0777 777777' #row['Phone']
       subscriber.password = subscriber.email
-      subscriber.active_sub = 1
+      subscriber.num_paid_subs = 1
       subscriber.address = 'Leeds' #row['Address']
       subscriber.name = row['Name']
 

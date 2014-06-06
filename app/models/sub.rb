@@ -11,7 +11,7 @@ class Sub
     customer = Stripe::Customer.retrieve(@subscriber.stripe_customer_id)
     customer.cancel_subscription
 
-    @subscriber.update_attributes(active_sub: nil)
+    @subscriber.update_attributes(num_paid_subs: nil)
 
     true
   rescue Stripe::APIError => e
@@ -28,7 +28,7 @@ class Sub
 
       @subscriber.update ({
         stripe_customer_id: stripe_customer.id,
-        active_sub: @subscriber.bread_types.size
+        num_paid_subs: @subscriber.bread_types.size
       })
 
       true
