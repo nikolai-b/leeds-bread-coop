@@ -4,7 +4,7 @@ describe Subscriber do
   subject { create :subscriber }
   its(:day_of_the_week) { should eq('Wednesday') }
 
-  describe "import" do
+  describe "#import" do
     before do
       load 'db/seeds.rb'
     end
@@ -22,6 +22,18 @@ describe Subscriber do
       expect(rachel.bread_type.name).to eq('Special')
       expect(rachel.collection_point.name).to eq('Fabrication')
       expect(rachel.day_of_the_week).to eq('Friday')
+    end
+  end
+
+  describe "#paid_bread_subs" do
+    subject { create(:subscriber, :paid) }
+
+    before do
+      3.times {create :subscriber_item, subscriber: subject}
+    end
+
+    it "limits the bread_types to the num paid subs" do
+      expect(subject.paid_bread_subs.size).to eq(1)
     end
   end
 end

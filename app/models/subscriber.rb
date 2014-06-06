@@ -22,6 +22,10 @@ class Subscriber < ActiveRecord::Base
     start_date.strftime('%A')
   end
 
+  def paid_bread_subs
+    bread_types.limit(num_paid_subs)
+  end
+
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
 
