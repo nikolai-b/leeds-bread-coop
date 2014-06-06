@@ -17,6 +17,17 @@ class Notifier < ActionMailer::Base
     email.deliver
   end
 
+  after_customer_subscription_deleted! do |subscription, event|
+    stripe_customer_id = subscription.customer
+
+    subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
+
+    subscriber.active_sub = nil
+    subscriber.save!
+
+    Notifier.sub_deleted(subscriber)
+  end
+
   after_invoice_created! do |invoice, event|
     stripe_customer_id = invoice.customer
 

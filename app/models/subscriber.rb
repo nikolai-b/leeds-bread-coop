@@ -19,19 +19,6 @@ class Subscriber < ActiveRecord::Base
   scope :active_sub, -> { where(active_sub: true) }
   scope :delivery_day, ->(date) { where("TO_CHAR(start_date,'D') = ?", (date + 1.day).strftime("%w")) } # %w has Sun at 0, Postgres frm D has Sun as 1
 
-  include Stripe::Callbacks
-
-  after_customer_subscription_deleted! do |subscription, event|
-    stripe_customer_id = subscription.customer
-
-    subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
-
-    subscriber.active_sub = nil
-    subscriber.save!
-
-    Notifier.sub_deleted(subscriber)
-  end
-
   def day_of_the_week
     start_date.strftime('%A')
   end
