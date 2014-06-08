@@ -10,7 +10,7 @@ class Notifier < ActionMailer::Base
          body: Mustache.render(
            template.body,
            subscriber: subscriber,
-           bread_type: subscriber.bread_type.name,
+           bread_types: subscriber.bread_types.map {|b| b.name },
            collection_point: subscriber.collection_point
          ),
          content_type: 'text/html; charset=UTF-8')

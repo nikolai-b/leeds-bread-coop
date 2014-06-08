@@ -41,7 +41,7 @@ end
 unless (EmailTemplate.find_by name: 'new_sub' )
   new_sub = EmailTemplate.create({name: "new_sub", body: "Welcome {{subscriber.name}}!
   Let us know if your details are incorrect: phone {{subscriber.phone}}, address: {{subscriber.address}}
-  You will be getting your bread {{bread_type}} from {{collection_point.name}}, {{collection_point.address}}, {{collection_point.post_code}} on
+  You will be getting your bread(s) {{bread_types}} from {{collection_point.name}}, {{collection_point.address}}, {{collection_point.post_code}} on
   {{subscriber.day_of_week}} starting on {{subscriber.collection_day_name}}, but we need three days to get an order started so if its closer than 3 days it will be next week.".gsub(/^\s*/,'')}
   )
 end

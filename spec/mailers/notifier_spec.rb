@@ -9,6 +9,9 @@ describe Notifier do
 
   describe '#new_sub' do
     let!(:subscriber) { create :subscriber }
+    before do
+      create :subscriber_item, subscriber: subscriber
+    end
 
     it "sends a templated email to the subscriber" do
       subject.new_sub(subscriber)
