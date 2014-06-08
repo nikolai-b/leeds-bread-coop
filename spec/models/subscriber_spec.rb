@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe Subscriber do
   subject { create :subscriber }
-  its(:day_of_the_week) { should eq('Wednesday') }
 
   describe "#import" do
     before do
@@ -15,13 +14,13 @@ describe Subscriber do
       ursula = Subscriber.find_by(email: "ursula@example.com")
       rachel = Subscriber.find_by(email: "rachel@example.com")
 
-      expect(ursula.bread_type.name).to eq('100% Rye')
+      expect(ursula.bread_types[0].name).to eq('100% Rye')
       expect(ursula.collection_point.name).to eq('Green Action')
-      expect(ursula.day_of_the_week).to eq('Wednesday')
+      expect(ursula.collection_day_name).to eq('Wednesday')
 
-      expect(rachel.bread_type.name).to eq('Special')
+      expect(rachel.bread_types[0].name).to eq('Special')
       expect(rachel.collection_point.name).to eq('Fabrication')
-      expect(rachel.day_of_the_week).to eq('Friday')
+      expect(rachel.collection_day_name).to eq('Friday')
     end
   end
 
@@ -34,6 +33,12 @@ describe Subscriber do
 
     it "limits the bread_types to the num paid subs" do
       expect(subject.paid_bread_subs.size).to eq(1)
+    end
+  end
+
+  describe 'update_collection_day_check' do
+    it do
+      pending
     end
   end
 end

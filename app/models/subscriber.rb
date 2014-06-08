@@ -6,6 +6,7 @@ class Subscriber < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
   validates :collection_point_id, numericality: { only_integer: true }
+  validates :collection_day, numericality: { only_integer: true }
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
   validates :name, length: {minimum: 4}
   validates :phone, length: {in: 10..13}
@@ -18,8 +19,16 @@ class Subscriber < ActiveRecord::Base
 
   scope :delivery_day, ->(date) { where(collection_day: date.wday).where("collection_day_updated_at < ?", (date - 3.days))  }
 
+  before_save :update_collection_day_check
+
   def collection_day_name
     Date::DAYNAMES[collection_day]
+  end
+
+  def update_collection_day_check
+    if collection_day_changed? || num_paid_subs_changed? || subscriber_items.any? {|si| si.bread_type_id_changed? }
+      collection_day_updated_at = Date.today
+    end
   end
 
   def paid_bread_subs
@@ -37,16 +46,17 @@ class Subscriber < ActiveRecord::Base
       subscriber = new
 
       subscriber.collection_point = CollectionPoint.find_by( name: csv_collection_point[row["Drop-off"]] )
-      subscriber.bread_type = BreadType.find_by( name: csv_bread_type[row["Bread"]] )
-      subscriber.collection_day = csv_collection_day[row['Days']]
       subscriber.email = row['Email']
       subscriber.phone = '0777 777777' #row['Phone']
       subscriber.password = subscriber.email
+      subscriber.collection_day = csv_collection_day[row['Days']]
       subscriber.num_paid_subs = 1
       subscriber.address = 'Leeds' #row['Address']
       subscriber.name = row['Name']
+      subscriber.bread_types << BreadType.find_by( name: csv_bread_type[row["Bread"]] )
 
       subscriber.save
+
     end
   end
 
