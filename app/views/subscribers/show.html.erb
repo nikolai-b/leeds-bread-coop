@@ -34,4 +34,10 @@
 <p>
   <strong>Bread subscripts:</strong>
   <%= @subscriber.paid_bread_subs.try(:map) {|bread_type| bread_type.name}.join(', ') %>
-  </p>
+</p>
+<p>
+  <strong>Number of paid subs:</strong>
+  <%= @subscriber.num_paid_subs %>
+</p>
+
+

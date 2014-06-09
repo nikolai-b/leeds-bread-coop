@@ -16,14 +16,12 @@
         <td><%= order.wholesale_customer %></td>
         <td><%= order.date %></td>
         <td><%= order.paid %></td>
-        <td><%= link_to 'Show', order %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', wholesale_customer_order_path(order.wholesale_customer, order) %></td>
+        <td><%= link_to 'Edit', edit_wholesale_customer_order_path(order.wholesale_customer, order) %></td>
+        <td><%= link_to 'Destroy', wholesale_customer_order_path(order.wholesale_customer, order), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Order', new_order_path %>
