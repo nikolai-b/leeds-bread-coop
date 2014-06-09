@@ -37,8 +37,35 @@ describe Subscriber do
   end
 
   describe 'update_collection_day_check' do
-    it do
-      pending
+    let(:collection_day_updated_at) { Date.parse('2014-06-01') }
+    before do
+      subject.update_attribute(:collection_day_updated_at, collection_day_updated_at )
+    end
+
+    context 'with no changes'  do
+      it 'collection_day_updated_at remains unchanged' do
+        expect(subject.collection_day_updated_at).to eq(collection_day_updated_at)
+      end
+    end
+
+    context 'with changes to collection_day' do
+      before do
+        subject.update({collection_day: 4})
+      end
+
+      it 'then collection_day_updated_at changes' do
+        expect(subject.collection_day_updated_at).to eq(Date.today)
+      end
+    end
+
+    context 'with changes to the bread type name' do
+      before do
+        subject.update("subscriber_items_attributes"=>{"1402307812703"=>{"bread_type_id"=>"2", "_destroy"=>"false"}})
+      end
+
+      it 'then collection_day_updated_at changes' do
+        expect(subject.collection_day_updated_at).to eq(Date.today)
+      end
     end
   end
 end

@@ -27,7 +27,7 @@ class Subscriber < ActiveRecord::Base
 
   def update_collection_day_check
     if collection_day_changed? || num_paid_subs_changed? || subscriber_items.any? {|si| si.bread_type_id_changed? }
-      collection_day_updated_at = Date.today
+      self.collection_day_updated_at = Date.today
     end
   end
 
