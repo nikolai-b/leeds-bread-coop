@@ -1,15 +1,13 @@
 require 'spec_helper'
 
 feature "New user, new sign-up", type: :feature,  js: true  do
-  setup do
-    Capybara.current_driver = :selenium
-    Capybara.javascript_driver = :selenium
-  end
 
   before :each do
     create :collection_point
     create :bread_type
     create :new_sub_template
+    Capybara.current_driver = :selenium
+    Capybara.javascript_driver = :selenium
   end
 
   scenario "New subscription" do
@@ -42,8 +40,8 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     fill_in "Address",    with: 'Somewhere in Leeds'
     fill_in "Phone",      with: '01132222222'
     select 'Green Action', from: :subscriber_collection_point_id
-    fill_in "Start date", with: ((Date.current + 14.days).at_beginning_of_week + 2.days).strftime # future Wed
-    select 'White sour', from: :subscriber_bread_type_id
+    select "Wednesday", from: "Collection day"
+    select 'White sour'
     fill_in "Password",   with: 'password'
     fill_in "Notes",      with: 'Thanks!'
 
@@ -51,7 +49,11 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   end
 
   def pay_stripe
-    click_on 'Pay for the bread'
+    click_on 'Pay for 1 loaf'
+    #Capybara.current_driver = :rack_test
+    #params = {"utf8"=>"✓", "stripeToken"=>"tok_104BlP4mOmZyXxlvkuSPOxa5", "stripeEmail"=>"lizzie@example.com", "action"=>"create", "controller"=>"subs", "subscriber_id"=>"1"}
+    #page.driver.submit :post, subscriber_subs_path(1), params
+
     page.driver.browser.switch_to.frame 'stripe_checkout_app'
     fill_in "card_number", with: "4242424242424242"
     fill_in "cc-exp", with: (Date.current + 1.month).strftime('%m%y')
@@ -60,7 +62,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   end
 
   def see_success
-    sleep(6)
+    sleep(3)
     expect(page).to have_content 'Lizzie'
     expect(page).to have_content 'White sour'
   end
