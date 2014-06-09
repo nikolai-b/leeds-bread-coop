@@ -2,13 +2,15 @@ describe ProductionReport do
   subject { ProductionReport.new(today) }
 
   describe '#show' do
-    let(:today) { Date.parse('2014-06-02') }
+    let(:today) { Date.today.next_week }
 
     before do
       yeast_bread = create :yeast_bread
       (1..3).each do |add|
-        create(:subscriber, :paid, bread_type: yeast_bread, collection_day: (1 + add) )
-        create(:subscriber, :paid, start_date: (1 + add) )
+        subscriber_yeast = create(:subscriber, :paid, collection_day: (1 + add) )
+        create :subscriber_item, subscriber: subscriber_yeast, bread_type: yeast_bread
+        subscriber = create(:subscriber, :paid, collection_day: (1 + add) )
+        create :subscriber_item, subscriber: subscriber
       end
     end
 
