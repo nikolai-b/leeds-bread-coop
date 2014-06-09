@@ -1,11 +1,12 @@
 require 'spec_helper'
 
-feature "New user, new sign-up", type: :feature,  js: true  do
+feature "Place wholesale order", type: :feature,  js: true  do
   before :each do
     Capybara.javascript_driver = :poltergeist
     Capybara.current_driver = :poltergeist
     create :wholesale_customer
     create :subscriber, :admin
+    create :bread_type
   end
 
   scenario "Place a customer order" do
