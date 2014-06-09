@@ -40,7 +40,7 @@ describe DeliveryReport do
   describe '#to_csv' do
 
     context 'on Friday' do
-      let(:date) { Date.parse("2014-06-06") }
+      let(:date) { Date.today.next_week.advance(days: 4) }
 
       it "outputs a csv with subscriber info" do
         csv = CSV.parse(subject.to_csv)
