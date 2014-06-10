@@ -23,7 +23,7 @@
 <p>
   <strong>Collection point:</strong>
   <%= @subscriber.collection_point.name %><br>
-  <%= @subscriber.collection_point.address + ", " + @subscriber.collection_point.post_code %>
+  <%= "#{@subscriber.collection_point.address}, #{@subscriber.collection_point.post_code}" %>
 </p>
 
 <p>
