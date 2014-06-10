@@ -20,34 +20,34 @@
       <tr>
         <td><strong>Baking Today</strong></td>
       </tr>
-      <% @production_report.production.each do |subscriber| %>
-        <% next unless subscriber.any? %>
+      <% @production_report.production.each do |bread_production| %>
+        <% next unless bread_production.num > 0 %>
       <tr>
         <td></td>
-        <td><%= subscriber[0].bread_types[0].name %></td>
-        <td><%= subscriber.count %></td>
+        <td><%= bread_production.name %></td>
+        <td><%= bread_production.num %></td>
       </tr>
       <% end %>
       <tr>
         <td><strong>Pre - Production</strong></td>
       </tr>
-      <% @production_report.preproduction.each do |subscriber| %>
-        <% next unless subscriber.any? %>
+      <% @production_report.preproduction.each do |bread_production| %>
+        <% next unless bread_production.num > 0 %>
       <tr>
         <td></td>
-        <td><%= subscriber[0].bread_types[0].name %></td>
-        <td><%= subscriber.count %></td>
+        <td><%= bread_production.name %></td>
+        <td><%= bread_production.num %></td>
       </tr>
       <% end %>
       <tr>
         <td><strong>Per - Ferment</strong></td>
       </tr>
-      <% @production_report.ferment.each do |subscriber| %>
-        <% next unless subscriber.any? %>
+      <% @production_report.ferment.each do |bread_production| %>
+        <% next unless bread_production.num > 0 %>
       <tr>
         <td></td>
-        <td><%= subscriber[0].bread_types[0].name %></td>
-        <td><%= subscriber.count %></td>
+        <td><%= bread_production.name %></td>
+        <td><%= bread_production.num %></td>
       </tr>
       <% end %>
   </tbody>
