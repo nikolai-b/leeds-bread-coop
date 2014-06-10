@@ -13,6 +13,6 @@ You are currently paying for <%= pluralize(@subscriber.num_paid_subs, "loaf") %>
   </script>
 <% end %>
 
-<% unless @subscriber.num_paid_subs %>
+<% if @subscriber.num_paid_subs %>
   <p><%= link_to "Cancel my payments", subscriber_subs_path(@subscriber), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %></p>
 <% end %>
