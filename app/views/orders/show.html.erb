@@ -15,6 +15,10 @@
   <%= @order.paid %>
 </p>
 
+<p>
+  <strong>Regular:</strong>
+  <%= @order.regular %>
+</p>
 <h2>Line Items</h2>
 
 <% @order.line_items.try(:each) do |line_item| %>
