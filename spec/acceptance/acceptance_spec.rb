@@ -11,6 +11,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   end
 
   scenario "New subscription" do
+    pending
     visit '/'
 
     click_on 'Sign up'
