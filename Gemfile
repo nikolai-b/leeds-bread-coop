@@ -45,9 +45,6 @@ gem 'stripe-rails'
 
 gem 'awesome_nested_fields'
 
-gem 'clockwork'
-gem 'delayed_job_active_record'
-
 group :development, :test do
   gem 'rspec-rails'
   gem 'byebug'
