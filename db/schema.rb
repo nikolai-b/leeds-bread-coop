@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140611113754) do
+ActiveRecord::Schema.define(version: 20140611114842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,7 +100,6 @@ ActiveRecord::Schema.define(version: 20140611113754) do
     t.boolean  "admin"
     t.integer  "num_paid_subs"
     t.string   "stripe_customer_id"
-    t.integer  "collection_day"
     t.date     "collection_day_updated_at"
   end
 
