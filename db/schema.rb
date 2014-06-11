@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610175439) do
+ActiveRecord::Schema.define(version: 20140611113754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,10 +56,12 @@ ActiveRecord::Schema.define(version: 20140610175439) do
   create_table "orders", force: true do |t|
     t.integer  "wholesale_customer_id"
     t.date     "date"
-    t.boolean  "paid"
+    t.boolean  "invoiced"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "regular"
+    t.boolean  "sample"
+    t.text     "note"
   end
 
   add_index "orders", ["wholesale_customer_id"], name: "index_orders_on_wholesale_customer_id", using: :btree
