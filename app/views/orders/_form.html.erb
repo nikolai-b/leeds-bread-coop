@@ -54,13 +54,25 @@ todayBtn: "linked"
 });
   </script>
 <div class="field">
-<%= f.label :paid %>
-<%= f.check_box :paid %>
+<%= f.label :invoiced, class: "checkbox inline" %>
+<%= f.check_box :invoiced %>
 </div>
+
 <div class="field">
-<%= f.label :regular %>
+<%= f.label :sample, class: "checkbox inline" %>
+<%= f.check_box :sample %>
+</div>
+
+<div class="field">
+<%= f.label :regular, class: "checkbox inline" %>
 <%= f.check_box :regular %>
 </div>
+
+<div class="field">
+<%= f.label :note %>
+<%= f.text_area :note %>
+</div>
+
 <div class="actions">
 <%= f.submit %>
 </div>

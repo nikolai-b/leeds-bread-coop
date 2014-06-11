@@ -11,8 +11,12 @@
 </p>
 
 <p>
-  <strong>Paid:</strong>
-  <%= @order.paid %>
+  <strong>Invoiced:</strong>
+  <%= @order.invoiced %>
+</p>
+<p>
+  <strong>Sample:</strong>
+  <%= @order.sample %>
 </p>
 
 <p>
@@ -24,6 +28,13 @@
 <% @order.line_items.try(:each) do |line_item| %>
   <p><%= "#{line_item.bread_type.name}: #{line_item.quantity}" %></p>
 <% end %>
+
+<p>
+  <strong>Note:</strong>
+  <%= @order.note %>
+</p>
+
+
 
 <%= link_to 'Edit', edit_wholesale_customer_order_path(@wholesale_customer, @order) %> |
 <%= link_to 'Back', wholesale_customer_orders_path(@wholesale_customer) %>
