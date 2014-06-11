@@ -6,32 +6,32 @@ class ProductionReport
   end
 
   def production
-    BreadType.all.each.map do |bread_type|
-      num_of_bread = Subscriber.delivery_day(@date + 1.days).find_each.inject(0) do |sum, subscriber|
-        sum + subscriber.paid_bread_subs.where(id: bread_type.id).count
+    bread_type.map do |bread_type|
+      num_of_bread = subscribers.inject(0) do |sum, subscriber|
+        sum + subscriber.paid_sub_items.delivery_day(@date + 1.days).where(bread_type_id: bread_type.id).count
       end
       BreadProduction.new(name: bread_type.name, num: num_of_bread)
     end
   end
 
   def preproduction
-    BreadType.where(sour_dough: true).each.map do |bread_type|
-      num_of_bread = Subscriber.delivery_day(@date + 2.days).find_each.inject(0) do |sum, subscriber|
-        sum + subscriber.paid_bread_subs.where(id: bread_type.id).count
+    bread_type.where(sour_dough: true).map do |bread_type|
+      num_of_bread = subscribers.inject(0) do |sum, subscriber|
+        sum + subscriber.paid_sub_items.delivery_day(@date + 2.days).where(bread_type_id: bread_type.id).count
       end
       BreadProduction.new(name: bread_type.name, num: num_of_bread)
     end
   end
 
   def ferment
-    BreadType.all.each.map do |bread_type|
+    bread_type.map do |bread_type|
       num_of_bread = if bread_type.sour_dough
-                       Subscriber.delivery_day(@date + 3.days).find_each.inject(0) do |sum, subscriber|
-                         sum + subscriber.paid_bread_subs.where(id: bread_type.id).count
+                       subscribers.inject(0) do |sum, subscriber|
+                         sum + subscriber.paid_sub_items.delivery_day(@date + 3.days).where(bread_type_id: bread_type.id).count
                        end
                      else
-                       Subscriber.delivery_day(@date + 2.days).find_each.inject(0) do |sum, subscriber|
-                         sum + subscriber.paid_bread_subs.where(id: bread_type.id).count
+                       subscribers.inject(0) do |sum, subscriber|
+                         sum + subscriber.paid_sub_items.delivery_day(@date + 2.days).where(bread_type_id: bread_type.id).count
                        end
                      end
       BreadProduction.new(name: bread_type.name, num: num_of_bread)
@@ -39,6 +39,14 @@ class ProductionReport
   end
 
   private
+
+  def bread_type
+    @bread_types ||= BreadType.all #includes(subscribers: :subscriber_items)
+  end
+
+  def subscribers
+    @subscribers ||= Subscriber.includes(subscriber_items: :bread_type)
+  end
 
   class BreadProduction
     include Virtus.value_object

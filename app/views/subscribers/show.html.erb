@@ -27,17 +27,21 @@
 </p>
 
 <p>
-  <strong>Pick-up day:</strong>
-  <%= @subscriber.collection_day_name %>
-</p>
-
-<p>
   <strong>Bread subscripts:</strong>
-  <%= @subscriber.paid_bread_subs.try(:map) {|bread_type| bread_type.name}.join(', ') %>
+  <%= @subscriber.paid_sub_items.try(:map) {|sub_item| "#{sub_item.bread_type.name} on #{sub_item.collection_day_name}"}.join(', ') %>
 </p>
 <p>
   <strong>Number of paid subs:</strong>
   <%= @subscriber.num_paid_subs %>
 </p>
+<p>
+  <strong>Created at</strong>
+  <%= @subscriber.created_at.to_formatted_s(:rfc822) %>
+</p>
+<p>
+  <strong>Updated at</strong>
+  <%= @subscriber.updated_at.to_formatted_s(:rfc822) %>
+</p>
+
 
 <%= link_to "Edit", edit_subscriber_path(@subscriber) %>

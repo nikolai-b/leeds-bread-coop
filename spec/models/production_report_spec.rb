@@ -8,11 +8,11 @@ describe ProductionReport do
       yeast_bread = create :yeast_bread
       sour_bread = create :bread_type
       (1..3).each do |add|
-        subscriber_yeast = create(:subscriber, :paid, collection_day: (1 + add) )
-        create :subscriber_item, subscriber: subscriber_yeast, bread_type: yeast_bread
-        subscriber = create(:subscriber, :paid, collection_day: (1 + add), num_paid_subs: 2 )
-        create :subscriber_item, subscriber: subscriber, bread_type: sour_bread
-        create :subscriber_item, subscriber: subscriber, bread_type: sour_bread
+        subscriber_yeast = create(:subscriber, :paid)
+        create :subscriber_item, subscriber: subscriber_yeast, bread_type: yeast_bread, collection_day: (1 + add) 
+        subscriber = create(:subscriber, :paid, num_paid_subs: 2 )
+        create :subscriber_item, subscriber: subscriber, bread_type: sour_bread, collection_day: (1 + add)
+        create :subscriber_item, subscriber: subscriber, bread_type: sour_bread, collection_day: (1 + add)
       end
     end
 

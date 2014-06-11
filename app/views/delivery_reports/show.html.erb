@@ -1,4 +1,4 @@
-<h1>Delivary Report</h1>
+<h1>Delivery Report</h1>
 
 <%= link_to('Yesterday <', delivery_reports_path(date: (@delivery_report.date - 1.day).to_s)) %> 
 &emsp;
@@ -18,18 +18,15 @@
 
   <tbody>
     <% @delivery_report.show.try(:each) do |delivery| %>
-      <% next unless delivery.any? %>
       <tr>
-        <td><strong><%= delivery[0].collection_point.name %></strong></td>
+        <td><strong><%= link_to delivery.collection_point.name, delivery.collection_point %></strong></td>
       </tr>
-      <% delivery.try(:each) do |subscriber| %>
-        <% subscriber.paid_bread_subs.try(:each) do |bread_type| %>
-          <tr>
-            <td> </td>
-            <td><%= link_to(subscriber.name, subscriber) %></td>
-            <td><%= bread_type.name %></td>
-          </tr>
-        <% end %>
+      <% delivery.items.try(:each) do |item| %>
+        <tr>
+          <td> </td>
+          <td><%= link_to(item.subscriber.name, item.subscriber) %></td>
+          <td><%= item.bread_type.name %></td>
+      </tr>
       <% end %>
     <% end %>
   </tbody>

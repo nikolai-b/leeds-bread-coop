@@ -6,7 +6,6 @@ class Subscriber < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
   validates :collection_point_id, numericality: { only_integer: true }
-  validates :collection_day, numericality: { only_integer: true }
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
   validates :name, length: {minimum: 4}
   validates :phone, length: {in: 10..13}
@@ -14,6 +13,7 @@ class Subscriber < ActiveRecord::Base
   belongs_to :collection_point
 
   has_many :subscriber_items
+
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
   has_many :bread_types, through: :subscriber_items
 
@@ -21,18 +21,15 @@ class Subscriber < ActiveRecord::Base
 
   before_save :update_collection_day_check
 
-  def collection_day_name
-    Date::DAYNAMES[collection_day]
-  end
-
   def update_collection_day_check
+    return
     if collection_day_changed? || num_paid_subs_changed? || subscriber_items.any? {|si| si.bread_type_id_changed? }
       self.collection_day_updated_at = Date.today
     end
   end
 
-  def paid_bread_subs
-    bread_types.limit(num_paid_subs)
+  def paid_sub_items
+    subscriber_items.limit(num_paid_subs || 0)
   end
 
   def self.import(file)
@@ -49,13 +46,16 @@ class Subscriber < ActiveRecord::Base
       subscriber.email = row['Email']
       subscriber.phone = '0777 777777' #row['Phone']
       subscriber.password = subscriber.email
-      subscriber.collection_day = csv_collection_day[row['Days']]
       subscriber.num_paid_subs = 1
       subscriber.address = 'Leeds' #row['Address']
       subscriber.name = row['Name']
-      subscriber.bread_types << BreadType.find_by( name: csv_bread_type[row["Bread"]] )
-
       subscriber.save
+
+      subscriber.subscriber_items.create(
+        bread_type_id: BreadType.find_by( name: csv_bread_type[row["Bread"]] ).id,
+        collection_day: csv_collection_day[row['Days']]
+      )
+
 
     end
   end

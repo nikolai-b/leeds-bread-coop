@@ -5,8 +5,15 @@ class DeliveryReport
   end
 
   def show
-    CollectionPoint.find_each.map do |collection_point|
-      collection_point.subscribers.delivery_day(@date)
+    collection_points = CollectionPoint.includes(subscribers: {subscriber_items: :bread_type})
+
+    collection_points.map do |collection_point|
+      deliverys_at_collection_point = collection_point.subscribers.flat_map do |subscriber|
+        subscriber.paid_sub_items.delivery_day(@date).map do |sub_item|
+          BreadDeliveryItem.new(subscriber: subscriber, bread_type: sub_item.bread_type)
+        end.compact
+      end
+      BreadDelivery.new(collection_point: collection_point, items: deliverys_at_collection_point)
     end
   end
 
@@ -14,17 +21,35 @@ class DeliveryReport
     CSV.generate(options) do |csv|
       csv << ["Drop-off", "Name", "Bread"]
       show.try(:each) do |delivery|
-        next unless delivery.any?
+        csv << [delivery.collection_point.name, nil, nil]
 
-        csv << [delivery[0].collection_point.name, nil, nil]
-
-        delivery.each do |subscriber|
-          subscriber.paid_bread_subs.try(:each) do |bread_type|
-            csv << [nil, subscriber.name, bread_type.name]
-          end
+        delivery.items.each do |item|
+          csv << [nil, item.subscriber.name, item.bread_type.name]
         end
       end
     end
   end
+
+  private
+
+  class BreadDeliveryItem
+    include Virtus.value_object
+
+    values do
+      attribute :subscriber
+      attribute :bread_type
+    end
+  end
+
+  class BreadDelivery
+    include Virtus.value_object
+
+    values do
+      attribute :collection_point
+      attribute :items, Array
+    end
+  end
+
+
 
 end

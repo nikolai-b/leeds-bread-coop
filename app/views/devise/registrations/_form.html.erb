@@ -12,19 +12,22 @@
   <%= f.text_area :address %>
   <%= f.phone_field :phone %>
   <%= f.collection_select(:collection_point_id, CollectionPoint.all, :id, :name) %>
-  <%= f.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]]) ) %>
 
+  <h4> Subscriptions </h4>
   <div class="items">
     <%= f.nested_fields_for :subscriber_items do |g| %>
       <fieldset class="item">
       <div class="field">
         <%= g.collection_select(:bread_type_id, BreadType.all, :id, :name) %>
       </div>
-
+      <div class="field">
+        <%= g.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]], selected: g.object.collection_day ) ) %>
+      </div>
       <a href="#" class="remove">remove subscription</a>
 
       <%= g.hidden_field :_destroy %>
     </fieldset>
+    </br>
   <% end %>
   </div>
   <a href="#" class="add">add another bread subscription</a>

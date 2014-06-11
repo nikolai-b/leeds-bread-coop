@@ -78,6 +78,6 @@ class SubscribersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscriber_params
-      params.require(:subscriber).permit(:name, :address, :phone, :collection_point_id, :collection_day, :paid_until, :quantity, subscriber_items_attributes: [:bread_type_id, :id, :_destroy])
+      params.require(:subscriber).permit(:num_paid_subs, *allowed_subscriuber_parms)
     end
 end

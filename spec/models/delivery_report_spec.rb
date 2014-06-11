@@ -7,7 +7,7 @@ describe DeliveryReport do
       subscriber = create(:subscriber, :paid, collection_point: collection_point)
       create :subscriber_item, subscriber: subscriber
     }
-    unpaid_subscriber = create :subscriber, name: 'NotPaid'
+    unpaid_subscriber = create :subscriber, name: 'NotPaid', collection_point: collection_point
     create :subscriber_item, subscriber: unpaid_subscriber
   end
 
@@ -17,19 +17,20 @@ describe DeliveryReport do
       let(:date) { Date.today.next_week.advance(days: 4) }
 
       it "returns an array with size of delivaries" do
-        expect(subject.show[0].size).to eq(4)
+        expect(subject.show[0].items.size).to eq(4)
       end
 
       it "each delivery has the collection point, bread_type, and subscriber name" do
         first_delivery = subject.show[0]
+        first_delivery_first_item = first_delivery.items[0]
 
-        expect(first_delivery[0].collection_point.name).to eq('Green Action')
-        expect(first_delivery[0].name).to include('Lizzie')
-        expect(first_delivery[0].bread_types[0].name).to eq('White sour')
+        expect(first_delivery.collection_point.name).to eq('Green Action')
+        expect(first_delivery_first_item.subscriber.name).to include('Lizzie')
+        expect(first_delivery_first_item.bread_type.name).to eq('White sour')
       end
 
       it 'excludes subscriber who have not paid' do
-        names = subject.show.map { |delivery| delivery[0].try(:name) }
+        names = subject.show[0].items.map { |items| items.subscriber.name }
 
         expect(names).not_to include('NotPaid')
         expect(names).to include('Lizzie')

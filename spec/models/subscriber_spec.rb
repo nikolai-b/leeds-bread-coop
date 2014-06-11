@@ -16,11 +16,11 @@ describe Subscriber do
 
       expect(ursula.bread_types[0].name).to eq('100% Rye')
       expect(ursula.collection_point.name).to eq('Green Action')
-      expect(ursula.collection_day_name).to eq('Wednesday')
+      expect(ursula.subscriber_items[0].collection_day_name).to eq('Wednesday')
 
       expect(rachel.bread_types[0].name).to eq('Special')
       expect(rachel.collection_point.name).to eq('Fabrication')
-      expect(rachel.collection_day_name).to eq('Friday')
+      expect(rachel.subscriber_items[0].collection_day_name).to eq('Friday')
     end
   end
 
@@ -32,7 +32,7 @@ describe Subscriber do
     end
 
     it "limits the bread_types to the num paid subs" do
-      expect(subject.paid_bread_subs.size).to eq(1)
+      expect(subject.paid_sub_items.size).to eq(1)
     end
   end
 

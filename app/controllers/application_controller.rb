@@ -9,8 +9,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up).push(:name, :address, :phone, :collection_point_id, :collection_day, :quantity, :notes, subscriber_items_attributes: [:bread_type_id, :id, :_destroy])
-    devise_parameter_sanitizer.for(:account_update).push(:name, :address, :phone, :collection_point_id, :collection_day, :quantity, :notes, subscriber_items_attributes: [:bread_type_id, :id, :_destroy])
+    devise_parameter_sanitizer.for(:sign_up).push(*allowed_subscriuber_parms)
+    devise_parameter_sanitizer.for(:account_update).push(*allowed_subscriuber_parms)
   end
 
   def authenticate_admin
@@ -19,4 +19,9 @@ class ApplicationController < ActionController::Base
       return
     end
   end
+
+  def allowed_subscriuber_parms
+    [:name, :address, :phone, :collection_point_id, :quantity, :notes, subscriber_items_attributes: [:bread_type_id, :collection_day, :id, :_destroy] ]
+  end
+
 end
