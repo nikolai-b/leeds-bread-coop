@@ -52,7 +52,7 @@ describe DeliveryReport do
         before do
           subscriber = Subscriber.last
           bread_type = create :bread_type, name: '100% Rye'
-          create :subscriber_item, bread_type: bread_type
+          create :subscriber_item, bread_type: bread_type, paid: false
         end
 
         it "doesn't show the unpaid breads" do

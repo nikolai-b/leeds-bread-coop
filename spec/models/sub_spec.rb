@@ -50,18 +50,20 @@ describe Sub do
   end
 
   describe '#cancel' do
-    let(:subscriber) { create :subscriber, :paid }
+    let(:subscriber) { create :subscriber}
+
     context 'happy path' do
       let(:stripe_customer) { double(cancel_subscription: true) }
 
       before do
+        create :subscriber_item, subscriber: subscriber
         Stripe::Customer.stub(:retrieve).and_return(stripe_customer)
       end
 
       it 'updates num_paid_subs to nil' do
-        expect(subscriber.num_paid_subs).to_not be_nil
+        expect(subscriber.num_paid_subs).to_not eq(0)
         subject.cancel
-        expect(subscriber.num_paid_subs).to be_nil
+        expect(subscriber.num_paid_subs).to eq(0)
       end
 
       it 'returns true' do
