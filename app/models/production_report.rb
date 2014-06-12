@@ -7,22 +7,22 @@ class ProductionReport
 
   def production
     bread_type.map do |bread_type|
-      BreadProduction.new(name: bread_type.name, num: count_paid_subscriptions(bread_type, 1))
+      BreadProduction.new(name: bread_type.name, num: count_orders_and_subscriptions(bread_type, 1))
     end
   end
 
   def preproduction
     bread_type.where(sour_dough: true).map do |bread_type|
-      BreadProduction.new(name: bread_type.name, num: count_paid_subscriptions(bread_type, 2))
+      BreadProduction.new(name: bread_type.name, num: count_orders_and_subscriptions(bread_type, 2))
     end
   end
 
   def ferment
     bread_type.map do |bread_type|
       num_of_bread = if bread_type.sour_dough
-                       count_paid_subscriptions(bread_type, 3)
+                       count_orders_and_subscriptions(bread_type, 3)
                      else
-                       count_paid_subscriptions(bread_type, 2)
+                       count_orders_and_subscriptions(bread_type, 2)
                      end
       BreadProduction.new(name: bread_type.name, num: num_of_bread)
     end
@@ -30,26 +30,27 @@ class ProductionReport
 
   private
 
+  def count_orders_and_subscriptions(bread_type, days_in_future)
+    count_paid_subscriptions(bread_type, days_in_future) + count_wholesale_orders(bread_type, days_in_future)
+  end
+
   def count_paid_subscriptions(bread_type, days_in_future)
-    subscribers.
-      where('subscriber_items.collection_day = ?', @date.wday + days_in_future).
-      where('subscriber_items.bread_type_id = ?', bread_type.id).
-      where('subscriber_items.paid = ?', true).
-      inject(0) do |sum, subscriber|
-        sum + subscriber.subscriber_items.
+    SubscriberItem.all.
           where('collection_day = ?', @date.wday + days_in_future).
           where('bread_type_id = ?', bread_type.id).
           where('paid = ?', true).
           count
-      end
   end
+
+  def count_wholesale_orders(bread_type, days_in_future)
+    Order.all.where(date: @date + days_in_future).inject(0) do |sum, order|
+      sum + order.line_items.where(bread_type_id: bread_type.id).sum(:quantity)
+    end
+  end
+
 
   def bread_type
     @bread_types ||= BreadType.all
-  end
-
-  def subscribers
-    @subscribers ||= Subscriber.includes(:subscriber_items).references(:subscriber_items)
   end
 
   class BreadProduction
