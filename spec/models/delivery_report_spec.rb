@@ -38,6 +38,24 @@ describe DeliveryReport do
     end
   end
 
+  describe '#wholesale_show' do
+    let(:date) { Date.today }
+
+    before do
+      bread_type = create :bread_type
+      wholesale_customer = create :wholesale_customer
+      order = wholesale_customer.orders.create(date: date, note: "needed soon")
+      order.line_items.create(bread_type_id: bread_type.id, quantity: 12)
+    end
+
+    it 'shows the wholesale orders' do
+      wholesale_show = subject.wholesale_show[0]
+      expect(wholesale_show.wholesale_customer.name).to eq "Lanes"
+      expect(wholesale_show.order.note).to eq "needed soon"
+      expect(wholesale_show.items[0].quantity).to eq 12
+    end
+  end
+
   describe '#to_csv' do
 
     context 'on Friday' do
@@ -45,7 +63,7 @@ describe DeliveryReport do
 
       it "outputs a csv with subscriber info" do
         csv = CSV.parse(subject.to_csv)
-        expect(csv[2]).to eq([nil, "Lizzie", "White sour"])
+        expect(csv[8]).to eq([nil, "Lizzie", "White sour"])
       end
 
       context 'a subscriber with more bread_types than paid subs' do

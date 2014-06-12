@@ -5,7 +5,33 @@
 <%= @delivery_report.date.strftime("%a #{@delivery_report.date.day.ordinalize} %b %y") %>
 &emsp;
 <%= link_to('> Tomorrow', delivery_reports_path(date: (@delivery_report.date + 1.day).to_s)) %>
+<table>
+  <thead>
+    <tr>
+      <th>Wholesale Customer</th>
+      <th>Order Notes</th>
+      <th>Bread Type</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
 
+  <tbody>
+    <% @delivery_report.wholesale_show.try(:each) do |wholesale| %>
+      <tr>
+        <td><strong><%= link_to wholesale.wholesale_customer.name, wholesale_customer_order_path(wholesale.wholesale_customer, wholesale.order) %></strong></td>
+        <td><%= wholesale.order.note %></td>
+      </tr>
+      <% wholesale.items.try(:each) do |item| %>
+        <tr>
+          <td> </td>
+          <td> </td>
+          <td><%= item.bread_type.name %></td>
+          <td><%= item.quantity %></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
 <table>
   <thead>
     <tr>
@@ -31,6 +57,7 @@
     <% end %>
   </tbody>
 </table>
+
 <p>
   Download:
   <%= link_to "CSV", delivery_reports_path(date: (@delivery_report.date), format: "csv") %>

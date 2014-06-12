@@ -17,8 +17,32 @@ class DeliveryReport
     end
   end
 
+  def wholesale_show
+    Order.all.where(date: @date).map do |order|
+      items = order.line_items.map do |line_item|
+        WholesaleDeliveryItem.new(bread_type: line_item.bread_type, quantity: line_item.quantity)
+      end
+      WholesaleDelivery.new(wholesale_customer: order.wholesale_customer, items: items, order: order)
+    end
+  end
+
   def to_csv(options = {})
     CSV.generate(options) do |csv|
+      csv << ["Wholesale Customer", "Order Notes", "Bread", "Quantity"]
+      wholesale_show.try(:each) do |delivery|
+        csv << [delivery.wholesale_customer.name, delivery.order.note, nil]
+
+        delivery.items.each do |item|
+          csv << [nil, nil, item.bread_type.name, item.quantity]
+        end
+      end
+
+      csv << [nil]
+      csv << [nil]
+      csv << ["---","---","---","----"]
+      csv << [nil]
+      csv << [nil]
+
       csv << ["Drop-off", "Name", "Bread"]
       show.try(:each) do |delivery|
         csv << [delivery.collection_point.name, nil, nil]
@@ -31,6 +55,25 @@ class DeliveryReport
   end
 
   private
+
+  class WholesaleDelivery
+    include Virtus.value_object
+
+    values do
+      attribute :wholesale_customer
+      attribute :order
+      attribute :items, Array
+    end
+  end
+
+  class WholesaleDeliveryItem
+    include Virtus.value_object
+
+    values do
+      attribute :bread_type
+      attribute :quantity, Integer
+    end
+  end
 
   class BreadDeliveryItem
     include Virtus.value_object
