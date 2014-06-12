@@ -36,7 +36,11 @@ class ProductionReport
       where('subscriber_items.bread_type_id = ?', bread_type.id).
       where('subscriber_items.paid = ?', true).
       inject(0) do |sum, subscriber|
-        sum + subscriber.subscriber_items.count
+        sum + subscriber.subscriber_items.
+          where('collection_day = ?', @date.wday + days_in_future).
+          where('bread_type_id = ?', bread_type.id).
+          where('paid = ?', true).
+          count
       end
   end
 
