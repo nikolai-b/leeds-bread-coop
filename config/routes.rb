@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'holiday/new'
+  post 'holiday', to: 'holiday#create'
+
   resources :wholesale_customers do
     resources :orders
   end
