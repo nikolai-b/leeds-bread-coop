@@ -25,18 +25,15 @@ class Subscriber < ActiveRecord::Base
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
 
-      row['Email'].gsub!(/(.*)@(.*)/,'\1@example.com')
-      row['Email'].downcase!
-
       next if find_by( email: row["Email"].strip)
 
       subscriber = new
 
       subscriber.collection_point = CollectionPoint.find_by( name: csv_collection_point[row["Drop-off"]] )
       subscriber.email = row['Email']
-      subscriber.phone = '0777 777777' #row['Phone']
+      subscriber.phone = row['Phone']
       subscriber.password = subscriber.email
-      subscriber.address = 'Leeds' #row['Address']
+      subscriber.address = row['Address']
       subscriber.name = row['Name']
       subscriber.save
 
