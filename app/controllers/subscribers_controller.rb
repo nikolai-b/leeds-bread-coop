@@ -78,6 +78,12 @@ class SubscribersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscriber_params
-      params.require(:subscriber).permit(:num_paid_subs, *allowed_subscriuber_parms)
+      params.require(:subscriber).permit(*add_paid_to_subscriber_items)
+    end
+
+    def add_paid_to_subscriber_items
+      allowed = allowed_subscriuber_parms.dup
+      allowed.find{ |i| i.class == Hash && i.keys.include?(:subscriber_items_attributes) }[:subscriber_items_attributes] << :paid
+      allowed
     end
 end
