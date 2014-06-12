@@ -9,7 +9,7 @@ class DeliveryReport
 
     collection_points.map do |collection_point|
       deliverys_at_collection_point = collection_point.subscribers.flat_map do |subscriber|
-        subscriber.paid_sub_items.delivery_day(@date).map do |sub_item|
+        subscriber.subscriber_items.where(paid: true).delivery_day(@date).map do |sub_item|
           BreadDeliveryItem.new(subscriber: subscriber, bread_type: sub_item.bread_type)
         end.compact
       end
@@ -49,7 +49,4 @@ class DeliveryReport
       attribute :items, Array
     end
   end
-
-
-
 end
