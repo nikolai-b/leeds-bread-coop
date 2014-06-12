@@ -28,11 +28,11 @@
 
 <p>
   <strong>Bread subscripts:</strong>
-  <%= @subscriber.paid_sub_items.try(:map) {|sub_item| "#{sub_item.bread_type.name} on #{sub_item.collection_day_name}"}.join(', ') %>
-</p>
-<p>
-  <strong>Number of paid subs:</strong>
-  <%= @subscriber.num_paid_subs %>
+  <% bread_subs = @subscriber.subscriber_items.try(:map) do |sub_item| %>
+    <% next unless sub_item.paid %>
+    <% "#{sub_item.bread_type.name} on #{sub_item.collection_day_name}" %>
+  <% end %>
+  <%= bread_subs.join(', ') %>
 </p>
 <p>
   <strong>Created at</strong>

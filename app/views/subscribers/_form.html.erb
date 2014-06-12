@@ -43,6 +43,10 @@
         <%= g.label :collection_day %>
         <%= g.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]], selected: g.object.collection_day )) %>
       </div>
+      <div class="field">
+        <%= g.label :paid,  class: "checkbox inline" %>
+        <%= g.check_box :paid %>
+      </div>
       <a href="#" class="remove">remove subscription</a>
 
       <%= g.hidden_field :_destroy %>
@@ -60,11 +64,6 @@
         }
         });
   </script>
-
-  <div class="form-group">
-    <%= f.label :num_paid_subs %>
-    <%= f.number_field :num_paid_subs %>
-  </div>
 
   <div class="actions">
     <%= f.submit %>
