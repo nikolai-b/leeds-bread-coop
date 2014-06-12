@@ -44,17 +44,22 @@ class Subscriber < ActiveRecord::Base
       subscriber.email = row['Email']
       subscriber.phone = '0777 777777' #row['Phone']
       subscriber.password = subscriber.email
-      subscriber.num_paid_subs = 1
       subscriber.address = 'Leeds' #row['Address']
       subscriber.name = row['Name']
       subscriber.save
 
       subscriber.subscriber_items.create(
         bread_type_id: BreadType.find_by( name: csv_bread_type[row["Bread"]] ).id,
-        collection_day: csv_collection_day[row['Days']]
+        collection_day: csv_collection_day[row['Days']],
+        paid: true
       )
 
+    end
+  end
 
+  def mark_subscriber_items_payment_as(paid)
+    subscriber_items.each do |sub_item|
+      sub_item.update({paid: paid})
     end
   end
 

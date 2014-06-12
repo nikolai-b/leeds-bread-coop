@@ -11,7 +11,7 @@ class Sub
     customer = Stripe::Customer.retrieve(@subscriber.stripe_customer_id)
     customer.cancel_subscription
 
-    @subscriber.update_attributes(num_paid_subs: nil)
+    @subscriber.mark_subscriber_items_payment_as false
 
     true
   rescue Stripe::APIError => e
@@ -24,12 +24,12 @@ class Sub
     stripe_customer = add_stripe_plan(stripe_token)
 
     if stripe_customer
-      Notifier.new_sub(@subscriber)
 
-      @subscriber.update ({
-        stripe_customer_id: stripe_customer.id,
-        num_paid_subs: @subscriber.bread_types.size
-      })
+      @subscriber.update ({ stripe_customer_id: stripe_customer.id })
+
+      @subscriber.mark_subscriber_items_payment_as true
+
+      Notifier.new_sub(@subscriber)
 
       true
     else
@@ -37,7 +37,6 @@ class Sub
       false
     end
   end
-
   private
 
   def add_stripe_plan(stripe_token)

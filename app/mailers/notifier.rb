@@ -22,7 +22,7 @@ class Notifier < ActionMailer::Base
 
     subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
 
-    subscriber.num_paid_subs = nil
+    subscriber.mark_subscriber_items_payment_as false
     subscriber.save!
 
     Notifier.sub_deleted(subscriber)
