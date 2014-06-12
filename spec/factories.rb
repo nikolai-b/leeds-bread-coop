@@ -29,11 +29,6 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
     collection_point
     password "password"
 
-    trait :paid do
-      num_paid_subs 1
-      collection_day_updated_at (Date.current - 4.days)
-    end
-
     trait :admin do
       admin true
       email "admin@example.com"
@@ -44,6 +39,7 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
     bread_type
     subscriber
     collection_day 5
+    paid true
   end
 
   factory :email_template do
