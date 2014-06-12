@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140611123542) do
+ActiveRecord::Schema.define(version: 20140612071351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,7 +99,6 @@ ActiveRecord::Schema.define(version: 20140611123542) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.boolean  "admin"
-    t.integer  "num_paid_subs"
     t.string   "stripe_customer_id"
     t.date     "collection_day_updated_at"
   end
