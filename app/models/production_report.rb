@@ -39,6 +39,7 @@ class ProductionReport
           where('collection_day = ?', @date.wday + days_in_future).
           where('bread_type_id = ?', bread_type.id).
           where('paid = ?', true).
+          where('updated_at < ?', @date - 3.days ).
           count
   end
 
