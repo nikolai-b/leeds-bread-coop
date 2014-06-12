@@ -17,14 +17,6 @@ class Subscriber < ActiveRecord::Base
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
   has_many :bread_types, through: :subscriber_items
 
-  before_save :update_collection_day_check
-
-  def update_collection_day_check
-    return
-    if collection_day_changed? || num_paid_subs_changed? || subscriber_items.any? {|si| si.bread_type_id_changed? }
-      self.collection_day_updated_at = Date.today
-    end
-  end
 
   def num_paid_subs
     subscriber_items.where(paid: true).count
