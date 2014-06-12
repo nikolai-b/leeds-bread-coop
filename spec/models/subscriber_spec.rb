@@ -24,15 +24,17 @@ describe Subscriber do
     end
   end
 
-  describe "#paid_bread_subs" do
-    subject { create(:subscriber, :paid) }
+  describe "#num_paid_subs" do
+    subject { create(:subscriber) }
+    let(:bread_type) { create :bread_type }
 
     before do
-      3.times {create :subscriber_item, subscriber: subject}
+      4.times {create :subscriber_item, subscriber: subject, bread_type: bread_type}
+      create :subscriber_item, subscriber: subject, bread_type: bread_type, paid: false
     end
 
-    it "limits the bread_types to the num paid subs" do
-      expect(subject.paid_sub_items.size).to eq(1)
+    it "returns the num paid subscriber items" do
+      expect(subject.num_paid_subs).to eq(4)
     end
   end
 

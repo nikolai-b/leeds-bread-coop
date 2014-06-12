@@ -17,8 +17,6 @@ class Subscriber < ActiveRecord::Base
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
   has_many :bread_types, through: :subscriber_items
 
-  scope :delivery_day, ->(date) { where(collection_day: date.wday).where("collection_day_updated_at < ?", (date - 3.days))  }
-
   before_save :update_collection_day_check
 
   def update_collection_day_check
@@ -28,8 +26,8 @@ class Subscriber < ActiveRecord::Base
     end
   end
 
-  def paid_sub_items
-    subscriber_items.limit(num_paid_subs || 0)
+  def num_paid_subs
+    subscriber_items.where(paid: true).count
   end
 
   def self.import(file)
