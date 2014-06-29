@@ -7,6 +7,7 @@ feature "Place wholesale order", type: :feature,  js: true  do
     create :wholesale_customer
     create :subscriber, :admin
     create :bread_type
+    create :email_template
   end
 
   scenario "Place a customer order" do

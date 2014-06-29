@@ -36,6 +36,13 @@ class Subscriber < ActiveRecord::Base
       subscriber.password = subscriber.email
       subscriber.address = row['Address']
       subscriber.name = row['Name']
+      phone_length = subscriber.phone ? subscriber.phone.length : 0
+      if phone_length > 13
+        subscriber.phone = subscriber.phone.slice(0,13)
+      elsif phone_length < 10
+        subscriber.phone = " "*(10 - phone_length) + subscriber.phone.to_s
+      end
+
       subscriber.save
 
       subscriber.subscriber_items.create(

@@ -11,7 +11,6 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   end
 
   scenario "New subscription" do
-    pending
     visit '/'
 
     click_on 'Sign up'
@@ -63,7 +62,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   end
 
   def see_success
-    sleep(3)
+    sleep(15)
     expect(page).to have_content 'Lizzie'
     expect(page).to have_content 'White sour'
   end

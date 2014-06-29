@@ -11,8 +11,8 @@ describe Subscriber do
     it "adds subscribers (inc. accociations)" do
       params_file = double('params_file').tap {|pf| pf.stub(:path).and_return('data/subscriber_import.csv')}
       Subscriber.import( params_file )
-      ursula = Subscriber.find_by(email: "ursula@example.com")
-      rachel = Subscriber.find_by(email: "rachel@example.com")
+      ursula = Subscriber.find_by(email: "ursula@test.com")
+      rachel = Subscriber.find_by(email: "rachel@test.com")
 
       expect(ursula.bread_types[0].name).to eq('100% Rye')
       expect(ursula.collection_point.name).to eq('Green Action')
