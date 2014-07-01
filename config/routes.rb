@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :holidays
+
   get 'holiday/new'
   post 'holiday', to: 'holiday#create'
 
