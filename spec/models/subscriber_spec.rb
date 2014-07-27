@@ -38,6 +38,15 @@ describe Subscriber do
     end
   end
 
+  describe 'collection_days' do
+    before do
+      2.times { create :subscriber_item, subscriber: subject }
+    end
+
+    it 'should return the collection days' do
+      expect(subject.collection_days).to eq([5,5])
+    end
+  end
 #  describe 'update_collection_day_check' do
 #    let(:collection_day_updated_at) { Date.parse('2014-06-01') }
 #    before do

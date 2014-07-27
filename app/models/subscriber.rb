@@ -22,6 +22,10 @@ class Subscriber < ActiveRecord::Base
     subscriber_items.where(paid: true).count
   end
 
+  def collection_days
+    subscriber_items.map &:collection_day
+  end
+
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
 
