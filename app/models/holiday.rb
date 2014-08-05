@@ -1,5 +1,5 @@
 class Holiday < ActiveRecord::Base
-  belongs_to :subscriber
+  belongs_to :subscriber, counter_cache: true
 
   def will_miss
     subscriber_collection_days = subscriber.collection_days
