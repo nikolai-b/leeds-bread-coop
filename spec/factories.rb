@@ -33,6 +33,10 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
       admin true
       email "admin@example.com"
     end
+
+    trait :subscription do
+      after(:build) {|s| s.subscriber_items << FactoryGirl.build(:subscriber_item, subscriber: s) }
+    end
   end
 
   factory :subscriber_item do

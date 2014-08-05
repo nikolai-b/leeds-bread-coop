@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Holiday do
-  let(:subscriber) { create :subscriber }
+  let(:subscriber) { create :subscriber, :subscription }
   let(:valid_start_date) { Date.tomorrow.beginning_of_week.next_week }
   subject { create :holiday, subscriber: subscriber }
 
