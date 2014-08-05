@@ -5,12 +5,11 @@ class DeliveryReport
   end
 
   def show
-    collection_points = CollectionPoint.includes(subscribers: [{subscriber_items: :bread_type}, :holidays])
+    collection_points = CollectionPoint.includes(subscribers: {subscriber_items: :bread_type})
 
     collection_points.map do |collection_point|
-      deliverys_at_collection_point = collection_point.subscribers.
-        where.not('DATE(?) BETWEEN holidays.start_date AND holidays.end_date', @date).references(:holidays).flat_map do |subscriber|
-        subscriber.subscriber_items.where(paid: true).where('subscriber_items.updated_at < ?', @date - 3.days ).delivery_day(@date).map do |sub_item|
+      deliverys_at_collection_point = collection_point.subscribers.active_on(@date).flat_map do |subscriber|
+        subscriber.subscriber_items.map do |sub_item|
           BreadDeliveryItem.new(subscriber: subscriber, bread_type: sub_item.bread_type)
         end.compact
       end

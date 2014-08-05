@@ -47,6 +47,26 @@ describe Subscriber do
       expect(subject.collection_days).to eq([5,5])
     end
   end
+
+  describe 'active_on scope' do
+    context 'with subscribers on holiday' do
+      let!(:subscriber) { create :subscriber, :subscription }
+
+      before do
+        subscriber_on_holiday = create :subscriber, :subscription
+        create :holiday, subscriber: subscriber_on_holiday
+      end
+
+      it 'excludes the subscribers on holiday' do
+        expect(Subscriber.active_on(Date.tomorrow.beginning_of_week + 18.days).count).to eq 1
+      end
+
+      it 'excludes unpaid subscribers' do
+        subscriber.subscriber_items[0].update_attribute :paid, false
+        expect(Subscriber.active_on(Date.tomorrow.beginning_of_week + 18.days).count).to eq 0
+      end
+    end
+  end
 #  describe 'update_collection_day_check' do
 #    let(:collection_day_updated_at) { Date.parse('2014-06-01') }
 #    before do

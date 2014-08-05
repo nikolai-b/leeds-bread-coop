@@ -18,6 +18,9 @@ class Subscriber < ActiveRecord::Base
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
   has_many :bread_types, through: :subscriber_items
 
+  scope :active_on, ->(date) { includes(:holidays, :subscriber_items).where('holidays_count = 0 OR DATE(?) NOT BETWEEN holidays.start_date AND holidays.end_date', date).
+                               where("subscriber_items.paid" => :true).where('subscriber_items.collection_day' => date.wday).references(:subscriber_items, :holidays) }
+
 
   def num_paid_subs
     subscriber_items.where(paid: true).count
