@@ -7,8 +7,13 @@ describe DeliveryReport do
       subscriber = create(:subscriber, collection_point: collection_point)
       create :subscriber_item, subscriber: subscriber
     }
+
     unpaid_subscriber = create :subscriber, name: 'NotPaid', collection_point: collection_point
     create :subscriber_item, subscriber: unpaid_subscriber, paid: false
+
+    subscriber_on_holiday = create :subscriber, name: 'Holiday', collection_point: collection_point
+    create :subscriber_item, subscriber: subscriber_on_holiday, paid: true
+    create :holiday, subscriber: subscriber_on_holiday
   end
 
   describe '#show' do

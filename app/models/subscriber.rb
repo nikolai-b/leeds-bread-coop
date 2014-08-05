@@ -13,6 +13,7 @@ class Subscriber < ActiveRecord::Base
   belongs_to :collection_point
 
   has_many :subscriber_items
+  has_many :holidays
 
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
   has_many :bread_types, through: :subscriber_items
