@@ -35,11 +35,12 @@ class ProductionReport
   end
 
   def count_paid_subscriptions(bread_type, days_in_future)
-    SubscriberItem.all.
-          where('collection_day = ?', @date.wday + days_in_future).
-          where('bread_type_id = ?', bread_type.id).
-          where('paid = ?', true).
-          where('updated_at < ?', @date - 3.days ).
+    SubscriberItem.includes(subscriber: :holidays).
+          where(collection_day: (@date.wday + days_in_future)).
+          where(bread_type_id: bread_type.id).
+          where(paid: true).
+          where('subscribers.holidays_count = 0 OR DATE(?) NOT BETWEEN holidays.start_date AND holidays.end_date', @date + days_in_future).
+          references(:holidays, :subscribers).
           count
   end
 
