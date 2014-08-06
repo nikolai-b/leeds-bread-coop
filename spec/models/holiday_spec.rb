@@ -11,10 +11,9 @@ describe Holiday do
 
   it 'will not allow overlapping holidays' do
     subject
-    overlapping = subscriber.holiday.create(
-      start_date: (subject.end_date - 1.day),
-      end_date: (subject.end_date + 1.day) )
-    expect(overlapping.errors.to_a).to eq('Start date overlaps another holiday')
+    expect(subject.errors).to be_empty
+    overlapping = Holiday.create( start_date: (subject.end_date - 1.day), end_date: (subject.end_date + 1.day), subscriber_id: subscriber.id )
+    expect(overlapping.errors.to_a.first).to eq('Start date overlaps another holiday')
   end
 
   it 'should not allow holidays in the next 3 days' do
