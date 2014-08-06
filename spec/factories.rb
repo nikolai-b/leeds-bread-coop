@@ -37,6 +37,13 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
     trait :subscription do
       after(:build) {|s| s.subscriber_items << FactoryGirl.build(:subscriber_item, subscriber: s) }
     end
+
+    trait :on_subscription_holiday do
+      after(:build) do |s|
+        s.subscriber_items << FactoryGirl.build(:subscriber_item, subscriber: s)
+        s.holidays << FactoryGirl.build(:holiday, subscriber: s)
+      end
+    end
   end
 
   factory :subscriber_item do

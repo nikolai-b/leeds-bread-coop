@@ -3,17 +3,12 @@ describe DeliveryReport do
   let(:collection_point) { create :collection_point }
 
   before do
-    4.times {
-      subscriber = create(:subscriber, collection_point: collection_point)
-      create :subscriber_item, subscriber: subscriber
-    }
+    4.times { subscriber = create :subscriber, :subscription, collection_point: collection_point }
 
     unpaid_subscriber = create :subscriber, name: 'NotPaid', collection_point: collection_point
     create :subscriber_item, subscriber: unpaid_subscriber, paid: false
 
-    subscriber_on_holiday = create :subscriber, name: 'Holiday', collection_point: collection_point
-    create :subscriber_item, subscriber: subscriber_on_holiday, paid: true
-    create :holiday, subscriber: subscriber_on_holiday
+    create :subscriber, :on_subscription_holiday, name: 'Holiday', collection_point: collection_point
   end
 
   describe '#show' do
