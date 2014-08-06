@@ -17,17 +17,20 @@ describe Holiday do
   end
 
   it 'should not allow holidays in the next 3 days' do
-    too_close = create :holiday, start_date: Date.today
-    expect(too_close.errors.to_a).to eq('Start date is too close and your bread is started')
+    too_close = build :holiday, start_date: Date.today
+    expect(too_close.valid?).to be_false
+    expect(too_close.errors.to_a.first).to eq('Start date is too close and your bread has been started')
   end
 
   it 'validates start is in the future' do
-    in_past = create :holiday, start_date: Date.yesterday
-    expect(in_past.errors.to_a).to eq('Start date is in the past')
+    in_past = build :holiday, start_date: Date.yesterday
+    expect(in_past.valid?).to be_false
+    expect(in_past.errors.to_a.first).to eq('Start date is in the past')
   end
 
-  it 'validates end date is after start date' do
-    end_before_start = create :holiday, end_date: (Date.today + 5.days)
-    expect(in_past.errors.to_a).to eq('End date is before start date')
+  it 'validates end date is before start date' do
+    end_before_start = build :holiday, end_date: (Date.today + 5.days)
+    expect(end_before_start.valid?).to be_false
+    expect(end_before_start.errors.to_a.first).to eq('End date must be before start date')
   end
 end
