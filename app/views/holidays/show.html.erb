@@ -10,10 +10,5 @@
   <%= @holiday.end_date %>
 </p>
 
-<p>
-  <strong>Subscriber:</strong>
-  <%= @holiday.subscriber %>
-</p>
-
-<%= link_to 'Edit', edit_holiday_path(@holiday) %> |
-<%= link_to 'Back', holidays_path %>
+<%= link_to 'Edit', edit_subscriber_holiday_path(@subscriber, @holiday) %> |
+<%= link_to 'Back', subscriber_holidays_path(@subscriber) %>

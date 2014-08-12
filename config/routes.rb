@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :holidays
-
-  get 'holiday/new'
-  post 'holiday', to: 'holiday#create'
-
   resources :wholesale_customers do
     resources :orders
   end
@@ -18,6 +13,8 @@ Rails.application.routes.draw do
   devise_for :subscribers, :controllers => { :registrations => "registrations" }
   resources :subscribers do
     resource :subs
+    resources :holidays
+
     collection { post :import }
   end
 

@@ -3,7 +3,7 @@ class SubscriberItem < ActiveRecord::Base
   belongs_to :bread_type
   validates :collection_day, numericality: { only_integer: true }
   scope :delivery_day, ->(date) { where(collection_day: date.wday) }
-  validate :change_subscription_ok?, on: :update
+  validate :change_subscription_ok, on: :update
 
   def collection_day_name
     Date::DAYNAMES[collection_day]
@@ -11,7 +11,7 @@ class SubscriberItem < ActiveRecord::Base
 
   private
 
-  def change_subscription_ok?
+  def change_subscription_ok
     if (bread_type_id_changed?)
       wday = Date.today.wday
       if (wday..wday + 3).include? collection_day

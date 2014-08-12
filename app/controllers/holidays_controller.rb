@@ -1,34 +1,28 @@
 class HolidaysController < ApplicationController
+  before_action :set_subscriber
   before_action :set_holiday, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authenticate_admin, only: [:new, :create, :show, :index]
 
-  # GET /holidays
-  # GET /holidays.json
   def index
-    @holidays = Holiday.all
+    @holidays = @subscriber.holidays
   end
 
-  # GET /holidays/1
-  # GET /holidays/1.json
   def show
   end
 
-  # GET /holidays/new
   def new
     @holiday = Holiday.new
   end
 
-  # GET /holidays/1/edit
   def edit
   end
 
-  # POST /holidays
-  # POST /holidays.json
   def create
-    @holiday = Holiday.new(holiday_params)
+    @holiday = Holiday.new(holiday_params.merge(subscriber: @subscriber))
 
     respond_to do |format|
       if @holiday.save
-        format.html { redirect_to @holiday, notice: 'Holiday was successfully created.' }
+        format.html { redirect_to [@subscriber, @holiday], notice: 'Holiday was successfully created.' }
         format.json { render :show, status: :created, location: @holiday }
       else
         format.html { render :new }
@@ -65,6 +59,10 @@ class HolidaysController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_holiday
       @holiday = Holiday.find(params[:id])
+    end
+
+    def set_subscriber
+      @subscriber = Subscriber.find(params[:subscriber_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

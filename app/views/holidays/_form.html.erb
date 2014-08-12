@@ -1,4 +1,4 @@
-<%= form_for(@holiday) do |f| %>
+<%= form_for([@subscriber, @holiday]) do |f| %>
   <% if @holiday.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@holiday.errors.count, "error") %> prohibited this holiday from being saved:</h2>
@@ -10,18 +10,30 @@
       </ul>
     </div>
   <% end %>
+  <script type="text/javascript">
+    $(document).ready(function(e) {
 
-  <div class="field">
+    $('#holiday_start_date').datepicker({ format: "dd/mm/yyyy", weekStart: 1,
+        startDate: "<%= (Date.current + 3.days).strftime("%d/%m/%Y") %>",
+        todayBtn: "linked", autoclose: true
+        });
+
+    $('#holiday_end_date').datepicker({ format: "dd/mm/yyyy",
+      weekStart: 1, startDate: "<%= (Date.current + 4.days).strftime("%d/%m/%Y") %>",
+      todayBtn: "linked", autoclose: true
+      });
+
+    });
+
+  </script>
+
+  <div class="input-append date">
     <%= f.label :start_date %><br>
-    <%= f.date_select :start_date %>
+    <%= f.text_field :start_date %>
   </div>
-  <div class="field">
+  <div class="input-append date">
     <%= f.label :end_date %><br>
-    <%= f.date_select :end_date %>
-  </div>
-  <div class="field">
-    <%= f.label :subscriber_id %><br>
-    <%= f.text_field :subscriber_id %>
+    <%= f.text_field :end_date %>
   </div>
   <div class="actions">
     <%= f.submit %>
