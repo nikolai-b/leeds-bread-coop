@@ -28,9 +28,9 @@ describe Holiday do
     expect(in_past.errors.to_a.first).to eq('Start date is in the past')
   end
 
-  it 'validates end date is before start date' do
+  it 'validates end date is after start date' do
     end_before_start = build :holiday, end_date: (Date.today + 5.days)
     expect(end_before_start.valid?).to be_false
-    expect(end_before_start.errors.to_a.first).to eq('End date must be before start date')
+    expect(end_before_start.errors.to_a.first).to eq('End date must be after start date')
   end
 end

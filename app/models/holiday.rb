@@ -4,7 +4,7 @@ class Holiday < ActiveRecord::Base
   validates :start_date, :end_date, :subscriber_id, presence: true
   validate :not_overlapping
   validate :not_in_the_past
-  validate :end_date_before_start_date
+  validate :end_date_after_start_date
   validate :start_date_too_close
 
   def will_miss
@@ -31,9 +31,9 @@ class Holiday < ActiveRecord::Base
     errors.add :start_date, 'is in the past' if start_date < Date.current
   end
 
-  def end_date_before_start_date
+  def end_date_after_start_date
     return unless start_date && end_date && subscriber
-    errors.add :end_date, 'must be before start date' if end_date <= start_date
+    errors.add :end_date, 'must be after start date' if end_date <= start_date
   end
 
   def start_date_too_close
