@@ -39,9 +39,9 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
     end
 
     trait :on_subscription_holiday do
-      after(:build) do |s|
-        s.subscriber_items << FactoryGirl.build(:subscriber_item, subscriber: s)
-        s.holidays << FactoryGirl.build(:holiday, subscriber: s)
+      after(:create) do |s|
+        s.subscriber_items << FactoryGirl.create(:subscriber_item, subscriber: s)
+        s.holidays << FactoryGirl.create(:holiday, subscriber: s)
       end
     end
   end
