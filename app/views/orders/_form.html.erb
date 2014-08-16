@@ -1,17 +1,4 @@
-<%= form_for [@wholesale_customer, @order] do |f| %>
-  <% if @order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
-
-      <ul>
-      <% @order.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="form-group">
+<%= bootstrap_form_for [@wholesale_customer, @order] do |f| %>
     <div class="input-append date">
       <%= f.label :date %>
       <input class="col-sm-4" data-behaviour='datepicker' value="<%= Date.current.strftime("%d/%m/%Y") %>" id="order_date" name="order[date]" type="text">
@@ -24,15 +11,8 @@
   <div class="items">
     <%= f.nested_fields_for :line_items do |f| %>
       <fieldset class="item">
-      <div class="field">
-        <%= f.label :bread_type %>
         <%= f.collection_select(:bread_type_id, BreadType.all, :id, :name) %>
-      </div>
-
-      <div class="field">
-        <%= f.label :quantity %>
         <%= f.number_field :quantity %>
-      </div>
 
       <a href="#" class="remove">remove</a>
 
@@ -53,27 +33,14 @@ weekStart: 1,
 todayBtn: "linked"
 });
   </script>
-<div class="field">
-<%= f.label :invoiced, class: "checkbox inline" %>
-<%= f.check_box :invoiced %>
-</div>
+<%= f.form_group :payment do %>
+  <%= f.check_box :invoiced, inline: true %>
+  <%= f.check_box :sample, inline: true %>
+  <%= f.check_box :regular, inline: true %>
+<% end %>
 
-<div class="field">
-<%= f.label :sample, class: "checkbox inline" %>
-<%= f.check_box :sample %>
-</div>
-
-<div class="field">
-<%= f.label :regular, class: "checkbox inline" %>
-<%= f.check_box :regular %>
-</div>
-
-<div class="field">
-<%= f.label :note %>
 <%= f.text_area :note %>
-</div>
+<% button_label = @order.persisted? ? "Update" : "Create" %>
+<%= f.submit button_label, class: "btn btn-success" %>
 
-<div class="actions">
-<%= f.submit %>
-</div>
 <% end %>

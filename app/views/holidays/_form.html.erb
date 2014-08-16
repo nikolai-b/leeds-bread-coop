@@ -1,14 +1,7 @@
-<%= form_for([@subscriber, @holiday]) do |f| %>
+<%= bootstrap_form_for([@subscriber, @holiday], layout: :vertical) do |f| %>
   <% if @holiday.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@holiday.errors.count, "error") %> prohibited this holiday from being saved:</h2>
-
-      <ul>
-      <% @holiday.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
+    <div class="error_messages">
+  </div>
   <% end %>
   <script type="text/javascript">
     $(document).ready(function(e) {
@@ -27,15 +20,8 @@
 
   </script>
 
-  <div class="input-append date">
-    <%= f.label :start_date %><br>
     <%= f.text_field :start_date %>
-  </div>
-  <div class="input-append date">
-    <%= f.label :end_date %><br>
     <%= f.text_field :end_date %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <% button_label = @holiday.persisted? ? "Update" : "Create" %>
+    <%= f.submit button_label, class: "btn btn-success" %>
 <% end %>
