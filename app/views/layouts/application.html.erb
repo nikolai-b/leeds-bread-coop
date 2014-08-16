@@ -1,85 +1,349 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-      "Leeds Bread Co-op"
-    </title>
-    <%= csrf_meta_tags %>
-    <!--[if lt IE 9]
+<!doctype html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en-US" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en-US" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en-US" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 9 ]><html class="ie ie9" lang="en-US" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if (gte IE 10)|!(IE)]><!--><html lang="en-US" prefix="og: http://ogp.me/ns#"> <!--<![endif]-->
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Home - Leeds Bread Co-operative</title>
+
+  <link rel="profile" href="http://gmpg.org/xfn/11" />
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+  <!-- Add CSS3 Rules here for IE 7-9
+================================================== -->
+
+  <!--[if IE]>
+<style type="text/css">
+html.ie #navigation,
+html.ie a.button,
+html.ie .cta,
+html.ie .wp-caption,
+html.ie #breadcrumbs,
+html.ie a.more-link,
+html.ie .gallery .gallery-item img,
+html.ie .gallery .gallery-item img.thumbnail,
+html.ie .widget-container,
+html.ie #author-info {behavior: url("http://leedsbread.coop/wp-content/themes/skeleton/PIE.php");position: relative;}</style>
+<![endif]-->
+
+
+  <!-- Mobile Specific Metas
+================================================== -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- Favicons
+================================================== -->
+
+  <link rel="shortcut icon" href="http://leedsbread.coop/wp-content/themes/skeleton/images/favicon.ico">
+
+  <link rel="apple-touch-icon" href="http://leedsbread.coop/wp-content/themes/skeleton/images/apple-touch-icon.png">
+
+  <link rel="apple-touch-icon" sizes="72x72" href="http://leedsbread.coop/wp-content/themes/skeleton/images/apple-touch-icon-72x72.png" />
+
+  <link rel="apple-touch-icon" sizes="114x114" href="http://leedsbread.coop/wp-content/themes/skeleton/images/apple-touch-icon-114x114.png" />
+
+  <link rel="pingback" href="http://leedsbread.coop/xmlrpc.php" />
+  <link rel="stylesheet" id="custom" href="http://leedsbread.coop/?get_styles=css" type="text/css" media="all" />
+
+
+  <!-- This site is optimized with the Yoast WordPress SEO plugin v1.5.3.3 - https://yoast.com/wordpress/plugins/seo/ -->
+  <meta name="description" content="Bakery making artisan Sourdough and Slowly Fermented bread for the good people of Leeds and surrounds. Markets and bread subs."/>
+  <link rel="canonical" href="http://leedsbread.coop/" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Home - Leeds Bread Co-operative" />
+  <meta property="og:description" content="Bakery making artisan Sourdough and Slowly Fermented bread for the good people of Leeds and surrounds. Markets and bread subs." />
+  <meta property="og:url" content="http://leedsbread.coop/" />
+  <meta property="og:site_name" content="Leeds Bread Co-operative" />
+  <meta property="og:image" content="http://leedsbread.coop/wp-content/themes/skeleton/images/home-learn-more.png" />
+  <!-- / Yoast WordPress SEO plugin. -->
+
+  <link rel="alternate" type="application/rss+xml" title="Leeds Bread Co-operative &raquo; Feed" href="http://leedsbread.coop/feed/" />
+  <link rel="alternate" type="application/rss+xml" title="Leeds Bread Co-operative &raquo; Comments Feed" href="http://leedsbread.coop/comments/feed/" />
+  <link rel='stylesheet' id='mailchimpSF_main_css-css'  href='http://leedsbread.coop/?mcsf_action=main_css&#038;ver=3.9.2' type='text/css' media='all' />
+  <!--[if IE]>
+<link rel='stylesheet' id='mailchimpSF_ie_css-css'  href='http://leedsbread.coop/wp-content/plugins/mailchimp/css/ie.css?ver=3.9.2' type='text/css' media='all' />
+<![endif]-->
+  <link rel='stylesheet' id='skeleton-css'  href='http://leedsbread.coop/wp-content/themes/skeleton/skeleton.css?ver=1.0' type='text/css' media='screen, projection' />
+  <link rel='stylesheet' id='theme-css'  href='http://leedsbread.coop/wp-content/themes/skeleton/style.css?ver=1.0' type='text/css' media='screen, projection' />
+  <link rel='stylesheet' id='layout-css'  href='http://leedsbread.coop/wp-content/themes/skeleton/layout.css?ver=1.0' type='text/css' media='screen, projection' />
+  <link rel='stylesheet' id='formalize-css'  href='http://leedsbread.coop/wp-content/themes/skeleton/formalize.css?ver=1.0' type='text/css' media='screen, projection' />
+  <link rel='stylesheet' id='superfish-css'  href='http://leedsbread.coop/wp-content/themes/skeleton/superfish.css?ver=1.0' type='text/css' media='screen, projection' />
+  <link rel='stylesheet' id='googlefonts-css'  href='http://fonts.googleapis.com/css?family=Glegoo:400|Dosis:200&subset=latin' type='text/css' media='all' />
+  <script type='text/javascript' src='http://leedsbread.coop/wp-includes/js/jquery/jquery.js?ver=1.11.0'></script>
+  <script type='text/javascript' src='http://leedsbread.coop/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+  <script type='text/javascript' src='http://leedsbread.coop/wp-content/plugins/mailchimp/js/scrollTo.js?ver=1.4.1'></script>
+  <script type='text/javascript' src='http://leedsbread.coop/wp-includes/js/jquery/jquery.form.min.js?ver=3.37.0'></script>
+  <script type='text/javascript'>
+    /* <![CDATA[ */
+  var mailchimpSF = {"ajax_url":"http:\/\/leedsbread.coop\/"};
+/* ]]> */
+  </script>
+  <script type='text/javascript' src='http://leedsbread.coop/wp-content/plugins/mailchimp/js/mailchimp.js?ver=1.4.1'></script>
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://leedsbread.coop/xmlrpc.php?rsd" />
+  <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://leedsbread.coop/wp-includes/wlwmanifest.xml" />
+  <meta name="generator" content="WordPress 3.9.2" />
+  <link rel='shortlink' href='http://leedsbread.coop/' />
+  <style type='text/css' media='screen'>
+    body{ font-family:"Glegoo", arial, sans-serif;}
+    h3{ font-family:"Dosis", arial, sans-serif;}
+  </style>
+  <!-- fonts delivered by Wordpress Google Fonts, a plugin by Adrian3.com --><link rel="stylesheet" type="text/css" href="http://leedsbread.coop/wp-content/plugins/wp-recaptcha/recaptcha.css" />
+  <!-- Responsive Select CSS
+================================================================ -->
+  <style type="text/css" id="responsive-select-css">
+    .responsiveSelectContainer select.responsiveMenuSelect, select.responsiveMenuSelect{
+      display:none;
+    }
+
+    @media (max-width: 767px) {
+      .responsiveSelectContainer{
+        border:none !important;
+        background:none !important;
+        box-shadow:none !important;
+      }
+      .responsiveSelectContainer ul, ul.responsiveSelectFullMenu, #megaMenu ul.megaMenu.responsiveSelectFullMenu{
+        display: none !important;
+      }
+      .responsiveSelectContainer select.responsiveMenuSelect, select.responsiveMenuSelect {
+        display: inline-block;
+        width:100%;
+      }
+    }
+  </style>
+  <!-- end Responsive Select CSS -->
+
+  <!-- Responsive Select JS
+================================================================ -->
+  <script type="text/javascript">
+    jQuery(document).ready( function($){
+        $( '.responsiveMenuSelect' ).change(function() {
+          var loc = $(this).find( 'option:selected' ).val();
+          if( loc != '' && loc != '#' ) window.location = loc;
+          });
+        //$( '.responsiveMenuSelect' ).val('');
+        });
+  </script>
+  <!-- end Responsive Select JS -->
+
+
+  <script type="text/javascript">
+
+    /* CAMBIO FADE LOGO Y LINKS */
+
+  /* http://mths.be/slideshow v1.0.0 by @mathias */
+  /* https://github.com/mathiasbynens/jquery-slideshow */
+
+  ;(function($) {
+      $.fn.slideshow = function(options) {
+      options = $.extend({
+        'timeout': 3000,
+        'speed': 400 // 'normal'
+        }, options);
+      // We loop through the selected elements, in case the slideshow was called on more than one element e.g. `$('.foo, .bar').slideShow();`
+      return this.each(function() {
+        // Inside the setInterval() block, `this` references the window object instead of the slideshow container element, so we store it inside a var
+        var $elem = $(this);
+        $elem.children().eq(0).appendTo($elem).show();
+        // Iterate through the slides
+        setInterval(function() {
+          $elem.children().eq(0)
+          // Hide the current slide and append it to the end of the image stack
+          .hide().appendTo($elem) // As of jQuery 1.3.2, .appendTo() returns the inserted element
+          // Fade in the next slide
+          .fadeIn(options.speed)
+          }, options.timeout);
+        });
+      };
+  }(jQuery));
+
+
+$(document).ready(function() {
+    $('.slideshow').slideshow({ timeout: 5000, speed: 800 }); /* Slideshow from heade */
+    });
+
+  </script>
+
+  <script>
+    // HTML5 PLACEHOLDER  -  http://www.cssnewbie.com/cross-browser-support-for-html5-placeholder-text-in-forms/#.UYabjysuV80
+    // This adds 'placeholder' to the items listed in the jQuery .support object.
+  jQuery(function() {
+      jQuery.support.placeholder = false;
+      test = document.createElement('input');
+      if('placeholder' in test) jQuery.support.placeholder = true;
+      });
+
+// This adds placeholder support to browsers that wouldn't otherwise support it.
+$(function() {
+    if(!$.support.placeholder) {
+    var active = document.activeElement;
+    $(':text').focus(function () {
+      if ($(this).attr('placeholder') != '' && $(this).val() == $(this).attr('placeholder')) {
+      $(this).val('').removeClass('hasPlaceholder');
+      }
+      }).blur(function () {
+        if ($(this).attr('placeholder') != '' && ($(this).val() == '' || $(this).val() == $(this).attr('placeholder'))) {
+        $(this).val($(this).attr('placeholder')).addClass('hasPlaceholder');
+        }
+        });
+    $(':text').blur();
+    $(active).focus();
+    $('form:eq(0)').submit(function () {
+      $(':text.hasPlaceholder').val('');
+      });
+    }
+    });
+  </script>
+
+  <%= csrf_meta_tags %>
+  <!--[if lt IE 9]
       <%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" %>
     -->
-    <%= stylesheet_link_tag "application", :media => "all" %>
-    <%= javascript_include_tag "application" %>
-  </head>
-  <body>
-    <div class="navbar navbar-fluid-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar">(data-target=".nav-collapse" data-toggle="collapse")
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <div class="container nav-collapse">
-            <ul class="nav">
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+
+
+</head>
+<body class="home page page-id-4 page-template-default">
+  <div id="wrap" class="container">
+    <div class="resize"></div>
+
+    <div id="main-header" class="twelve columns">
+      <div class="lbc-logo">
+        <a href="http://leedsbread.coop/">
+          <img src="http://leedsbread.coop/wp-content/themes/skeleton/images/leeds-bread-coop-logotype.png" class="scale-with-grid" alt="Leeds Bread Coop">
+        </a>
+      </div>
+
+      <!-- UL con PHP dentro que analiza la carpeta y crea LI con las imgs -->
+      <ul class="slideshow">
+        <li>
+          <img src="http://leedsbread.coop/wp-content/themes/skeleton/images/transp.gif"
+          style="background-image:url(&#39;http://leedsbread.coop/wp-content/themes/skeleton/images/headers/leeds-bread-coop(1).png&#39;); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;" class="scale-with-grid"/>
+        </li><li>
+          <img src="http://leedsbread.coop/wp-content/themes/skeleton/images/transp.gif"
+          style="background-image:url(&#39;http://leedsbread.coop/wp-content/themes/skeleton/images/headers/leeds-bread-coop(2).png&#39;); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;" class="scale-with-grid"/>
+        </li><li>
+          <img src="http://leedsbread.coop/wp-content/themes/skeleton/images/transp.gif"
+          style="background-image:url(&#39;http://leedsbread.coop/wp-content/themes/skeleton/images/headers/leeds-bread-coop(3).png&#39;); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;" class="scale-with-grid"/>
+        </li><li>
+          <img src="http://leedsbread.coop/wp-content/themes/skeleton/images/transp.gif"
+          style="background-image:url(&#39;http://leedsbread.coop/wp-content/themes/skeleton/images/headers/leeds-bread-coop(4).png&#39;); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;" class="scale-with-grid"/>
+        </li><li>
+          <img src="http://leedsbread.coop/wp-content/themes/skeleton/images/transp.gif"
+          style="background-image:url(&#39;http://leedsbread.coop/wp-content/themes/skeleton/images/headers/leeds-bread-coop(5).png&#39;); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;" class="scale-with-grid"/>
+        </li><li>
+          <img src="http://leedsbread.coop/wp-content/themes/skeleton/images/transp.gif"
+          style="background-image:url(&#39;http://leedsbread.coop/wp-content/themes/skeleton/images/headers/leeds-bread-coop(6).png&#39;); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;" class="scale-with-grid"/>
+        </li>
+      </ul>
+
+      <div class="lbc-menu">
+        <div id="navigation"><div class="responsiveSelectContainer"><ul id="menu-main_menu-1" class="menu responsiveSelectFullMenu">
+              <li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-290">
+                <%= link_to "Home", "/" %>
+              </li>
+
               <% if current_subscriber%>
-                <li>
-                  <%= link_to 'Logout', destroy_subscriber_session_path, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-                </li>
-                <% unless admin? %>
-                  <li>
-                  <%= link_to "Edit Account", edit_subscriber_registration_path %>
-                </li>
-                <li>
-                  <%= link_to "Payment", edit_subscriber_subs_path(current_subscriber) %>
-                </li>
-                <li>
-                  <%= link_to "Pause your subscription", new_subscriber_holiday_path(current_subscriber) %>
-                </li>
-              <% end %>
-              <% end %>
-                <% if admin?%>
-                  <li>
-                    <%= link_to 'Subscribers', subscribers_path %>
-                  </li>
-                  <li>
-                    <%= link_to 'Collection Points', collection_points_path %>
-                  </li>
-                  <li>
-                    <%= link_to 'Bread Types', bread_types_path %>
-                  </li>
-                  <li>
-                    <%= link_to 'Email Templates', email_templates_path %>
-                  </li>
-                  <li>
-                    <%= link_to 'Wholesale', wholesale_customers_path %>
-                  </li>
-                  <li>
-                    <%= link_to 'Delivery', delivery_reports_path %>
-                  </li>
-                  <li>
-                    <%= link_to 'Production', production_reports_path %>
-                  </li>
+                <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <%= link_to 'Logout', destroy_subscriber_session_path, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+              </li>
+              <% unless admin? %>
+                <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <%= link_to "Edit Account", edit_subscriber_registration_path %>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <%= link_to "Payment", edit_subscriber_subs_path(current_subscriber) %>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <%= link_to "Pause your subscription", new_subscriber_holiday_path(current_subscriber) %>
+              </li>
+            <% end %>
+            <% end %>
+              <% if admin?%>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <%= link_to 'Subscribers', subscribers_path %>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <%= link_to 'Collection Points', collection_points_path %>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <%= link_to 'Bread Types', bread_types_path %>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <%= link_to 'Email Templates', email_templates_path %>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <%= link_to 'Wholesale', wholesale_customers_path %>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <%= link_to 'Delivery', delivery_reports_path %>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <%= link_to 'Production', production_reports_path %>
+              </li>
                 <% end %>
                 </ul>
-              </div>
             </div>
-          </div>
+          </div><!--/#navigation-->
         </div>
-        <div class="container">
+      </div>
+
+  <a name="top" id="top"></a><div id="content" class="twelve columns">
+
+    <div id="post-4" class="type-page status-publish hentry">
+
+
+      <!--<h2 class="entry-title">Home</h2>-->
+
+
+      <div class="entry-content">
           <%= render 'layouts/messages' %>
-          <div class="row">
             <%= render_breadcrumbs %>
             <%= yield %>
-          </div>
-          <footer>
-            <p>&copy; Leeds Bread Co-op 2014</p>
-          </footer>
         </div>
       </div>
     </div>
+<div class="clear"></div><div id="footer" class="normal twelve columns">
+
+
+<div class="one_third">
+	  		<div class="recent-posts-3">		<h3 class="widget-title">Latest posts</h3>		<ul>
+					<li>
+				<a href="http://leedsbread.coop/blog/roasted-garlic-bread-4/">Roasted Garlic Bread</a>
+						</li>
+					<li>
+				<a href="http://leedsbread.coop/blog/roast-potato-rosemary-bread-4/">Roast Potato &#038; Rosemary Bread</a>
+						</li>
+				</ul>
+		</div></div>
+
+<div class="one_third last">
+	  <div class="text-3"><h3 class="widget-title">Bread subscriptions</h3>			<div class="textwidget">Are you a real-bread lover?<br>
+Take a look at our <a href="/bread-subscriptions/" title="Bread subscriptions">subscription scheme</a> and make sure you never run out of bread!</div>
+		</div></div>
+
+<div class="clear"></div>
+
+<div id="credits"><span class="sociallinks">
+			  <a href="http://www.facebook.com/pages/Leeds-Bread-Coop/245404722229376" class="iconSocial social-facebook">
+			  <img src="http://leedsbread.coop/wp-content/themes/skeleton/images/transp.gif" alt="Leeds Bread Co-op on Facebook" height="25" width="25"></a>
+			  <a href="https://twitter.com/LeedsBreadCoop" class="iconSocial social-twitter">
+			  <img src="http://leedsbread.coop/wp-content/themes/skeleton/images/transp.gif" alt="Leeds Bread Co-op on Twitter" height="25" width="25"></a>
+			  </span><span class="webowner">Leeds Bread Co-op · 2014</span><span class="themeauthor">web. <a href="http://www.cocinadeideas.net" title="Cocina de ideas - Graphic and web design Leeds & Birmingham">Cocina de ideas</a></span><a href="http://www.sustainweb.org/realbread/" class="realbread" title="Real bread campaign"><img src="http://leedsbread.coop/wp-content/themes/skeleton/images/leeds-bread-coop-real-bread-campaign.png" alt="Real Bread Campaign" height="80" width="80"></a></span></div><script type='text/javascript' src='http://leedsbread.coop/wp-content/themes/skeleton/javascripts/app.js?ver=1.2.3'></script>
+<script type='text/javascript' src='http://leedsbread.coop/wp-content/themes/skeleton/javascripts/superfish.js?ver=1.2.3'></script>
+<script type='text/javascript' src='http://leedsbread.coop/wp-content/themes/skeleton/javascripts/jquery.formalize.min.js?ver=1.2.3'></script>
+
+</div><!--/#footer-->
+</div><!--/#wrap.container-->
   </body>
 </html>
