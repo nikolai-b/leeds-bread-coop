@@ -9,7 +9,8 @@ describe SubsController do
 
   let(:subscriber) { create :subscriber }
   let(:valid_attributes) { {subscriber_id: subscriber.to_param } }
-  let(:customer) { double('customer').tap {|c| c.stub(:id).and_return(1) } }
+  let(:customer) { double('customer', id: 1) }
+  let(:notifier) { double('customer', new_sub: true) }
 
   before do
     setup
@@ -17,7 +18,7 @@ describe SubsController do
 
   it do
     expect(Stripe::Customer).to receive(:create).and_return(customer)
-    expect(Notifier).to receive(:new_sub)
+    expect(SubscriberNotifier).to receive(:new).with(subscriber).and_return(notifier)
 
     post :create,  valid_attributes
   end

@@ -10,11 +10,11 @@ describe Sub do
       before do
         create :subscriber_item, subscriber: subscriber
         Stripe::Customer.stub(:create).and_return(stripe_customer)
-        Notifier.stub(:new_sub)
+        SubscriberNotifier.stub_chain(:new, :new_sub)
       end
 
       it 'sends an new_sub email' do
-        expect(Notifier).to receive(:new_sub)
+        expect(SubscriberNotifier).to receive(:new).with(subscriber)
         subject.add('strip_token')
       end
 

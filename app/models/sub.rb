@@ -2,8 +2,9 @@ class Sub
   extend ActiveModel::Naming
   attr_reader :errors
 
-  def initialize(subscriber)
+  def initialize(subscriber, notifier = nil)
     @subscriber = subscriber
+    @notifier = notifier || SubscriberNotifier.new(subscriber)
     @errors = ActiveModel::Errors.new(self)
   end
 
@@ -29,7 +30,7 @@ class Sub
 
       @subscriber.mark_subscriber_items_payment_as true
 
-      Notifier.new_sub(@subscriber)
+      @notifier.new_sub
 
       true
     else

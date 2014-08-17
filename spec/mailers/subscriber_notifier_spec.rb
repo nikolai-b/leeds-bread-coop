@@ -1,13 +1,13 @@
 require "spec_helper"
 
-describe Notifier do
+describe SubscriberNotifier do
   before do
     create :email_template, :with_real_template
     create :email_template, :with_real_template, name: 'sub_deleted'
   end
   let(:subscriber) { create :subscriber, :subscription }
 
-  subject {Notifier.new(subscriber)}
+  subject {SubscriberNotifier.new(subscriber)}
 
   it "sends a new_sub email to the subscriber" do
     subject.new_sub

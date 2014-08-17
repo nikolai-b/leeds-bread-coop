@@ -8,7 +8,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   before :each do
     create :collection_point
     create :bread_type
-    create :new_sub_template
+    create :email_template, :with_real_template
     Capybara.current_driver = :selenium
     Capybara.javascript_driver = :selenium
     @client = StripeMock.start_client

@@ -14,7 +14,7 @@ describe DeliveryReport do
   describe '#show' do
 
     context 'on Friday' do
-      let(:date) { Date.today.next_week.advance(days: 4) }
+      let(:date) { Date.today.next_week.advance(days: 11) }
 
       it "returns an array with size of delivaries" do
         expect(subject.show[0].items.size).to eq(4)
@@ -34,7 +34,15 @@ describe DeliveryReport do
 
         expect(names).not_to include('NotPaid')
         expect(names).to include('Lizzie')
+
       end
+
+      it 'excludes subscriber who are on holiday' do
+        names = subject.show[0].items.map { |items| items.subscriber.name }
+
+        expect(names).not_to include('Holiday')
+      end
+
     end
   end
 
@@ -59,7 +67,7 @@ describe DeliveryReport do
   describe '#to_csv' do
 
     context 'on Friday' do
-      let(:date) { Date.today.next_week.advance(days: 4) }
+      let(:date) { Date.today.next_week.advance(days: 11) }
 
       it "outputs a csv with subscriber info" do
         csv = CSV.parse(subject.to_csv)

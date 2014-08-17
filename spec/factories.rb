@@ -14,7 +14,6 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
   factory :bread_type do
     name "White sour"
     sour_dough true
-
   end
 
   factory :yeast_bread, class: BreadType do

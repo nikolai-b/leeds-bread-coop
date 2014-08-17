@@ -9,7 +9,7 @@ class StripeAPI
     subscriber.mark_subscriber_items_payment_as false
     subscriber.save!
 
-    Notifier.sub_deleted(subscriber)
+    SubscriberNotifier.new(subscriber).sub_deleted
   end
 
   after_invoice_created! do |invoice, event|
@@ -17,9 +17,9 @@ class StripeAPI
 
     subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
 
-    formatted_invoice = Invoice.new(invoice )
+    formatted_invoice = Invoice.new(invoice)
 
-    stripe_invoice(subscriber, formatted_invoice)
+    SubscriberNotifier.new(subscriber, formatted_invoice).stripe_invoice
   end
 
   after_charge_dispute_created! do |charge, event|
