@@ -1,75 +1,34 @@
-class Notifier < ActionMailer::Base
+class SubscriberNotifier < ActionMailer::Base
   default from: "info@leedsbread.coop"
   require 'mustache'
-  include Stripe::Callbacks
 
-  def new_sub(subscriber)
+  def initialize(subscriber, invoice = nil)
+    @subscriber, @invoice = subscriber, invoice
+  end
+
+  def new_sub
     template = EmailTemplate.find_by name: 'new_sub'
-    email = mail(to: subscriber.email,
+    email = mail(to: @subscriber.email,
          subject: 'New Subscription to Leeds Bread Co-op',
-         body: Mustache.render(
-           template.body,
-           subscriber: subscriber,
-           bread_types: subscriber.bread_types.map {|b| b.name },
-           collection_point: subscriber.collection_point
-         ),
+         body: Mustache.render( template.body, subscriber_details),
          content_type: 'text/html; charset=UTF-8')
     email.deliver
   end
 
-  after_customer_subscription_deleted! do |subscription, event|
-    stripe_customer_id = subscription.customer
-
-    subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
-
-    subscriber.mark_subscriber_items_payment_as false
-    subscriber.save!
-
-    Notifier.sub_deleted(subscriber)
-  end
-
-  after_invoice_created! do |invoice, event|
-    stripe_customer_id = invoice.customer
-
-
-    subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
-
-
-    formatted_invoice = Invoice.new(invoice )
-
-    stripe_invoice(subscriber, formatted_invoice)
-  end
-
-  after_charge_dispute_created! do |charge, event|
-    stripe_dispute(charge)
-  end
-
-  def stripe_invoice(subscriber, invoice)
+  def stripe_invoice
     template = EmailTemplate.find_by name: 'stripe_invoice'
-    email = mail(to: subscriber.email,
-         subject: 'Leeds Bread Co-op Invoice',
-         body: Mustache.render(
-           template.body,
-           subscriber: subscriber,
-           bread_type: subscriber.bread_type.name,
-           collection_point: subscriber.collection_point,
-           invoice: invoice
-         ),
+    email = mail(to: @subscriber.email,
+         subject: 'Leeds Bread Co-op: Invoice',
+         body: Mustache.render( template.body, subscriber_details.merge(invoice: invoice) ),
          content_type: 'text/html; charset=UTF-8')
     email.deliver
   end
 
-  def sub_deleted(subscriber)
+  def sub_deleted
     template = EmailTemplate.find_by name: 'sub_deleted'
-    email = mail(to: subscriber.email,
-         subject: 'Leeds Bread Co-op Invoice',
-         body: Mustache.render(
-           template.body,
-           subscriber: subscriber,
-           bread_type: subscriber.bread_type.name,
-           collection_point: subscriber.collection_point,
-           invoice: invoice
-         ),
+    email = mail(to: @subscriber.email,
+         subject: 'Leeds Bread Co-op: Subscription Removed',
+         body: Mustache.render( template.body, subscriber_details),
          content_type: 'text/html; charset=UTF-8')
     email.deliver
   end
@@ -110,5 +69,15 @@ class Notifier < ActionMailer::Base
     def next_payment_attempt_raw
       @invoice.next_payment_attempt || Time.new.to_i
     end
+  end
+
+  private
+
+  def subscriber_details
+    {
+      subscriber: @subscriber,
+      bread_type: @subscriber.bread_types.map(&:name).to_sentence,
+      collection_point: @subscriber.collection_point
+    }
   end
 end

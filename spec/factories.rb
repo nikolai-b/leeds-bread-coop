@@ -56,11 +56,10 @@ NEW_SUB_BODY ="Welcome {{subscriber.name}}!
   factory :email_template do
     name 'new_sub'
     body 'Welcome!'
-  end
 
-  factory :new_sub_template, class: EmailTemplate do
-    name 'new_sub'
-    body NEW_SUB_BODY
+    trait :with_real_template do
+      body NEW_SUB_BODY
+    end
   end
 
   factory :wholesale_customer do
