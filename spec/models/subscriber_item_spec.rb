@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-Describe SubscriberItem do
+describe SubscriberItem do
   it "write real specs" do
-    pending
+    skip
   end
 end

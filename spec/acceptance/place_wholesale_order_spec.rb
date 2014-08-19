@@ -2,6 +2,9 @@ require 'spec_helper'
 
 feature "Place wholesale order", type: :feature,  js: true  do
   before :each do
+    Capybara.register_driver :poltergeist do |app|
+      Capybara::Poltergeist::Driver.new(app, js_errors: false)
+    end
     Capybara.javascript_driver = :poltergeist
     Capybara.current_driver = :poltergeist
     create :wholesale_customer
@@ -43,6 +46,6 @@ feature "Place wholesale order", type: :feature,  js: true  do
     fill_in "Quantity", with: 12
     select "White sour"
 
-    click_on 'Create Order'
+    click_on 'Create'
   end
 end

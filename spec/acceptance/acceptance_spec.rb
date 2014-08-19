@@ -1,4 +1,7 @@
 require 'spec_helper'
+require 'thin'
+
+StripeMock.spawn_server
 
 feature "New user, new sign-up", type: :feature,  js: true  do
 
@@ -8,7 +11,10 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     create :new_sub_template
     Capybara.current_driver = :selenium
     Capybara.javascript_driver = :selenium
+    @client = StripeMock.start_client
   end
+
+  after { StripeMock.stop }
 
   scenario "New subscription" do
     visit '/'
@@ -55,9 +61,10 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     #page.driver.submit :post, subscriber_subs_path(1), params
 
     page.driver.browser.switch_to.frame 'stripe_checkout_app'
-    fill_in "card_number", with: "4242424242424242"
-    fill_in "cc-exp", with: (Date.current + 1.month).strftime('%m%y')
+    fill_in "card_number", with: "4242 4242 4242 4242"
+    fill_in "cc-exp", with: (Date.current + 1.month).strftime('%m %y')
     fill_in "cc-csc", with: '123'
+
     click_on 'Pay £10 every 4 weeks'
   end
 

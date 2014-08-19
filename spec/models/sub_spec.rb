@@ -26,7 +26,7 @@ describe Sub do
       end
 
       it 'returns true' do
-        expect(subject.add('strip_token')).to be_true
+        expect(subject.add('strip_token')).to be_truthy
       end
     end
 
@@ -44,7 +44,7 @@ describe Sub do
       end
 
       it 'returns false' do
-        expect(subject.add('strip_token')).to be_false
+        expect(subject.add('strip_token')).to be_falsey
       end
     end
   end
@@ -67,7 +67,7 @@ describe Sub do
       end
 
       it 'returns true' do
-        expect(subject.cancel).to be_true
+        expect(subject.cancel).to be_truthy
       end
     end
   end
