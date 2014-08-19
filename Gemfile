@@ -27,7 +27,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+# gem 'bcrypt', '> 3.1.7'
 
 # Use unicorn as the app server
 gem 'thin'
@@ -36,7 +36,7 @@ gem 'virtus'
 
 gem "therubyracer"
 gem "less-rails"
-gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails", '< 3.0'
 gem 'mustache'
 
 gem 'bootstrap-datepicker-rails'
@@ -46,8 +46,8 @@ gem 'stripe-rails'
 gem 'awesome_nested_fields'
 
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'byebug'
+  gem 'rspec-rails', '< 3.0'
+  gem 'pry-byebug'
 end
 
 
@@ -59,6 +59,7 @@ group :test do
   gem 'launchy'
   gem 'capybara-email'
   gem 'factory_girl_rails'
+  gem 'stripe-ruby-mock'
 end
 
 group :development do
