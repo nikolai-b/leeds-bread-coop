@@ -24,18 +24,22 @@ describe Subscriber do
     end
   end
 
-  describe "#num_paid_subs" do
+  context "with subscriber items" do
     subject { create(:subscriber) }
-    let(:bread_type) { create :bread_type }
 
     before do
-      4.times {create :subscriber_item, subscriber: subject, bread_type: bread_type}
-      create :subscriber_item, subscriber: subject, bread_type: bread_type, paid: false
+      4.times {create :subscriber_item, subscriber: subject}
+      create :subscriber_item, subscriber: subject, paid: false
     end
 
     it "returns the num paid subscriber items" do
       expect(subject.num_paid_subs).to eq(4)
     end
+
+    it "returns the num unpaid subscriber items" do
+      expect(subject.num_unpaid_subs).to eq(1)
+    end
+
   end
 
   describe 'collection_days' do

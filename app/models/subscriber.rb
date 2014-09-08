@@ -21,6 +21,10 @@ class Subscriber < ActiveRecord::Base
                                where("subscriber_items.paid" => :true).where('subscriber_items.collection_day' => date.wday).references(:subscriber_items, :holidays) }
 
 
+  def num_unpaid_subs
+    subscriber_items.where(paid: false).count
+  end
+
   def num_paid_subs
     subscriber_items.where(paid: true).count
   end
