@@ -13,6 +13,7 @@ class Sub
     customer.cancel_subscription
 
     @subscriber.mark_subscriber_items_payment_as false
+    @notifier.sub_deleted
 
     true
   rescue Stripe::APIError => e

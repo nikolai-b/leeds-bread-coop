@@ -6,10 +6,12 @@ class StripeAPI
 
     subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
 
-    subscriber.mark_subscriber_items_payment_as false
-    subscriber.save!
+    if subscriber
+      subscriber.mark_subscriber_items_payment_as false
+      subscriber.save!
 
-    SubscriberNotifier.new(subscriber).sub_deleted
+      SubscriberNotifier.new(subscriber).sub_deleted
+    end
   end
 
   after_invoice_created! do |invoice, event|

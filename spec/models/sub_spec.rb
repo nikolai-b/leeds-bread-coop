@@ -1,8 +1,10 @@
 describe Sub do
-  subject { Sub.new(subscriber)}
+  let(:notifier) { double('SubscriberNotifier', new_sub: true, sub_deleted: true) }
+  let(:subscriber) { create :subscriber}
+
+  subject { Sub.new(subscriber, notifier)}
 
   describe '#add' do
-    let(:subscriber) { create :subscriber }
     let(:stripe_customer) { double(id: "customer_id") }
 
     context 'with no current sub' do
@@ -10,11 +12,11 @@ describe Sub do
       before do
         create :subscriber_item, subscriber: subscriber
         Stripe::Customer.stub(:create).and_return(stripe_customer)
-        SubscriberNotifier.stub_chain(:new, :new_sub)
       end
 
+
       it 'sends an new_sub email' do
-        expect(SubscriberNotifier).to receive(:new).with(subscriber)
+        expect(notifier).to receive(:new_sub)
         subject.add('strip_token')
       end
 
@@ -50,7 +52,6 @@ describe Sub do
   end
 
   describe '#cancel' do
-    let(:subscriber) { create :subscriber}
 
     context 'happy path' do
       let(:stripe_customer) { double(cancel_subscription: true) }
@@ -68,6 +69,11 @@ describe Sub do
 
       it 'returns true' do
         expect(subject.cancel).to be_truthy
+      end
+
+      it 'sends an new_sub email' do
+        expect(notifier).to receive(:sub_deleted)
+        subject.cancel
       end
     end
   end
