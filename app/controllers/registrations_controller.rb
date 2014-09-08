@@ -20,6 +20,12 @@ class RegistrationsController < Devise::RegistrationsController
       render "edit"
     end
   end
+
+  def destroy
+    Sub.new(@subscriber).cancel
+    super
+  end
+
   protected
 
   def after_sign_up_path_for(resource)

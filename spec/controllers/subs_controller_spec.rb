@@ -1,7 +1,4 @@
 describe SubsController do
-  include Devise::TestHelpers
-
-
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:subscriber]
     sign_in subscriber
