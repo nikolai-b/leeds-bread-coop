@@ -5,10 +5,10 @@ describe DeliveryReport do
   before do
     4.times { subscriber = create :subscriber, :subscription, collection_point: collection_point }
 
-    unpaid_subscriber = create :subscriber, name: 'NotPaid', collection_point: collection_point
+    unpaid_subscriber = create :subscriber, first_name: 'NotPaid', collection_point: collection_point
     create :subscriber_item, subscriber: unpaid_subscriber, paid: false
 
-    create :subscriber, :on_subscription_holiday, name: 'Holiday', collection_point: collection_point
+    create :subscriber, :on_subscription_holiday, first_name: 'Holiday', collection_point: collection_point
   end
 
   describe '#show' do
@@ -25,12 +25,12 @@ describe DeliveryReport do
         first_delivery_first_item = first_delivery.items[0]
 
         expect(first_delivery.collection_point.name).to eq('Green Action')
-        expect(first_delivery_first_item.subscriber.name).to include('Lizzie')
+        expect(first_delivery_first_item.subscriber.first_name).to include('Lizzie')
         expect(first_delivery_first_item.bread_type.name).to eq('White sour')
       end
 
       it 'excludes subscriber who have not paid' do
-        names = subject.show[0].items.map { |items| items.subscriber.name }
+        names = subject.show[0].items.map { |items| items.subscriber.first_name }
 
         expect(names).not_to include('NotPaid')
         expect(names).to include('Lizzie')
@@ -38,7 +38,7 @@ describe DeliveryReport do
       end
 
       it 'excludes subscriber who are on holiday' do
-        names = subject.show[0].items.map { |items| items.subscriber.name }
+        names = subject.show[0].items.map { |items| items.subscriber.first_name }
 
         expect(names).not_to include('Holiday')
       end
@@ -71,7 +71,7 @@ describe DeliveryReport do
 
       it "outputs a csv with subscriber info" do
         csv = CSV.parse(subject.to_csv)
-        expect(csv[8]).to eq([nil, "Lizzie", "White sour"])
+        expect(csv[8]).to eq([nil, "Lizzie Surname", "White sour"])
       end
 
       context 'a subscriber with more bread_types than paid subs' do

@@ -50,7 +50,8 @@ class Subscriber < ActiveRecord::Base
       subscriber.phone = row['Phone']
       subscriber.password = subscriber.email
       subscriber.address = row['Address']
-      subscriber.first_name = row['Name']
+      subscriber.first_name = row['Name'].split(' ')[0]
+      subscriber.last_name = row['Name'].split(' ')[1..-1].join(' ')
       phone_length = subscriber.phone ? subscriber.phone.length : 0
       if phone_length > 13
         subscriber.phone = subscriber.phone.slice(0,13)
