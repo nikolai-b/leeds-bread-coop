@@ -1,41 +1,6 @@
-<h1> Subscribe </h1>
-<div class="row">
-  <div class="col-sm-2">
-    <%= bootstrap_form_for @subscriber, layout: :vertical do |f| %>
-      <% if @subscriber.errors.any? %>
-        <div class="error_messages">
-          <ul>
-        </div>
-      <% end %>
-      <%= f.hidden_field :stripe_card_token %>
-      <%= f.hidden_field :plan_id %>
-      <%= f.hidden_field :email %>
-      <%= label_tag :card_number, "Card Number", class: "control-label" %>
-      <%= text_field_tag :card_number, nil, name: nil, class: "form-control" %>
-      <div class="form-group">
-        <%= label_tag :card_code, "CVV", class: "control-label" %>
-        <%= text_field_tag :card_code, nil, name: nil, class: "form-control" %>
-      </div>
-      <div class="form-group">
-        <%= label_tag :card_month, "Card Expiration" %>
-        <div class="row">
-          <div class="col-sm-6">
-            <%= select_month nil, {add_month_numbers_true: true}, {name: nil, id: "card_month", class: "form-control"} %>
-          </div>
-          <div class="col-sm-6">
-            <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year", class: "form-control"} %>
-          </div>
-        </div>
-      </div>
-      <div id="stripe_error">
-        <noscript> JavaScript is not enabled and is required for this form. First enable it in your web browser settings </noscript>
-      </div>
-      <div class="actions pull-right">
-        <div class="soft">
-          £10 every 4 weeks
-        </div>
-        <%= f.submit "Subscribe", class: "btn btn-success" %>
-      </div>
-    <% end %>
-  </div>
-</div>
+<h1>New subscriber</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @subscriber %> |
+<%= link_to 'Back', subscribers_path %>
