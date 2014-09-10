@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140908225649) do
+ActiveRecord::Schema.define(version: 20140910205405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20140908225649) do
   add_index "subscriber_items", ["subscriber_id"], name: "index_subscriber_items_on_subscriber_id", using: :btree
 
   create_table "subscribers", force: true do |t|
-    t.string   "name"
+    t.string   "first_name"
     t.text     "address"
     t.string   "phone"
     t.integer  "collection_point_id"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20140908225649) do
     t.string   "stripe_customer_id"
     t.date     "collection_day_updated_at"
     t.integer  "holidays_count",            default: 0,  null: false
+    t.string   "last_name"
   end
 
   add_index "subscribers", ["collection_point_id"], name: "index_subscribers_on_collection_point_id", using: :btree

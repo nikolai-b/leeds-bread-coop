@@ -7,7 +7,8 @@ class Subscriber < ActiveRecord::Base
 
   validates :collection_point_id, numericality: { only_integer: true }
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
-  validates :name, length: {minimum: 4}
+  validates :first_name, length: {minimum: 3}
+  validates :last_name, length: {minimum: 2}
   validates :phone, length: {in: 10..13}
 
   belongs_to :collection_point
@@ -20,6 +21,9 @@ class Subscriber < ActiveRecord::Base
   scope :active_on, ->(date) { includes(:holidays, :subscriber_items).where('holidays_count = 0 OR DATE(?) NOT BETWEEN holidays.start_date AND holidays.end_date', date).
                                where("subscriber_items.paid" => :true).where('subscriber_items.collection_day' => date.wday).references(:subscriber_items, :holidays) }
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 
   def num_unpaid_subs
     subscriber_items.where(paid: false).count
@@ -46,7 +50,7 @@ class Subscriber < ActiveRecord::Base
       subscriber.phone = row['Phone']
       subscriber.password = subscriber.email
       subscriber.address = row['Address']
-      subscriber.name = row['Name']
+      subscriber.first_name = row['Name']
       phone_length = subscriber.phone ? subscriber.phone.length : 0
       if phone_length > 13
         subscriber.phone = subscriber.phone.slice(0,13)

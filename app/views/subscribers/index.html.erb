@@ -8,7 +8,7 @@
   <thead>
     <tr>
       <th>
-        <%= model_class.human_attribute_name(:name) %>
+        <%= model_class.human_attribute_name(:full_name) %>
       </th>
       <th>
         <%= model_class.human_attribute_name(:collection_point) %>
@@ -28,7 +28,7 @@
     <% @subscribers.each do |subscriber| %>
       <tr>
         <td>
-          <%= link_to subscriber.name, subscriber_path(subscriber) %>
+          <%= link_to subscriber.full_name, subscriber_path(subscriber) %>
         </td>
         <td>
           <%= subscriber.collection_point.name %>

@@ -1,6 +1,6 @@
 <p>
   <strong>Name:</strong>
-  <%= @subscriber.name %>
+  <%= @subscriber.full_name %>
 </p>
 
 <p>
@@ -32,6 +32,11 @@
   <% end %>
   <%= bread_subs.join(', ') %>
 </p>
+<p>
+  <strong>Notes</strong>
+  <%= @subscriber.notes %>
+</p>
+
 <p>
   <strong>Created at</strong>
   <%= @subscriber.created_at.to_formatted_s(:rfc822) %>
