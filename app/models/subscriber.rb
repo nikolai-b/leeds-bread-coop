@@ -20,6 +20,7 @@ class Subscriber < ActiveRecord::Base
 
   scope :active_on, ->(date) { includes(:holidays, :subscriber_items).where('holidays_count = 0 OR DATE(?) NOT BETWEEN holidays.start_date AND holidays.end_date', date).
                                where("subscriber_items.paid" => :true).where('subscriber_items.collection_day' => date.wday).references(:subscriber_items, :holidays) }
+  scope :ordered, -> { order(:first_name, :last_name) }
 
   def full_name
     "#{first_name} #{last_name}"

@@ -68,4 +68,13 @@ describe Subscriber do
       end
     end
   end
+
+  it 'has ordered scope' do
+    create :subscriber, first_name: 'Aaa1', last_name: 'Zzzzz'
+    create :subscriber, first_name: 'Aaa1', last_name: 'Aaaaa'
+    create :subscriber, first_name: 'Zzzz', last_name: 'Aaaaa'
+    expect(described_class.ordered[0].last_name).to eq('Aaaaa')
+    expect(described_class.ordered[1].first_name).to eq('Aaa1')
+    expect(described_class.ordered[2].first_name).to eq('Zzzz')
+  end
 end

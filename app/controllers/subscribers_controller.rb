@@ -5,7 +5,7 @@ class SubscribersController < ApplicationController
   # GET /subscribers
   # GET /subscribers.json
   def index
-    @subscribers = Subscriber.all
+    @subscribers = Subscriber.ordered
   end
 
   def new
