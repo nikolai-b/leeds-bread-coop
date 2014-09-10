@@ -93,10 +93,10 @@
     <% else %>
       <%= f.password_field :password, autocomplete: "off" %>
     <% end %>
-
-    <% button_label = @subscriber.persisted? ? "Update" : "Subscribe" %>
-    <%= f.submit button_label, class: "btn btn-success" %>
-
   <% end %>
+
+  <% button_label = @subscriber.persisted? ? "Update" : "Subscribe" %>
+  <%= f.submit button_label, class: "btn btn-success" %>
+
 <% end %>
 
