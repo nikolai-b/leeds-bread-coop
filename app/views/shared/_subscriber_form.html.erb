@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@subscriber, as: :subscriber, url: registration_path(:subscriber), layout: :inline, html: { method: html_method }) do |f| %>
+<%= bootstrap_form_for(@subscriber, as: :subscriber, url: form_url, layout: :inline, html: { method: html_method }) do |f| %>
   <% if @subscriber.errors.any? %>
     <div id="error_explanation">
       <div class="alert alert-error">

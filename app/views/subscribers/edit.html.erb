@@ -1,6 +1,6 @@
 <h1>Editing subscriber</h1>
 
-<%= render 'shared/subscriber_form', html_method: :put %>
+<%= render 'shared/subscriber_form', html_method: :put, form_url: subscriber_path(@subscriber) %>
 
 <%= link_to 'Show', @subscriber %> |
 <%= link_to 'Back', subscribers_path %>
