@@ -1,29 +1,23 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
-  before_action :set_wholesale_customer
+  before_action :set_wholesale_customer, except: :copy
+  skip_before_action :authenticate_subscriber!, only: [:copy]
+  skip_before_action :authenticate_admin, only: [:copy]
 
-  # GET /orders
-  # GET /orders.json
   def index
     @orders = Order.all
   end
 
-  # GET /orders/1
-  # GET /orders/1.json
   def show
   end
 
-  # GET /orders/new
   def new
     @order = Order.new
   end
 
-  # GET /orders/1/edit
   def edit
   end
 
-  # POST /orders
-  # POST /orders.json
   def create
     @order = @wholesale_customer.orders.new(order_params)
 
@@ -34,8 +28,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /orders/1
-  # PATCH/PUT /orders/1.json
   def update
     if @order.update(order_params)
       redirect_to [@wholesale_customer, @order], notice: 'Order was successfully updated.'
@@ -44,13 +36,20 @@ class OrdersController < ApplicationController
     end
   end
 
-  # DELETE /orders/1
-  # DELETE /orders/1.json
   def destroy
     @order.destroy
     respond_to do |format|
       format.html { redirect_to wholesale_customer_orders_url(@wholesale_customer), notice: 'Order was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def copy
+    if params[:admin_email].in? Subscriber.where(admin: true).pluck(:email)
+      Order.copy_regular_orders
+      head :no_content
+    else
+      redirect_to '/'
     end
   end
 
