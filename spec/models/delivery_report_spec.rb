@@ -3,7 +3,7 @@ describe DeliveryReport do
   let(:collection_point) { create :collection_point }
 
   before do
-    4.times { subscriber = create :subscriber, :subscription, collection_point: collection_point }
+    4.times { subscriber = create :subscriber, :with_subscription, collection_point: collection_point }
 
     unpaid_subscriber = create :subscriber, first_name: 'NotPaid', collection_point: collection_point
     create :subscriber_item, subscriber: unpaid_subscriber, paid: false

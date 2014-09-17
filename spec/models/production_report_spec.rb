@@ -7,7 +7,7 @@ describe ProductionReport do
     before do
       subscriber_on_holiday = create :subscriber, :on_subscription_holiday
 
-      yeast_bread = create :yeast_bread
+      yeast_bread = create :bread_type, :yeasty
       sour_bread = subscriber_on_holiday.subscriber_items[0].bread_type
       (1..3).each do |add|
         create :subscriber_item, bread_type: yeast_bread, collection_day: (1 + add)
@@ -22,10 +22,7 @@ describe ProductionReport do
             quantity: 15
           }
         )
-
       end
-
-
     end
 
     it 'production has all breads for tomorrow (n+1)' do

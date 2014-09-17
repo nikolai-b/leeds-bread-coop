@@ -51,10 +51,10 @@ describe Subscriber do
 
   describe 'active_on scope' do
     context 'with subscribers on holiday' do
-      let!(:subscriber) { create :subscriber, :subscription }
+      let!(:subscriber) { create :subscriber, :with_subscription }
 
       before do
-        subscriber_on_holiday = create :subscriber, :subscription
+        subscriber_on_holiday = create :subscriber, :with_subscription
         create :holiday, subscriber: subscriber_on_holiday
       end
 

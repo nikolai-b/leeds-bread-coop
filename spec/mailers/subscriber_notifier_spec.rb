@@ -5,7 +5,7 @@ describe SubscriberNotifier do
     create :email_template, :with_real_template
     create :email_template, :with_real_template, name: 'sub_deleted'
   end
-  let(:subscriber) { create :subscriber, :subscription }
+  let(:subscriber) { create :subscriber, :with_subscription }
 
   subject {SubscriberNotifier.new(subscriber)}
 
