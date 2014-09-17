@@ -28,18 +28,24 @@ class DeliveryReport
 
   def to_csv(options = {})
     CSV.generate(options) do |csv|
-      csv << ["Wholesale Customer", "Order Notes", "Bread", "Quantity"]
+      csv << ["Wholesale Customer", "Order Notes", "Invoiced", "Regular", "Sample", "Bread", "Quantity"]
       wholesale_show.try(:each) do |delivery|
-        csv << [delivery.wholesale_customer.name, delivery.order.note, nil]
+        csv << [
+          delivery.wholesale_customer.name,
+          delivery.order.note,
+          delivery.order.invoiced ? 'T' : 'F',
+          delivery.order.regular  ? 'T' : 'F',
+          delivery.order.sample   ? 'T' : 'F',
+        ]
 
         delivery.items.each do |item|
-          csv << [nil, nil, item.bread_type.name, item.quantity]
+          csv << [nil, nil, nil, nil, nil, item.bread_type.name, item.quantity]
         end
       end
 
       csv << [nil]
       csv << [nil]
-      csv << ["---","---","---","----"]
+      csv << ["---","---","---","----","----","----"]
       csv << [nil]
       csv << [nil]
 

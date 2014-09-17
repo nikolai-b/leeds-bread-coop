@@ -5,7 +5,9 @@
     <tr>
       <th>Wholesale Customer</th>
       <th>Date</th>
-      <th>Invoiced or sample</th>
+      <th>Invoiced</th>
+      <th>Regular</th>
+      <th>Sample</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -13,9 +15,11 @@
   <tbody>
     <% @orders.each do |order| %>
       <tr>
-        <td><%= order.wholesale_customer %></td>
+        <td><%= order.wholesale_customer.name %></td>
         <td><%= order.date %></td>
-        <td><%= order.invoiced || order.sample %></td>
+        <td><%= order.invoiced %></td>
+        <td><%= order.regular %></td>
+        <td><%= order.sample %></td>
         <td><%= link_to 'Show', wholesale_customer_order_path(order.wholesale_customer, order) %></td>
         <td><%= link_to 'Edit', edit_wholesale_customer_order_path(order.wholesale_customer, order) %></td>
         <td><%= link_to 'Destroy', wholesale_customer_order_path(order.wholesale_customer, order), method: :delete, data: { confirm: 'Are you sure?' } %></td>
