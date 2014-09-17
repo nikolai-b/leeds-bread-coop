@@ -15,11 +15,12 @@ describe SubscriberNotifier do
     expect(email.body).to include("Welcome Lizzie!")
   end
 
-  it "sends a sub_deleted email to the subscriber" do
+  it "sends a sub_deleted email to the subscriber and info" do
     create :subscriber_item, subscriber: subscriber
     subject.sub_deleted
     email = ActionMailer::Base.deliveries.last
     expect(email.body).to include("White sour and White sour")
+    expect(email.cc).to include("info@leedsbread.coop")
   end
 
 end

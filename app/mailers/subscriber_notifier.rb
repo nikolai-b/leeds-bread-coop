@@ -24,9 +24,10 @@ class SubscriberNotifier
   def sub_deleted
     template = EmailTemplate.find_by name: 'sub_deleted'
     @emailer.send_mail(to: @subscriber.email,
-         subject: 'Leeds Bread Co-op: Subscription Removed',
-         body: Mustache.render( template.body, subscriber_details),
-         content_type: 'text/html; charset=UTF-8')
+                       cc: 'info@leedsbread.coop',
+                       subject: 'Leeds Bread Co-op: Subscription Removed',
+                       body: Mustache.render( template.body, subscriber_details),
+                       content_type: 'text/html; charset=UTF-8')
   end
 
   def stripe_dispute(charge)
