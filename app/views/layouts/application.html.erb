@@ -44,11 +44,11 @@ html.ie #author-info {behavior: url("http://leedsbread.coop/wp-content/themes/sk
 ================================================== -->
   <%= favicon_link_tag 'favicon.ico' %>
 
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="<%= image_path("apple-touch-icon.png") %>">
 
-  <link rel="apple-touch-icon" sizes="72x72" href="/assets/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="<%= image_path("apple-touch-icon-72x72.png") %>">
 
-  <link rel="apple-touch-icon" sizes="114x114" href="/assets/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="<%= image_path("apple-touch-icon-114x114.png") %>">
 
   <!-- This site is optimized with the Yoast WordPress SEO plugin v1.5.3.3 - https://yoast.com/wordpress/plugins/seo/ -->
   <meta name="description" content="Bakery making artisan Sourdough and Slowly Fermented bread for the good people of Leeds and surrounds. Markets and bread subs."/>
@@ -58,7 +58,7 @@ html.ie #author-info {behavior: url("http://leedsbread.coop/wp-content/themes/sk
   <meta property="og:title" content="Home - Leeds Bread Co-operative" />
   <meta property="og:description" content="Bakery making artisan Sourdough and Slowly Fermented bread for the good people of Leeds and surrounds. Markets and bread subs." />
   <meta property="og:site_name" content="Leeds Bread Co-operative" />
-  <meta property="og:image" content="/assets/home-learn-more.png" />
+  <meta property="og:image" content="<%= image_path("home-learn-more.png") %>" />
   <!-- / Yoast WordPress SEO plugin. -->
   <link rel='stylesheet' id='googlefonts-css'  href='http://fonts.googleapis.com/css?family=Glegoo:400|Dosis:200&subset=latin' type='text/css' media='all' />
   <meta name="generator" content="WordPress 3.9.2" />
@@ -198,22 +198,22 @@ $(function() {
       <ul class="slideshow">
         <li>
           <%= image_tag 'transp.gif',
-            style: :'background-image:url("/assets/leeds-bread-coop(1).png"); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;', class: :'scale-with-grid' %>
+            style: "background-image:url('#{image_path("leeds-bread-coop(1).png")}'); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;", class: :'scale-with-grid' %>
         </li><li>
           <%= image_tag 'transp.gif',
-            style: :'background-image:url("/assets/leeds-bread-coop(2).png"); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;', class: :'scale-with-grid' %>
+            style: "background-image:url('#{image_path("leeds-bread-coop(2).png")}'); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;", class: :'scale-with-grid' %>
         </li><li>
           <%= image_tag 'transp.gif',
-            style: :'background-image:url("/assets/leeds-bread-coop(3).png"); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;', class: :'scale-with-grid' %>
+            style: "background-image:url('#{image_path("leeds-bread-coop(3).png")}'); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;", class: :'scale-with-grid' %>
         </li><li>
           <%= image_tag 'transp.gif',
-            style: :'background-image:url("/assets/leeds-bread-coop(4).png"); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;', class: :'scale-with-grid' %>
+            style: "background-image:url('#{image_path("leeds-bread-coop(4).png")}'); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;", class: :'scale-with-grid' %>
         </li><li>
           <%= image_tag 'transp.gif',
-            style: :'background-image:url("/assets/leeds-bread-coop(5).png"); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;', class: :'scale-with-grid' %>
+            style: "background-image:url('#{image_path("leeds-bread-coop(5).png")}'); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;", class: :'scale-with-grid' %>
         </li><li>
           <%= image_tag 'transp.gif',
-            style: :'background-image:url("/assets/leeds-bread-coop(6).png"); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;', class: :'scale-with-grid' %>
+            style: "background-image:url('#{image_path("leeds-bread-coop(6).png")}'); background-repeat:no-repeat; background-position:center; background-size: cover; min-height:150px;", class: :'scale-with-grid' %>
         </li>
       </ul>
       <div class="lbc-menu">
