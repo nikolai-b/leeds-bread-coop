@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :orders
   end
   post '/orders/copy', to: "orders#copy"
+  get '/orders/copy', to: "orders#copy"
 
   resources :email_templates, only: [:index, :edit, :show, :update]
 
