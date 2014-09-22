@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :wholesale_customers do
     resources :orders
   end
-  get '/orders/copy', to: "orders#copy"
+  post '/orders/copy', to: "orders#copy"
 
   resources :email_templates, only: [:index, :edit, :show, :update]
 
