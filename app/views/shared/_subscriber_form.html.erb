@@ -31,49 +31,9 @@
   <%= f.text_area :address %>
   <%= f.collection_select(:collection_point_id, CollectionPoint.all, :id, :name) %>
 
-  <h4> Subscriptions </h4>
-  <div class="items">
-    <%= f.nested_fields_for :subscriber_items do |g| %>
-      <fieldset class="item">
-      <table class="table table-striped">
-        <tbody>
-          <tr>
-            <td>
-              <%= g.collection_select(:bread_type_id, BreadType.all, :id, :name) %>
-
-            </td>
-            <td>
-              <%= g.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]], selected: g.object.collection_day ) ) %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="field">
-        <% if current_subscriber.try(:admin?) %>
-          <%= g.check_box :paid, inline: true %>
-        <% end %>
-      </div>
-      <a href="#" class="remove">remove subscription</a>
-
-      <%= g.hidden_field :_destroy %>
-    </fieldset>
-    </br>
+  <% unless @subscriber.persisted? %>
+    <%= render 'shared/suscription' %>
   <% end %>
-  </div>
-  <a href="#" class="add">add another bread subscription</a>
-  <script type="text/javascript">
-    $(document).ready(function(e) {
-        $('FORM').nestedFields();
-
-        if ($('.item').size() == 1) {
-          $('.items').nestedFields('insert', function(item) {
-            }, {skipBefore: false});
-        }
-        });
-  </script>
-
-
-  <%= f.text_area :notes %>
 
   <% unless current_subscriber.try(:admin?) %>
     <% if devise_mapping.rememberable? -%>

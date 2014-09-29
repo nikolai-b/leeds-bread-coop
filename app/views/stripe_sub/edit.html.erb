@@ -36,6 +36,5 @@ You are currently paying for <%= pluralize(@subscriber.num_paid_subs, "loaf") %>
 </table>
 
 <% if (@subscriber.num_paid_subs > 0) %>
-  <p><%= link_to "Edit", edit_subscriber_registration_path, class: 'btn btn-success' %></p>
   <p><%= link_to "Cancel my payments", subscriber_subs_path(@subscriber), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %></p>
 <% end %>

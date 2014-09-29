@@ -1,4 +1,4 @@
-class Sub
+class StripeSub
   extend ActiveModel::Naming
   attr_reader :errors
 
