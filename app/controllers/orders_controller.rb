@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
-  before_action :set_wholesale_customer, except: :copy
-  skip_before_action :authenticate_subscriber!, only: [:copy]
-  skip_before_action :authenticate_admin, only: [:copy]
+  before_action :set_wholesale_customer
+  skip_before_action :authenticate_subscriber!
+  skip_before_action :authenticate_admin
 
   def index
     @orders = Order.all
@@ -41,15 +41,6 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to wholesale_customer_orders_url(@wholesale_customer), notice: 'Order was successfully destroyed.' }
       format.json { head :no_content }
-    end
-  end
-
-  def copy
-    if params[:admin_email].in? Subscriber.where(admin: true).pluck(:email)
-      Order.copy_regular_orders
-      head :no_content
-    else
-      redirect_to '/'
     end
   end
 
