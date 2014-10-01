@@ -1,7 +1,7 @@
 <%= bootstrap_form_for [@wholesale_customer, @order] do |f| %>
     <div class="input-append date">
       <%= f.label :date %>
-      <input class="col-sm-4" data-behaviour='datepicker' value="<%= Date.current.strftime("%d/%m/%Y") %>" id="order_date" name="order[date]" type="text">
+      <input class="col-sm-4" data-behaviour='datepicker' value="<%= @order.try(:date).try(:strftime, "%d/%m/%Y") || Date.current.strftime("%d/%m/%Y") %>" id="order_date" name="order[date]" type="text">
       </input>
       <span class="add-on">
         <i class="icon-th"></i>
