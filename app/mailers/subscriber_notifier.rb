@@ -42,6 +42,7 @@ class SubscriberNotifier
   def subscriber_details
     {
       subscriber: @subscriber,
+      subscriber_items: @subscriber.subscriber_items.to_a,
       bread_types: @subscriber.bread_types.map(&:name).to_sentence,
       collection_point: @subscriber.collection_point
     }

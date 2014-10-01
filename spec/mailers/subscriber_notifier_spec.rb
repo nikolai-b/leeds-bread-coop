@@ -13,6 +13,7 @@ describe SubscriberNotifier do
     subject.new_sub
     email = ActionMailer::Base.deliveries.last
     expect(email.body).to include("Welcome Lizzie!")
+    expect(email.body).to include("Friday")
   end
 
   it "sends a sub_deleted email to the subscriber and info" do
