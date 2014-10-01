@@ -1,18 +1,25 @@
 You are currently paying for <%= pluralize(current_subscriber.num_paid_subs, "loaf") %> of bread.
-<% unless(current_subscriber.num_unpaid_subs == 0) %>
-  <%= form_tag stripe_sub_path do %>
-    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+<%= form_tag stripe_sub_path do %>
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          <% if(current_subscriber.stripe_customer_id) %>
+            data-description="Current Card ends in <%= current_subscriber.payment_card.last4 %>"
+          <% else %>
             data-description="Start a subscription"
-            data-amount="<%= current_subscriber.bread_types.size %>000"
-            data-currency="gbp"
-            data-allow-remember-me="false"
+          <% end %>
+          data-amount="<%= current_subscriber.bread_types.size %>000"
+          data-currency="gbp"
+          data-allow-remember-me="false"
+          <% if(current_subscriber.stripe_customer_id) %>
+            data-label="Change card details"
+          <% else %>
             data-label="Pay for <%= pluralize(current_subscriber.bread_types.size, "loaf") %> "
-            data-panel-label="Pay £<%= current_subscriber.bread_types.size %>0 every 4 weeks"
-            data-email=<%= current_subscriber.email %>
-            data->
-    </script>
-  <% end %>
+          <% end %>
+
+          data-panel-label="Pay £<%= current_subscriber.bread_types.size %>0 every 4 weeks"
+          data-email=<%= current_subscriber.email %>
+          data->
+  </script>
 <% end %>
 
 <table>
@@ -36,5 +43,5 @@ You are currently paying for <%= pluralize(current_subscriber.num_paid_subs, "lo
 </table>
 
 <% if (current_subscriber.num_paid_subs > 0) %>
-  <p><%= link_to "Cancel my payments", subscriber_subs_path(current_subscriber), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %></p>
+  <p><%= link_to "Cancel my payments", stripe_sub_path, data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %></p>
 <% end %>

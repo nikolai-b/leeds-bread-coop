@@ -27,7 +27,10 @@ class StripeSub
 
     if stripe_customer
 
-      @subscriber.update ({ stripe_customer_id: stripe_customer.id })
+      @subscriber.update(stripe_customer_id: stripe_customer.id)
+
+      card = stripe_customer.cards.data[0]
+      @subscriber.create_payment_card(last4: card.last4, exp_month: card.exp_month, exp_year: card.exp_year)
 
       @subscriber.mark_subscriber_items_payment_as true
 
