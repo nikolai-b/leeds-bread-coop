@@ -41,7 +41,12 @@ class SubscribersController < ApplicationController
   # PATCH/PUT /subscribers/1.json
   def update
     respond_to do |format|
-      if @subscriber.update(subscriber_params)
+      update_params = subscriber_params
+      if update_params[:password] == '' || !update_params[:password]
+        update_params.delete :password
+      end
+
+      if @subscriber.update(update_params)
         format.html { redirect_to @subscriber, notice: 'Subscriber was successfully updated.' }
         format.json { render :show, status: :ok, location: @subscriber }
       else
