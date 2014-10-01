@@ -41,7 +41,7 @@
     <% end -%>
   <% end -%>
 
-  <% if @subscriber.persisted? || !current_subscriber.try(:admin?)%>
+  <% if @subscriber.persisted? && !current_subscriber.try(:admin?)%>
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
