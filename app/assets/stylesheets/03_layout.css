@@ -6,7 +6,7 @@
 	#Page Styles
 	#Media Queries
 	#Font-Face */
-	
+
 /* #Site Styles
 ================================================== */
 
@@ -98,10 +98,10 @@ a.themeauthor {
 
 /* #Media Queries
 ================================================== */
-	
+
 	/* iPad Portrait/Browser */
 @media only screen and (min-width: 768px) and (max-width: 959px) {
-	
+
 	#navigation ul {border-radius:0px;}
 	#navigation ul li a {
 	font-size: .9em;
@@ -110,10 +110,10 @@ a.themeauthor {
 	#navigation ul {min-width: 700px;}
 	#sidebar .widget-container {margin-left: 0px;}
 	.resize {display: none;}
-	#respond textarea {width:auto;}	
+	#respond textarea {width:auto;}
 	#header .site-desc.text {font-size: 1.25em;}
-	
-	
+
+
 	#main-header{
 		position: relative;
 		height: 155px;
@@ -124,19 +124,19 @@ a.themeauthor {
 	font-size: 1.05em;
 	padding: 7px 31px;
 	}
-	
+
 	.lbc-logo{
 		width: 96px;
 		height: 96px;
 		left: 50%;
 		top: 14px;
 		margin-left: -48px;
-	}	
-	
+	}
+
 	#navigation ul.sub-menu {
 	top: 34px;
 	}
-	
+
 	.home-general{
 	background-position: 20px top, 450px top;
 	}
@@ -163,26 +163,26 @@ a.themeauthor {
 	margin-top: 5px;
 	}
 }
-	
-	
+
+
 	/* Mobile/Browser 1*/
 @media only screen and (max-width: 767px) {
 
-	
+
 	#wrap {padding: 0 10px;}
 	#header .site-desc.text {font-size: 1.25em;}
-	
+
 
 	#main-header{
 		position: relative;
 		height: 150px;
 		margin-bottom: 30px;
 		background-color: #2e2e2e;
-	}	
-	
-	
+	}
+
+
 	#navigation {margin: 10px 0px;}
-	
+
 	#navigation ul,
 	#navigation ul li,
 	#navigation ul li a {
@@ -194,7 +194,7 @@ a.themeauthor {
 	-webkit-box-shadow:none;
 	behavior:none;
 	}
-	
+
 	#navigation ul li a,
 	#navigation ul li.active a,
 	#navigation ul li a:hover,
@@ -205,9 +205,9 @@ a.themeauthor {
 	background: transparent;
 	background-image: none;
 	}
-	
+
 	/* Initial reset and hide sublevels in mobile view */
-	
+
 	#navigation ul.sub-menu,
 	#navigation ul.sub-menu li,
 	#navigation ul.sub-menu li:hover,
@@ -227,25 +227,25 @@ a.themeauthor {
 		height: auto;
 		background-image: none;
 	}
-	
+
 	/* Declare new padding for submenu items */
 
 	#navigation ul.sub-menu li a,
 	#navigation ul.sub-menu li a:hover {
 		padding: 4px 0px 4px 10px;
 	}
-	
+
 	/* Show on hover */
-	
+
 	#navigation li:hover ul.sub-menu,
 	#navigation li:hover ul.sub-menu li,
 	#navigation li:hover ul.sub-menu li a {
 		display: inline-block;
 	}
-	#respond textarea {width:300px;}	
+	#respond textarea {width:300px;}
 
 
-	
+
 	#wrap .products li,.products li.first,.products li.last {
  	float: left;
  	clear: both;
@@ -276,15 +276,15 @@ a.themeauthor {
 		left: 50%;
 		top: 15px;
 		margin-left: -35px;
-	}	
-	
-	
+	}
+
+
 	/* @group Navigation Bar Responsive mobile */
 	.lbc-menu{
 		background-color: transparent;
 	}
 	select.responsiveMenuSelect {
-		background: rgba(0, 0, 0, 0.6) url(images/select_menu.png) no-repeat 98% 50%; 
+		background: rgba(0, 0, 0, 0.6) image-url('select_menu.png') no-repeat 98% 50%;
 		border: 0;
 		color: #fff;
 		font-family: 'Dosis', sans-serif;
@@ -292,12 +292,12 @@ a.themeauthor {
 		font-size: 1.2em;
 		text-transform: uppercase!important;
 		text-decoration: none;
-		color: #fff;	
+		color: #fff;
 		padding-left: 15px;
 		height: 40px;
-	}	
+	}
 	/* @end */
-	
+
 	.home-general{
 	background-image: none;
 	}
@@ -388,7 +388,7 @@ a.themeauthor {
 	.colRight{padding: 10px;}
 	.colRight iframe{height: 310px !important;}
 	.colLeft .cta{margin: 0;}
-	
+
 	.realbread img{
 	width: 60px;
 	height: 60px;
@@ -401,7 +401,7 @@ a.themeauthor {
 	width: 100%;
 	height: auto;
 	}
-	
+
 	.colLeft .cta,
 	.colLeft h1{margin: 10px 15px 10px 5px;}
 
@@ -422,19 +422,19 @@ a.themeauthor {
 	padding: 10px 5px !important;
 	}
 }
-	
+
 	/* Mobile Landscape/Browser */
 	@media only screen and (min-width: 480px) and (max-width: 767px) {}
-	
+
 	/* Anything smaller than standard 960 */
 	@media only screen and (max-width: 959px) {}
-	
+
 	/* iPad Portrait Only */
 	@media only screen and (min-width: 768px) and (max-width: 991px) and (max-device-width: 1000px) {}
-	
+
 	/* Mobile Only */
 	@media only screen and (max-width: 767px) and (max-device-width: 1000px) {}
-	
+
 	/* Mobile Landscape Only */
 	@media only screen and (min-width: 480px) and (max-width: 767px) and (max-device-width: 1000px) {}
-	
+
