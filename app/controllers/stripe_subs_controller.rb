@@ -26,7 +26,7 @@ class StripeSubsController < ApplicationController
   private
 
   def set_sub
-    @sub = Sub.new(current_subscriber)
+    @sub = StripeSub.new(current_subscriber)
   end
 
   def add_error_message

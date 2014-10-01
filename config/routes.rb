@@ -5,14 +5,15 @@ Rails.application.routes.draw do
   end
 
   resources :email_templates, only: [:index, :edit, :show, :update]
-
   resources :bread_types
-
   resources :collection_points
+  resources :subscriber_items
+  resource :stripe_sub
+
 
   devise_for :subscribers, :controllers => { :registrations => "registrations" }
+
   resources :subscribers do
-    resource :subs
     resources :holidays
 
     collection { post :import }

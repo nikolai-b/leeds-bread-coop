@@ -1,8 +1,8 @@
-describe Sub do
+describe StripeSub do
   let(:notifier) { double('SubscriberNotifier', new_sub: true, sub_deleted: true) }
   let(:subscriber) { create :subscriber}
 
-  subject { Sub.new(subscriber, notifier)}
+  subject { StripeSub.new(subscriber, notifier)}
 
   describe '#add' do
     let(:stripe_customer) { double(id: "customer_id") }
@@ -13,7 +13,6 @@ describe Sub do
         create :subscriber_item, subscriber: subscriber
         Stripe::Customer.stub(:create).and_return(stripe_customer)
       end
-
 
       it 'sends an new_sub email' do
         expect(notifier).to receive(:new_sub)

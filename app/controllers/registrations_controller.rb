@@ -22,14 +22,14 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def destroy
-    Sub.new(@subscriber).cancel
+    StripeSub.new(@subscriber).cancel
     super
   end
 
   protected
 
   def after_sign_up_path_for(resource)
-    edit_subscriber_subs_path(resource)
+    edit_stripe_sub_path(resource)
   end
 
   private
