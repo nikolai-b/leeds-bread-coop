@@ -4,6 +4,7 @@ class SubscriberItem < ActiveRecord::Base
   validates :collection_day, numericality: { only_integer: true }
   scope :delivery_day, ->(date) { where(collection_day: date.wday) }
   validate :change_subscription_ok, on: :update
+  validates :bread_type_id, inclusion: { in: BreadType.for_subscribers.pluck(:id) }
 
   def collection_day_name
     Date::DAYNAMES[collection_day]

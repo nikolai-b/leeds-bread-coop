@@ -6,7 +6,7 @@
       <tbody>
         <tr>
           <td>
-            <%= g.collection_select(:bread_type_id, BreadType.all, :id, :name) %>
+            <%= g.collection_select(:bread_type_id, BreadType.for_subscribers, :id, :name) %>
 
           </td>
           <td>

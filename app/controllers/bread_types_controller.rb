@@ -69,6 +69,6 @@ class BreadTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bread_type_params
-      params.require(:bread_type).permit(:name, :sour_dough, :notes)
+      params.require(:bread_type).permit(:name, :sour_dough, :notes, :wholesale_only)
     end
 end

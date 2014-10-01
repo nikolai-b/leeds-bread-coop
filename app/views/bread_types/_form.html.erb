@@ -6,6 +6,7 @@
 
     <%= f.text_area :name %>
     <%= f.check_box :sour_dough %>
+    <%= f.check_box :wholesale_only %>
     <%= f.text_area :notes %>
   <% button_label = @bread_type.persisted? ? "Update" : "Create" %>
   <%= f.submit button_label, class: "btn btn-success" %>
