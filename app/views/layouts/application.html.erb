@@ -228,10 +228,10 @@ $(function() {
               </li>
               <% unless admin? %>
                 <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <%= link_to "Edit Account", edit_subscriber_registration_path %>
+                <%= link_to "Edit Details", edit_subscriber_registration_path %>
               </li>
               <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <%= link_to "Payment", edit_subscriber_subs_path(current_subscriber) %>
+                <%= link_to "Edit Payment", edit_stripe_sub_path %>
               </li>
               <li class="menu-item menu-item-type-post_type menu-item-object-page">
                 <%= link_to "Pause your subscription", new_subscriber_holiday_path(current_subscriber) %>
