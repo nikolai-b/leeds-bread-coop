@@ -15,6 +15,7 @@ class Subscriber < ActiveRecord::Base
   has_many :subscriber_items
   has_many :holidays
   has_many :bread_types, through: :subscriber_items
+  has_one :payment_card
 
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
 
