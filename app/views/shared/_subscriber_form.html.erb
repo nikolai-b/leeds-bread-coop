@@ -32,27 +32,27 @@
   <%= f.collection_select(:collection_point_id, CollectionPoint.all, :id, :name) %>
 
   <% unless @subscriber.persisted? %>
-    <%= render 'shared/suscription' %>
+    <%= render 'shared/subscription', f: f %>
   <% end %>
 
   <% unless current_subscriber.try(:admin?) %>
     <% if devise_mapping.rememberable? -%>
       <div><%= f.check_box :remember_me %> </div>
     <% end -%>
+  <% end -%>
 
-    <% if @subscriber.persisted? %>
-      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-      <% end %>
-
-      <%= f.password_field :password, label: "New password (leave blank if you don't want to change it)", autocomplete: "off" %>
-
-      <%= f.password_field :password_confirmation, label: "New password confimation" , autocomplete: "off" %>
-
-      <%= f.password_field :current_password, label: "Current password (only if your changing your username or password)" , autocomplete: "off" %>
-    <% else %>
-      <%= f.password_field :password, autocomplete: "off" %>
+  <% if @subscriber.persisted? || !current_subscriber.try(:admin?)%>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
+
+    <%= f.password_field :password, label: "New password (leave blank if you don't want to change it)", autocomplete: "off" %>
+
+    <%= f.password_field :password_confirmation, label: "New password confimation" , autocomplete: "off" %>
+
+    <%= f.password_field :current_password, label: "Current password (only if your changing your username or password)" , autocomplete: "off" %>
+  <% else %>
+    <%= f.password_field :password, autocomplete: "off" %>
   <% end %>
 
   <% button_label = @subscriber.persisted? ? "Update" : "Subscribe" %>

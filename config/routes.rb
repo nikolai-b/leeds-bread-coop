@@ -11,9 +11,13 @@ Rails.application.routes.draw do
   resource :stripe_sub
 
 
-  devise_for :subscribers, :controllers => { :registrations => "registrations" }
+  devise_for :subscribers, :controllers => { registrations: :registrations }
 
-  resources :subscribers do
+  scope :admin do
+    resources :subscribers, as: :admin_subscriber
+  end
+
+  resources :subscribers, only: :show do
     resources :holidays
 
     collection { post :import }

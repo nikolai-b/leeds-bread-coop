@@ -83,7 +83,7 @@ class SubscribersController < ApplicationController
     end
 
     def add_paid_to_subscriber_items
-      allowed = allowed_subscriber_parms.dup
+      allowed = allowed_subscriber_parms.dup + [:email, :password]
       allowed.find{ |i| i.class == Hash && i.keys.include?(:subscriber_items_attributes) }[:subscriber_items_attributes] << :paid
       allowed
     end
