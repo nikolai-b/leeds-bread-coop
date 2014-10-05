@@ -89,12 +89,12 @@ def sendmail(message):
 	print 'sending mail...'
 	try:
 #		s = smtplib.SMTP("smtp.gmail.com", 587)
-#		s = smtplib.SMTP_SSL('smtps.leeds.ac.uk',465)
-		s = smtplib.SMTP_SSL("interceptor.websitewelcome.com", 465)
+		s = smtplib.SMTP_SSL('smtps.leeds.ac.uk',465)
+#		s = smtplib.SMTP_SSL("interceptor.websitewelcome.com", 465)
 		s.set_debuglevel(1)
 
 		AUTHREQUIRED = 1 # if you need to use SMTP AUTH set to 1
-		smtpuser = "webmaster@greenactionleeds.org.uk"# 'unigreen'
+		smtpuser = "unigreen"# 'unigreen'
 		smtppass = 'BombayMix!' #'sbfcmlm2'
            #     s.ehlo()
            #     s.starttls()
@@ -103,7 +103,7 @@ def sendmail(message):
                 s.login(smtpuser, smtppass)
 
                 messageHTML = createhtmlmail(message, 'Upcoming Events')
-                s.sendmail('webmaster@greenactionleeds.org.uk', 'nikolai.berkoff@gmail.com', messageHTML) # from , to
+                s.sendmail('unigreen@leeds.ac.uk', 'webmaster@greenactionleeds.org.uk', messageHTML) # from , to
 		s.close()
 		print 'done.'
 	except Exception, exc:
