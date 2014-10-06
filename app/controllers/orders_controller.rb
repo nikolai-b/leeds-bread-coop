@@ -1,8 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :set_wholesale_customer
-  skip_before_action :authenticate_subscriber!
-  skip_before_action :authenticate_admin
 
   def index
     @orders = Order.all
