@@ -9,8 +9,7 @@ class StripeSub
   end
 
   def cancel
-    customer = Stripe::Customer.retrieve(@subscriber.stripe_customer_id)
-    customer.cancel_subscription
+    stipe_customer.cancel_subscription
 
     @subscriber.mark_subscriber_items_payment_as false
     @notifier.sub_deleted
@@ -23,28 +22,23 @@ class StripeSub
   end
 
   def update
-    stripe_customer = Stripe::Customer.retrieve(@subscriber.stripe_customer_id)
-
-    if stripe_customer
-      stripe_subscription = stripe_customer.subscriptions.retrieve(stripe_customer.subscriptions.data[0].id)
+    if stripe_subscription = stripe_customer.subscriptions.first
       stripe_subscription.plan = plan
       if stripe_subscription.save
-        @subscriber.mark_subscriber_items_payment_as true
-        return true
+        return
       end
     end
-
-    false
+    raise ActiveRecord::Rollback, 'Stripe Customer could not be updated'
   end
 
   def add(stripe_token)
-    stripe_customer = add_stripe_plan(stripe_token)
+    new_stripe_customer = add_stripe_plan(stripe_token)
 
-    if stripe_customer
+    if new_stripe_customer
 
-      @subscriber.update(stripe_customer_id: stripe_customer.id)
+      @subscriber.update(stripe_customer_id: new_stripe_customer.id)
 
-      card = stripe_customer.cards.data[0]
+      card = new_stripe_customer.cards.data[0]
       @subscriber.create_payment_card(last4: card.last4, exp_month: card.exp_month, exp_year: card.exp_year)
 
       @subscriber.mark_subscriber_items_payment_as true
@@ -74,5 +68,9 @@ class StripeSub
 
   def plan
     "weekly-bread-#{@subscriber.subscriber_items.size}"
+  end
+
+  def stripe_customer
+    stripe_customer ||= Stripe::Customer.retrieve(@subscriber.stripe_customer_id)
   end
 end
