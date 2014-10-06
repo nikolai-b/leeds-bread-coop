@@ -1,28 +1,21 @@
 class RegistrationsController < Devise::RegistrationsController
   def update
-    @subscriber = Subscriber.find(current_subscriber.id)
-
-    successfully_updated = if needs_password?(@subscriber, params)
-      @subscriber.update_with_password(devise_parameter_sanitizer.sanitize(:account_update))
+    successfully_updated = if needs_password?(current_subscriber, params)
+      current_subscriber.update_with_password(devise_parameter_sanitizer.sanitize(:account_update))
     else
       # remove the virtual current_password attribute
       # update_without_password doesn't know how to ignore it
       params[:subscriber].delete(:current_password)
-      @subscriber.update_without_password(devise_parameter_sanitizer.sanitize(:account_update))
+      current_subscriber.update_without_password(devise_parameter_sanitizer.sanitize(:account_update))
     end
 
     if successfully_updated
       set_flash_message :notice, :updated
-      sign_in @subscriber, :bypass => true
-      redirect_to after_update_path_for(@subscriber)
+      sign_in current_subscriber, :bypass => true
+      redirect_to after_update_path_for(current_subscriber)
     else
       render "edit"
     end
-  end
-
-  def destroy
-    StripeSub.new(@subscriber).cancel
-    super
   end
 
   protected

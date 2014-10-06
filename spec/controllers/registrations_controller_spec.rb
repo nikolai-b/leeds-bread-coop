@@ -10,10 +10,4 @@ describe RegistrationsController do
   before do
     setup
   end
-
-  it 'cancels subs on destroy' do
-    expect_any_instance_of(StripeSub).to receive(:cancel).once
-
-    delete :destroy
-  end
 end

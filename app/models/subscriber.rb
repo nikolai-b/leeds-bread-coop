@@ -12,10 +12,12 @@ class Subscriber < ActiveRecord::Base
   validates :phone, length: {in: 10..13}
 
   belongs_to :collection_point
-  has_many :subscriber_items
   has_many :holidays
   has_many :bread_types, through: :subscriber_items
   has_one :payment_card
+
+  has_many :subscriber_items, before_add: :update_stripe, before_remove: :update_stripe
+  before_destroy :cancel_stripe
 
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
 
@@ -37,6 +39,10 @@ class Subscriber < ActiveRecord::Base
 
   def collection_days
     subscriber_items.map &:collection_day
+  end
+
+  def stripe_sub
+    StripeSub.new(self)
   end
 
   def self.import(file)
@@ -80,6 +86,14 @@ class Subscriber < ActiveRecord::Base
 
   private
 
+  def update_stripe
+    stripe_sub.update if stripe_customer_id
+  end
+
+  def cancel_stipe
+    stripe_sub.cancel if stripe_customer_id
+  end
+
   def self.csv_collection_point
     {
       "A" => "Wharf Chambers",
@@ -91,7 +105,7 @@ class Subscriber < ActiveRecord::Base
       "G" => "Opposite",
       "H" => "Cafe 164",
       "I" => "Green Action",
-    }
+    }.freeze
   end
 
   def self.csv_bread_type
@@ -100,14 +114,14 @@ class Subscriber < ActiveRecord::Base
       "SS" => "Seedy Sour",
       "RY" => "100% Rye",
       "SP" => "Special",
-    }
+    }.freeze
   end
 
   def self.csv_collection_day
     {
       "Wed" => 3,
       "Fri" => 5,
-    }
+    }.freeze
   end
 
 end
