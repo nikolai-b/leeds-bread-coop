@@ -22,6 +22,21 @@ class StripeSub
     false
   end
 
+  def update
+    stripe_customer = Stripe::Customer.retrieve(@subscriber.stripe_customer_id)
+
+    if stripe_customer
+      stripe_subscription = stripe_customer.subscriptions.retrieve(stripe_customer.subscriptions.data[0].id)
+      stripe_subscription.plan = plan
+      if stripe_subscription.save
+        @subscriber.mark_subscriber_items_payment_as true
+        return true
+      end
+    end
+
+    false
+  end
+
   def add(stripe_token)
     stripe_customer = add_stripe_plan(stripe_token)
 
@@ -42,13 +57,14 @@ class StripeSub
       false
     end
   end
+
   private
 
   def add_stripe_plan(stripe_token)
     Stripe::Customer.create(
       :email => @subscriber.email,
       :card  => stripe_token,
-      :plan  => "weekly-bread-#{@subscriber.bread_types.size}",
+      :plan  => plan,
     )
 
   rescue Stripe::APIError => e
@@ -56,5 +72,7 @@ class StripeSub
     false
   end
 
-
+  def plan
+    "weekly-bread-#{@subscriber.subscriber_items.size}"
+  end
 end

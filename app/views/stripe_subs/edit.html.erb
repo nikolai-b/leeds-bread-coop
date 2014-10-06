@@ -42,6 +42,6 @@ You are currently paying for <%= pluralize(current_subscriber.num_paid_subs, "lo
   </tbody>
 </table>
 
-<% if (current_subscriber.num_paid_subs > 0) %>
+<% if (current_subscriber.stripe_customer_id) %>
   <p><%= link_to "Cancel my payments", stripe_sub_path, data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %></p>
 <% end %>

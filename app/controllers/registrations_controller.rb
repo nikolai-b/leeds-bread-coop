@@ -1,5 +1,4 @@
 class RegistrationsController < Devise::RegistrationsController
-
   def update
     @subscriber = Subscriber.find(current_subscriber.id)
 
