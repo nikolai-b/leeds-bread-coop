@@ -1,12 +1,12 @@
 class StripeSubsController < ApplicationController
-  before_action :set_sub
+  before_action :set_stripe_sub
   skip_before_action :authenticate_admin
 
   def edit
   end
 
   def create
-    if @sub.add(params[:stripeToken])
+    if @stripe_sub.add(params[:stripeToken])
       redirect_to current_subscriber
     else
       add_error_message
@@ -15,7 +15,7 @@ class StripeSubsController < ApplicationController
   end
 
   def destroy
-    if @sub.cancel
+    if @stripe_sub.cancel
       redirect_to edit_subscriber_registration
     else
       add_error_message
@@ -25,15 +25,15 @@ class StripeSubsController < ApplicationController
 
   private
 
-  def set_sub
-    @sub = StripeSub.new(current_subscriber)
+  def set_stripe_sub
+    @stripe_sub = StripeSub.new(current_subscriber)
   end
 
   def add_error_message
     flash[:error] = "Something went wrong, please email (info@leedsbread.coop) or call us (0113 262 5155) if this continues"
 
-    if @sub.errors.any?
-      flash[:warn] = @sub.errors.full_messages.to_sentence
+    if @stripe_sub.errors.any?
+      flash[:warn] = @stripe_sub.errors.full_messages.to_sentence
     end
   end
 end
