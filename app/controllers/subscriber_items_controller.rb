@@ -10,11 +10,10 @@ class SubscriberItemsController < ApplicationController
 
   def update_all
     if current_subscriber.update subscriber_items_params
-      if @stripe_sub.update
-        redirect_to current_subscriber, notice: 'Order was successfully updated.'
-      else
-        render :edit_all, notice: 'Problem with our payment service, please try again'
-      end
+      current_subscriber.save
+      current_subscriber.mark_subscriber_items_payment_as true
+
+      redirect_to current_subscriber, notice: 'Order was successfully updated.'
     else
       render :edit_all
     end
