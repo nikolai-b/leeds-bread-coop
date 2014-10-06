@@ -1,0 +1,19 @@
+<table>
+  <thead>
+    <tr>
+      <th>Bread Type</th>
+      <th>Collection Point</th>
+      <th>Delivery Day</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% current_subscriber.subscriber_items.try(:each) do |subscriber_item| %>
+      <tr>
+        <td><%= subscriber_item.bread_type.name %></td>
+        <td><%= current_subscriber.collection_point.name %></td>
+        <td><%= subscriber_item.collection_day_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
