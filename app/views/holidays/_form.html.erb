@@ -7,12 +7,10 @@
     $(document).ready(function(e) {
 
     $('#holiday_start_date').datepicker({ format: "dd/mm/yyyy", weekStart: 1,
-        startDate: "<%= (Date.current + 3.days).strftime("%d/%m/%Y") %>",
         todayBtn: "linked", autoclose: true
         });
 
     $('#holiday_end_date').datepicker({ format: "dd/mm/yyyy",
-      weekStart: 1, startDate: "<%= (Date.current + 4.days).strftime("%d/%m/%Y") %>",
       todayBtn: "linked", autoclose: true
       });
 
@@ -20,8 +18,8 @@
 
   </script>
 
-    <%= f.text_field :start_date %>
-    <%= f.text_field :end_date %>
+    <%= f.text_field :start_date, value: (Date.current + 3.days).strftime('%d/%m/%Y') %>
+    <%= f.text_field :end_date, value: (Date.current + 4.days).strftime('%d/%m/%Y') %>
     <% button_label = @holiday.persisted? ? "Update" : "Create" %>
     <%= f.submit button_label, class: "btn btn-success" %>
 <% end %>
