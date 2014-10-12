@@ -16,8 +16,9 @@ class Subscriber < ActiveRecord::Base
   has_many :bread_types, through: :subscriber_items
   has_one :payment_card
 
-  has_many :subscriber_items, before_add: :update_stripe, before_remove: :update_stripe
+  has_many :subscriber_items
   before_destroy :cancel_stripe
+  before_update :update_stripe
 
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
 
