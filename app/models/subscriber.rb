@@ -17,8 +17,8 @@ class Subscriber < ActiveRecord::Base
   has_one :payment_card
 
   has_many :subscriber_items
+
   before_destroy :cancel_stripe
-  before_update :update_stripe
 
   accepts_nested_attributes_for :subscriber_items, allow_destroy: true
 
@@ -43,7 +43,7 @@ class Subscriber < ActiveRecord::Base
   end
 
   def stripe_sub
-    StripeSub.new(self)
+    @stripe_sub ||= StripeSub.new(self)
   end
 
   def self.import(file)
@@ -80,18 +80,12 @@ class Subscriber < ActiveRecord::Base
   end
 
   def mark_subscriber_items_payment_as(paid)
-    subscriber_items.each do |sub_item|
-      sub_item.update({paid: paid})
-    end
+    subscriber_items.update_all paid: paid
   end
 
   private
 
-  def update_stripe
-    stripe_sub.update if stripe_customer_id
-  end
-
-  def cancel_stipe
+  def cancel_stripe
     stripe_sub.cancel if stripe_customer_id
   end
 

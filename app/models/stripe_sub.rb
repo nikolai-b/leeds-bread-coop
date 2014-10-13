@@ -9,7 +9,7 @@ class StripeSub
   end
 
   def cancel
-    stipe_customer.cancel_subscription
+    stripe_customer.subscriptions.each { |s| s.delete() }
 
     @subscriber.mark_subscriber_items_payment_as false
     @notifier.sub_deleted
@@ -25,6 +25,8 @@ class StripeSub
     if stripe_subscription = stripe_customer.subscriptions.first
       stripe_subscription.plan = plan
       if stripe_subscription.save
+        @subscriber.mark_subscriber_items_payment_as true
+
         return
       end
     end
@@ -32,9 +34,7 @@ class StripeSub
   end
 
   def add(stripe_token)
-    new_stripe_customer = add_stripe_plan(stripe_token)
-
-    if new_stripe_customer
+    if new_stripe_customer = add_stripe_plan(stripe_token)
 
       @subscriber.update(stripe_customer_id: new_stripe_customer.id)
 

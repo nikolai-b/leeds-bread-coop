@@ -2,16 +2,20 @@ describe StripeSub do
   let(:notifier) { double('SubscriberNotifier', new_sub: true, sub_deleted: true) }
   let(:subscriber) { create :subscriber}
 
+  before do
+    StripeMock.start
+    Stripe::Plan.create(id: 'weekly-bread-1', amount: 500)
+  end
+
+  after { StripeMock.stop }
+
   subject { StripeSub.new(subscriber, notifier)}
 
   describe '#add' do
-    let(:stripe_customer) { double(id: "customer_id") }
-
     context 'with no current sub' do
-
       before do
+        Stripe::Plan.create(id: 'weekly-bread-1', amount: 500)
         create :subscriber_item, subscriber: subscriber
-        Stripe::Customer.stub(:create).and_return(stripe_customer)
       end
 
       it 'sends an new_sub email' do
@@ -22,8 +26,9 @@ describe StripeSub do
       it 'sets the subscriber\'s stripe id and active sub' do
         subject.add('stripe_token')
 
-        expect(subscriber.stripe_customer_id).to eq('customer_id')
+        expect(subscriber.stripe_customer_id).to_not be_nil
         expect(subscriber.num_paid_subs).to eq(1)
+        expect(subscriber.payment_card.last4).to eq(4242)
       end
 
       it 'returns true' do
@@ -51,13 +56,11 @@ describe StripeSub do
   end
 
   describe '#cancel' do
-
     context 'happy path' do
-      let(:stripe_customer) { double(cancel_subscription: true) }
-
       before do
         create :subscriber_item, subscriber: subscriber
-        Stripe::Customer.stub(:retrieve).and_return(stripe_customer)
+        subscriber.update stripe_customer_id: 'test_customer_sub'
+        customer = Stripe::Customer.create(id: subscriber.stripe_customer_id, card: 'tk')
       end
 
       it 'updates num_paid_subs to nil' do
@@ -75,5 +78,20 @@ describe StripeSub do
         subject.cancel
       end
     end
+  end
+
+  describe '#update' do
+    before do
+      subscriber.update stripe_customer_id: 'test_customer_sub'
+      customer = Stripe::Customer.create(id: subscriber.stripe_customer_id, card: 'tk')
+      customer.subscriptions.create({ :plan => 'weekly-bread-1' })
+      create :subscriber_item, subscriber: subscriber
+    end
+
+    it 'marks all subscriber_items as paid' do
+      expect(subject).to receive(:mark_subscriber_items_payment_as).once
+      subject.update
+    end
+
   end
 end

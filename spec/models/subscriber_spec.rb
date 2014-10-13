@@ -77,4 +77,5 @@ describe Subscriber do
     expect(described_class.ordered[1].first_name).to eq('Aaa1')
     expect(described_class.ordered[2].first_name).to eq('Zzzz')
   end
+
 end

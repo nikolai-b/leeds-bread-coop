@@ -11,10 +11,13 @@ describe StripeSubsController do
 
   before do
     setup
+    StripeMock.start
+    Stripe::Plan.create(id: 'weekly-bread-0', amount: 0)
   end
 
+  after { StripeMock.stop }
+
   it do
-    expect(Stripe::Customer).to receive(:create).and_return(customer)
     expect(SubscriberNotifier).to receive(:new).with(subscriber).and_return(notifier)
 
     post :create,  valid_attributes
