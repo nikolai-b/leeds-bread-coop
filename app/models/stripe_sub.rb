@@ -26,7 +26,6 @@ class StripeSub
       stripe_subscription.plan = plan
       if stripe_subscription.save
         @subscriber.mark_subscriber_items_payment_as true
-
         return
       end
     end

@@ -82,14 +82,14 @@ describe StripeSub do
 
   describe '#update' do
     before do
+      create :subscriber_item, subscriber: subscriber
       subscriber.update stripe_customer_id: 'test_customer_sub'
       customer = Stripe::Customer.create(id: subscriber.stripe_customer_id, card: 'tk')
       customer.subscriptions.create({ :plan => 'weekly-bread-1' })
-      create :subscriber_item, subscriber: subscriber
     end
 
     it 'marks all subscriber_items as paid' do
-      expect(subject).to receive(:mark_subscriber_items_payment_as).once
+      expect(subscriber).to receive(:mark_subscriber_items_payment_as).once
       subject.update
     end
 

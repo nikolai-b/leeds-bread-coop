@@ -1,7 +1,7 @@
 class Holiday < ActiveRecord::Base
   belongs_to :subscriber, counter_cache: true
 
-  validates :start_date, :end_date, :subscriber_id, presence: true
+  validates :start_date, :end_date, :subscriber, presence: true
   validate :not_overlapping
   validate :not_in_the_past
   validate :end_date_after_start_date

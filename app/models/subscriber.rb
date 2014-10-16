@@ -5,7 +5,7 @@ class Subscriber < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
-  validates :collection_point_id, numericality: { only_integer: true }
+  validates :collection_point, presence: true
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
   validates :first_name, length: {minimum: 3}
   validates :last_name, length: {minimum: 2}
@@ -14,9 +14,8 @@ class Subscriber < ActiveRecord::Base
   belongs_to :collection_point
   has_many :holidays
   has_many :bread_types, through: :subscriber_items
-  has_one :payment_card
-
   has_many :subscriber_items
+  has_one :payment_card
 
   before_destroy :cancel_stripe
 
