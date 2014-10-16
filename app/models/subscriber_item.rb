@@ -5,6 +5,7 @@ class SubscriberItem < ActiveRecord::Base
   validates :collection_day, numericality: { only_integer: true }
   validates :bread_type, :subscriber, presence: true
   validate :change_subscription_ok, on: :update
+  validate :bread_type_for_subscribers
 
   scope :delivery_day, ->(date) { where(collection_day: date.wday) }
 
@@ -16,6 +17,12 @@ class SubscriberItem < ActiveRecord::Base
   end
 
   private
+
+  def bread_type_for_subscribers
+    unless bread_type_id.in? BreadType.for_subscribers.pluck(:id)
+      errors.add(:bread_type_id, "must be a bread avaliable to subscribers")
+    end
+  end
 
   def update_stripe
     subscriber.stripe_sub.update if subscriber.stripe_customer_id

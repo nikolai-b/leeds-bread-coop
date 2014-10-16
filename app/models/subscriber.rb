@@ -88,6 +88,7 @@ class Subscriber < ActiveRecord::Base
     stripe_sub.cancel if stripe_customer_id
   end
 
+
   def self.csv_collection_point
     {
       "A" => "Wharf Chambers",

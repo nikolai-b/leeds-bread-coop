@@ -9,5 +9,16 @@ describe SubscriberItem do
       si = create :subscriber_item, subscriber: subscriber
       si.destroy
     end
+
+    it 'validates bread is avaliable for subscribers' do
+      subscriber_bread = create :bread_type
+      wholesale_bread = create :bread_type, wholesale_only: true
+
+      subscriber_item = build :subscriber_item, bread_type: subscriber_bread
+      expect(subscriber_item.valid?).to be_truthy
+
+      subscriber_item.bread_type = wholesale_bread
+      expect(subscriber_item.valid?).to be_falsey
+    end
   end
 end
