@@ -32,6 +32,12 @@
   <% end %>
   <%= bread_subs.join(', ') %>
 </p>
+
+<p>
+  <strong>Monthly Payment</strong>
+  <%= number_to_currency @subscriber.monthly_payment %>
+</p>
+
 <p>
   <strong>Notes</strong>
   <%= @subscriber.notes %>
@@ -39,11 +45,11 @@
 
 <p>
   <strong>Created at</strong>
-  <%= @subscriber.created_at.to_formatted_s(:rfc822) %>
+  <%= @subscriber.created_at.to_date %>
 </p>
 <p>
   <strong>Updated at</strong>
-  <%= @subscriber.updated_at.to_formatted_s(:rfc822) %>
+  <%= @subscriber.updated_at.to_date %>
 </p>
 
 

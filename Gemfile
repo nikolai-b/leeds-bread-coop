@@ -39,9 +39,11 @@ gem "less-rails"
 gem "twitter-bootstrap-rails", '< 3.0'
 gem 'mustache'
 
+gem 'rails-i18n'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap_form'
 gem 'stripe-rails'
+
 
 gem 'awesome_nested_fields'
 
