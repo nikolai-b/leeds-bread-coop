@@ -78,4 +78,11 @@ describe Subscriber do
     expect(described_class.ordered[2].first_name).to eq('Zzzz')
   end
 
+  it 'has a monthly cost' do
+    expect(subject.monthly_payment).to eq(0)
+    create :subscriber_item, subscriber: subject, paid: true
+    subject.reload
+    expect(subject.monthly_payment).to eq(10)
+  end
+
 end

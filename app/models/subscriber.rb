@@ -82,6 +82,10 @@ class Subscriber < ActiveRecord::Base
     subscriber_items.update_all paid: paid
   end
 
+  def monthly_payment
+    num_paid_subs * StripeSub::MONTHLY_COST
+  end
+
   private
 
   def cancel_stripe

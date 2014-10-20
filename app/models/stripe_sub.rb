@@ -1,6 +1,7 @@
 class StripeSub
   extend ActiveModel::Naming
   attr_reader :errors
+  MONTHLY_COST = 10.freeze
 
   def initialize(subscriber, notifier = nil)
     @subscriber = subscriber
