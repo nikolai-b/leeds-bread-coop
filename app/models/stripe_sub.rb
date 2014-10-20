@@ -40,10 +40,7 @@ class StripeSub
 
       card = new_stripe_customer.cards.data[0]
       @subscriber.create_payment_card(last4: card.last4, exp_month: card.exp_month, exp_year: card.exp_year)
-
       @subscriber.mark_subscriber_items_payment_as true
-
-      @notifier.new_sub
 
       true
     else

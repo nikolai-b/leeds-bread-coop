@@ -13,7 +13,7 @@ class SubscriberItemsController < ApplicationController
       current_subscriber.save
       current_subscriber.mark_subscriber_items_payment_as true
 
-      redirect_to current_subscriber, notice: 'Order was successfully updated.'
+      redirect_to current_subscriber, notice: 'Bread subscription was successfully updated'
     else
       render :edit_all
     end
