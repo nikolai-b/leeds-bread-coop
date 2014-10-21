@@ -1,8 +1,6 @@
 require 'spec_helper'
 require 'thin'
 
-StripeMock.spawn_server
-
 feature "New user, new sign-up", type: :feature,  js: true  do
 
   before :each do

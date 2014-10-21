@@ -18,11 +18,6 @@ describe StripeSub do
         create :subscription, subscriber: subscriber
       end
 
-      it 'sends an new_sub email' do
-        expect(notifier).to receive(:new_sub)
-        subject.add('strip_token')
-      end
-
       it 'sets the subscriber\'s stripe id and active sub' do
         subject.add('stripe_token')
 
