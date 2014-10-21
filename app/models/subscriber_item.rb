@@ -3,7 +3,7 @@ class SubscriberItem < ActiveRecord::Base
   belongs_to :bread_type
 
   validates :collection_day, numericality: { only_integer: true }
-  validates :bread_type, :subscriber, presence: true
+  validates :bread_type, presence: true
   validate :change_subscription_ok, on: :update
   validate :bread_type_for_subscribers
 
