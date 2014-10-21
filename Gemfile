@@ -40,6 +40,7 @@ gem "twitter-bootstrap-rails", '< 3.0'
 gem 'mustache'
 
 gem 'rails-i18n'
+gem 'devise-i18n'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap_form'
 gem 'stripe-rails'
