@@ -12,7 +12,7 @@ class StripeSub
   def cancel
     stripe_customer.subscriptions.each { |s| s.delete() }
 
-    @subscriber.mark_subscriber_items_payment_as false
+    @subscriber.mark_subscriptions_payment_as false
     @notifier.sub_deleted
 
     true
@@ -26,7 +26,7 @@ class StripeSub
     if stripe_subscription = stripe_customer.subscriptions.first
       stripe_subscription.plan = plan
       if stripe_subscription.save
-        @subscriber.mark_subscriber_items_payment_as true
+        @subscriber.mark_subscriptions_payment_as true
         return
       end
     end
@@ -40,7 +40,7 @@ class StripeSub
 
       card = new_stripe_customer.cards.data[0]
       @subscriber.create_payment_card(last4: card.last4, exp_month: card.exp_month, exp_year: card.exp_year)
-      @subscriber.mark_subscriber_items_payment_as true
+      @subscriber.mark_subscriptions_payment_as true
 
       true
     else
@@ -64,7 +64,7 @@ class StripeSub
   end
 
   def plan
-    "weekly-bread-#{@subscriber.subscriber_items.size}"
+    "weekly-bread-#{@subscriber.subscriptions.size}"
   end
 
   def stripe_customer

@@ -13,16 +13,16 @@ class Subscriber < ActiveRecord::Base
 
   belongs_to :collection_point
   has_many :holidays
-  has_many :bread_types, through: :subscriber_items
-  has_many :subscriber_items
+  has_many :bread_types, through: :subscriptions
+  has_many :subscriptions
   has_one :payment_card
 
   before_destroy :cancel_stripe
 
-  accepts_nested_attributes_for :subscriber_items, allow_destroy: true
+  accepts_nested_attributes_for :subscriptions, allow_destroy: true
 
-  scope :active_on, ->(date) { includes(:holidays, :subscriber_items).where('holidays_count = 0 OR DATE(?) NOT BETWEEN holidays.start_date AND holidays.end_date', date).
-                               where("subscriber_items.paid" => :true).where('subscriber_items.collection_day' => date.wday).references(:subscriber_items, :holidays) }
+  scope :active_on, ->(date) { includes(:holidays, :subscriptions).where('holidays_count = 0 OR DATE(?) NOT BETWEEN holidays.start_date AND holidays.end_date', date).
+                               where("subscriptions.paid" => :true).where('subscriptions.collection_day' => date.wday).references(:subscriptions, :holidays) }
   scope :ordered, -> { order(:first_name, :last_name) }
 
   def full_name
@@ -30,15 +30,15 @@ class Subscriber < ActiveRecord::Base
   end
 
   def num_unpaid_subs
-    subscriber_items.where(paid: false).count
+    subscriptions.where(paid: false).count
   end
 
   def num_paid_subs
-    subscriber_items.where(paid: true).count
+    subscriptions.where(paid: true).count
   end
 
   def collection_days
-    subscriber_items.map &:collection_day
+    subscriptions.map &:collection_day
   end
 
   def stripe_sub
@@ -69,7 +69,7 @@ class Subscriber < ActiveRecord::Base
 
       subscriber.save
 
-      subscriber.subscriber_items.create(
+      subscriber.subscriptions.create(
         bread_type_id: BreadType.find_by( name: csv_bread_type[row["Bread"]] ).id,
         collection_day: csv_collection_day[row['Days']],
         paid: true
@@ -78,8 +78,8 @@ class Subscriber < ActiveRecord::Base
     end
   end
 
-  def mark_subscriber_items_payment_as(paid)
-    subscriber_items.update_all paid: paid
+  def mark_subscriptions_payment_as(paid)
+    subscriptions.update_all paid: paid
   end
 
   def monthly_payment

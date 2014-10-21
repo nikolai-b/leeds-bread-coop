@@ -7,7 +7,7 @@ class StripeAPI
     subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
 
     if subscriber
-      subscriber.mark_subscriber_items_payment_as false
+      subscriber.mark_subscriptions_payment_as false
       subscriber.save!
 
       SubscriberNotifier.new(subscriber).sub_deleted

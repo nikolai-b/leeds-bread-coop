@@ -35,7 +35,7 @@ class ProductionReport
   end
 
   def count_paid_subscriptions(bread_type, days_in_future)
-    SubscriberItem.includes(subscriber: :holidays).
+    Subscription.includes(subscriber: :holidays).
           where(collection_day: (@date.wday + days_in_future)).
           where(bread_type_id: bread_type.id).
           where(paid: true).

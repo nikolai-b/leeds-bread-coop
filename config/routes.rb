@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :email_templates, only: [:index, :edit, :show, :update]
   resources :bread_types
   resources :collection_points
-  resources :subscriber_items do
+  resources :subscriptions do
     get 'edit_all', on: :collection
     put 'update_all', on: :collection
   end

@@ -15,7 +15,7 @@ describe StripeSub do
     context 'with no current sub' do
       before do
         Stripe::Plan.create(id: 'weekly-bread-1', amount: 500)
-        create :subscriber_item, subscriber: subscriber
+        create :subscription, subscriber: subscriber
       end
 
       it 'sends an new_sub email' do
@@ -58,7 +58,7 @@ describe StripeSub do
   describe '#cancel' do
     context 'happy path' do
       before do
-        create :subscriber_item, subscriber: subscriber
+        create :subscription, subscriber: subscriber
         subscriber.update stripe_customer_id: 'test_customer_sub'
         customer = Stripe::Customer.create(id: subscriber.stripe_customer_id, card: 'tk')
       end
@@ -82,14 +82,14 @@ describe StripeSub do
 
   describe '#update' do
     before do
-      create :subscriber_item, subscriber: subscriber
+      create :subscription, subscriber: subscriber
       subscriber.update stripe_customer_id: 'test_customer_sub'
       customer = Stripe::Customer.create(id: subscriber.stripe_customer_id, card: 'tk')
       customer.subscriptions.create({ :plan => 'weekly-bread-1' })
     end
 
-    it 'marks all subscriber_items as paid' do
-      expect(subscriber).to receive(:mark_subscriber_items_payment_as).once
+    it 'marks all subscriptions as paid' do
+      expect(subscriber).to receive(:mark_subscriptions_payment_as).once
       subject.update
     end
 

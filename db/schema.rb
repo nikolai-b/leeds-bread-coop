@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001215408) do
+ActiveRecord::Schema.define(version: 20141021190015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,18 +94,6 @@ ActiveRecord::Schema.define(version: 20141001215408) do
 
   add_index "payment_cards", ["subscriber_id"], name: "index_payment_cards_on_subscriber_id", using: :btree
 
-  create_table "subscriber_items", force: true do |t|
-    t.integer  "subscriber_id"
-    t.integer  "bread_type_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "collection_day"
-    t.boolean  "paid",           default: false
-  end
-
-  add_index "subscriber_items", ["bread_type_id"], name: "index_subscriber_items_on_bread_type_id", using: :btree
-  add_index "subscriber_items", ["subscriber_id"], name: "index_subscriber_items_on_subscriber_id", using: :btree
-
   create_table "subscribers", force: true do |t|
     t.string   "first_name"
     t.text     "address"
@@ -138,6 +126,18 @@ ActiveRecord::Schema.define(version: 20141001215408) do
   add_index "subscribers", ["email"], name: "index_subscribers_on_email", unique: true, using: :btree
   add_index "subscribers", ["reset_password_token"], name: "index_subscribers_on_reset_password_token", unique: true, using: :btree
   add_index "subscribers", ["unlock_token"], name: "index_subscribers_on_unlock_token", unique: true, using: :btree
+
+  create_table "subscriptions", force: true do |t|
+    t.integer  "subscriber_id"
+    t.integer  "bread_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "collection_day"
+    t.boolean  "paid",           default: false
+  end
+
+  add_index "subscriptions", ["bread_type_id"], name: "index_subscriptions_on_bread_type_id", using: :btree
+  add_index "subscriptions", ["subscriber_id"], name: "index_subscriptions_on_subscriber_id", using: :btree
 
   create_table "wholesale_customers", force: true do |t|
     t.string   "name"

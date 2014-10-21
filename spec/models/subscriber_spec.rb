@@ -16,18 +16,18 @@ describe Subscriber do
 
       expect(ursula.bread_types[0].name).to eq('100% Rye')
       expect(ursula.collection_point.name).to eq('Green Action')
-      expect(ursula.subscriber_items[0].collection_day_name).to eq('Wednesday')
+      expect(ursula.subscriptions[0].collection_day_name).to eq('Wednesday')
 
       expect(rachel.bread_types[0].name).to eq('Special')
       expect(rachel.collection_point.name).to eq('Fabrication')
-      expect(rachel.subscriber_items[0].collection_day_name).to eq('Friday')
+      expect(rachel.subscriptions[0].collection_day_name).to eq('Friday')
     end
   end
 
   context "with subscriber items" do
     before do
-      4.times {create :subscriber_item, subscriber: subject}
-      create :subscriber_item, subscriber: subject, paid: false
+      4.times {create :subscription, subscriber: subject}
+      create :subscription, subscriber: subject, paid: false
     end
 
     it "returns the num paid subscriber items" do
@@ -41,7 +41,7 @@ describe Subscriber do
 
   describe 'collection_days' do
     before do
-      2.times { create :subscriber_item, subscriber: subject }
+      2.times { create :subscription, subscriber: subject }
     end
 
     it 'should return the collection days' do
@@ -63,7 +63,7 @@ describe Subscriber do
       end
 
       it 'excludes unpaid subscribers' do
-        subscriber.subscriber_items[0].update_attribute :paid, false
+        subscriber.subscriptions[0].update_attribute :paid, false
         expect(described_class.active_on(Date.tomorrow.beginning_of_week + 18.days).count).to eq 0
       end
     end
@@ -80,7 +80,7 @@ describe Subscriber do
 
   it 'has a monthly cost' do
     expect(subject.monthly_payment).to eq(0)
-    create :subscriber_item, subscriber: subject, paid: true
+    create :subscription, subscriber: subject, paid: true
     subject.reload
     expect(subject.monthly_payment).to eq(10)
   end

@@ -8,12 +8,12 @@ describe ProductionReport do
       subscriber_on_holiday = create :subscriber, :on_subscription_holiday
 
       yeast_bread = create :bread_type, :yeasty
-      sour_bread = subscriber_on_holiday.subscriber_items[0].bread_type
+      sour_bread = subscriber_on_holiday.subscriptions[0].bread_type
       (1..3).each do |add|
-        create :subscriber_item, bread_type: yeast_bread, collection_day: (1 + add)
+        create :subscription, bread_type: yeast_bread, collection_day: (1 + add)
 
         subscriber = create :subscriber
-        3.times {create :subscriber_item, subscriber: subscriber, bread_type: sour_bread, collection_day: (1 + add) }
+        3.times {create :subscription, subscriber: subscriber, bread_type: sour_bread, collection_day: (1 + add) }
 
         order = Order.create({ date: today + add, })
         order.line_items.create(

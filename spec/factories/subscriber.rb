@@ -13,12 +13,12 @@ FactoryGirl.define do
     end
 
     trait :with_subscription do
-      after(:build) {|s| s.subscriber_items << FactoryGirl.build(:subscriber_item, subscriber: s) }
+      after(:build) {|s| s.subscriptions << FactoryGirl.build(:subscription, subscriber: s) }
     end
 
     trait :on_subscription_holiday do
       after(:create) do |s|
-        s.subscriber_items << FactoryGirl.create(:subscriber_item, subscriber: s)
+        s.subscriptions << FactoryGirl.create(:subscription, subscriber: s)
         s.holidays << FactoryGirl.create(:holiday, subscriber: s)
       end
     end

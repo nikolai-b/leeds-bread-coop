@@ -5,11 +5,11 @@ class DeliveryReport
   end
 
   def show
-    collection_points = CollectionPoint.includes(subscribers: {subscriber_items: :bread_type})
+    collection_points = CollectionPoint.includes(subscribers: {subscriptions: :bread_type})
 
     collection_points.map do |collection_point|
       deliverys_at_collection_point = collection_point.subscribers.active_on(@date).flat_map do |subscriber|
-        subscriber.subscriber_items.map do |sub_item|
+        subscriber.subscriptions.map do |sub_item|
           BreadDeliveryItem.new(subscriber: subscriber, bread_type: sub_item.bread_type)
         end.compact
       end
