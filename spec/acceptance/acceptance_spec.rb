@@ -8,6 +8,11 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     create :bread_type
     create :email_template, :with_real_template
     Capybara.current_driver = :selenium
+   # Capybara.register_driver :poltergeist do |app|
+   #   Capybara::Poltergeist::Driver.new(app, js_errors: false)
+   # end
+   # Capybara.javascript_driver = :poltergeist
+   # Capybara.current_driver = :poltergeist
     Capybara.javascript_driver = :selenium
   end
 
@@ -23,6 +28,8 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     expect(page).to have_content "You have signed up successfully."
 
     pay_stripe
+
+    sleep(2)
 
     see_success
 
@@ -42,7 +49,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     fill_in "Address",    with: 'Somewhere in Leeds'
     fill_in "Phone",      with: '01132222222'
     select 'Green Action', from: :subscriber_collection_point_id
-    select "Wednesday", from: "Collection day"
+    select "Wednesday",    from: "Collection day"
     select 'White sour'
     fill_in "Password",   with: 'password'
     fill_in "Notes",      with: 'Thanks!'
@@ -52,20 +59,21 @@ feature "New user, new sign-up", type: :feature,  js: true  do
 
   def pay_stripe
     click_on 'Pay for 1 loaf'
-    #Capybara.current_driver = :rack_test
-    #params = {"utf8"=>"✓", "stripeToken"=>"tok_104BlP4mOmZyXxlvkuSPOxa5", "stripeEmail"=>"lizzie@example.com", "action"=>"create", "controller"=>"subs", "subscriber_id"=>"1"}
-    #page.driver.submit :post, subscriber_subs_path(1), params
 
-    page.driver.browser.switch_to.frame 'stripe_checkout_app'
-    fill_in "card_number", with: "4242424242424242"
-    fill_in "cc-exp", with: (Date.current + 1.month).strftime('%m%y')
-    fill_in "cc-csc", with: '123'
+    stripe = page.driver.window_handles.last
 
-    click_on 'Pay £10 every 4 weeks'
+    Capybara.within_frame all('iframe[name=stripe_checkout_app]').last do
+
+      4.times { fill_with_keys "card_number", with: '4242' }
+      fill_with_keys "cc-exp", with: (Date.current + 1.month).strftime('%m')
+      fill_with_keys "cc-exp", with: (Date.current + 1.month).strftime('%y')
+      fill_in "cc-csc", with: '123'
+
+      click_on 'Pay £10 every 4 weeks'
+    end
   end
 
   def see_success
-    sleep(15)
     expect(page).to have_content 'lizzie'
     expect(page).to have_content 'White sour'
   end
@@ -76,5 +84,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     expect(current_email).to have_content "Green Action"
   end
 
-
+  def fill_with_keys(el, opts)
+    page.driver.browser.find_element(:id, el).send_keys(opts[:with])
+  end
 end
