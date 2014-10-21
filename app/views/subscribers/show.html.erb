@@ -26,7 +26,7 @@
 
 <p>
   <strong>Bread subscripts:</strong>
-  <% bread_subs = @subscriber.subscriber_items.try(:map) do |sub_item| %>
+  <% bread_subs = @subscriber.subscriptions.try(:map) do |sub_item| %>
     <% next unless sub_item.paid %>
     <% "#{sub_item.bread_type.name} on #{sub_item.collection_day_name}" %>
   <% end %>

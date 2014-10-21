@@ -32,11 +32,11 @@ You are currently paying for <%= pluralize(current_subscriber.num_paid_subs, "lo
   </thead>
 
   <tbody>
-    <% current_subscriber.subscriber_items.try(:each) do |subscriber_item| %>
+    <% current_subscriber.subscriptions.try(:each) do |subscription| %>
       <tr>
-        <td><%= subscriber_item.bread_type.name %></td>
+        <td><%= subscription.bread_type.name %></td>
         <td><%= current_subscriber.collection_point.name %></td>
-        <td><%= subscriber_item.collection_day_name %></td>
+        <td><%= subscription.collection_day_name %></td>
       </tr>
     <% end %>
   </tbody>
