@@ -10,6 +10,4 @@ task :copy_regular_orders => :environment do
       system('python', 'compost.v2.py')
     end
   end
-
-
 end

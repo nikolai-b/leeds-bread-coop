@@ -2,6 +2,14 @@ class StripeSub
   extend ActiveModel::Naming
   attr_reader :errors
   MONTHLY_COST_PENCE = 1000.freeze
+  WEEKLY_COST_PENCE = MONTHLY_COST_PENCE/4.0.freeze
+
+  def self.refund
+    Holiday.in_last_week.each do |hol|
+      strip = new hol.subscriber
+      strip.refund_weeks hol.will_miss
+    end
+  end
 
   def initialize(subscriber, notifier = nil)
     @subscriber = subscriber
@@ -50,14 +58,15 @@ class StripeSub
   end
 
   def refund_weeks(weeks)
-    amount = weeks * MONTHLY_COST_PENCE / 4.0
-    full, remainder = amount.divmod MONTHLY_COST_PENCE
-    charges = last_charges(full + 1)
-    if charges
-      charges[0..-2].each do |charge|
-        charge.refund
+    amount_to_refund = (weeks * WEEKLY_COST_PENCE * @subscriber.num_paid_subs).to_i
+    last_charges((weeks/4.0).ceil).each do |charge|
+      if charge.amount < amount_to_refund
+        charge.refund amount: charge.amount
+        amount_to_refund -= charge.amount
+      else
+        charge.refund amount: amount_to_refund
+        return
       end
-      charges[-1].refund amount: remainder.to_i
     end
   end
 

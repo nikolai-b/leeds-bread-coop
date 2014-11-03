@@ -7,6 +7,9 @@ class Holiday < ActiveRecord::Base
   validate :end_date_after_start_date
   validate :start_date_too_close
 
+  scope :in_last_week, ->{ t = Date.today; where(end_date: (t-6.days..t)) }
+
+
   def will_miss
     subscriber_collection_days = subscriber.collection_days
     (start_date..end_date).select{ |k| subscriber_collection_days.include?(k.wday) }.size

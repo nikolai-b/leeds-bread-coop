@@ -110,4 +110,12 @@ describe StripeSub do
       expect(charges[2]['data'].refunds).to be_blank
     end
   end
+
+  it 'refunds subscribers in last week' do
+    skip
+    hol = build :holiday, subscriber: subscriber, end_date: (Date.today - 6.days)
+    hol.save validate: false
+    expect{ described_class.refund }
+  end
+
 end

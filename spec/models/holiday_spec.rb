@@ -31,4 +31,16 @@ describe Holiday do
     expect(end_before_start.valid?).to be_falsey
     expect(end_before_start.errors.to_a.first).to eq('End date must be after start date')
   end
+
+  it 'has scope in_last_week' do
+    hol = build :holiday, subscriber: subscriber, end_date: Date.tomorrow
+    hol.save validate: false
+    hol = build :holiday, subscriber: subscriber, end_date: (Date.today - 7.days)
+    hol.save validate: false
+    expect(described_class.in_last_week.size).to eq(0)
+    hol = build :holiday, subscriber: subscriber, end_date: (Date.today - 6.days)
+    hol.save validate: false
+    expect(described_class.in_last_week.size).to eq(1)
+  end
+
 end
