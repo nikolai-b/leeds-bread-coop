@@ -83,7 +83,7 @@ class Subscriber < ActiveRecord::Base
   end
 
   def monthly_payment
-    num_paid_subs * StripeSub::MONTHLY_COST
+    num_paid_subs * StripeSub::MONTHLY_COST_PENCE / 100.0
   end
 
   private

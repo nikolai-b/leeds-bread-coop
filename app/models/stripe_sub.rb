@@ -1,7 +1,7 @@
 class StripeSub
   extend ActiveModel::Naming
   attr_reader :errors
-  MONTHLY_COST = 10.freeze
+  MONTHLY_COST_PENCE = 1000.freeze
 
   def initialize(subscriber, notifier = nil)
     @subscriber = subscriber
@@ -49,15 +49,26 @@ class StripeSub
     end
   end
 
+  def refund_weeks(weeks)
+    amount = weeks * MONTHLY_COST_PENCE / 4.0
+    full, remainder = amount.divmod MONTHLY_COST_PENCE
+    charges = last_charges(full + 1)
+    if charges
+      charges[0..-2].each do |charge|
+        charge.refund
+      end
+      charges[-1].refund amount: remainder
+    end
+  end
+
   private
 
   def add_stripe_plan(stripe_token)
-    Stripe::Customer.create(
+    sc = Stripe::Customer.create(
       :email => @subscriber.email,
       :card  => stripe_token,
       :plan  => plan,
     )
-
   rescue Stripe::APIError => e
     Rails.logger.error "Stripe Authentication error while creating user: #{e.message}"
     false
@@ -69,5 +80,11 @@ class StripeSub
 
   def stripe_customer
     stripe_customer ||= Stripe::Customer.retrieve(@subscriber.stripe_customer_id)
+  end
+
+  def last_charges(nth = 1)
+    sc = Stripe::Charge.all(customer: @subscriber.stripe_customer_id, count: nth)
+    return sc['data'] if sc
+    nil
   end
 end

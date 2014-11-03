@@ -196,11 +196,16 @@ def getcontent(post):
 
 	tag='<div class="article-content">'
 	x=cpost.find(tag)
+
+	tag='<div class="field field-name-body'
+	x_new=cpost.find(tag)
+	if x_new!=-1: x=x_new
+
 	#find the closing div
 
 	y=cpost.find('<table id="attachments"',x)
 	if y!=-1: return cpost[x:y]
-	y=cpost.find('<section class=',x)
+	y=cpost.find('<section class="field field-name-field-date',x)
 	return cpost[x:y]
 
 def ddmmyy(s):

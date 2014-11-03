@@ -1,10 +1,11 @@
 describe StripeSub do
   let(:notifier) { double('SubscriberNotifier', new_sub: true, sub_deleted: true) }
   let(:subscriber) { create :subscriber}
+  let(:stripe_helper) { StripeMock.create_test_helper }
 
   before do
     StripeMock.start
-    Stripe::Plan.create(id: 'weekly-bread-1', amount: 500)
+    Stripe::Plan.create(id: 'weekly-bread-1', amount: 1000, name: 'weekly-sub', currency: 'GBP', interval: 4)
   end
 
   after { StripeMock.stop }
@@ -14,12 +15,11 @@ describe StripeSub do
   describe '#add' do
     context 'with no current sub' do
       before do
-        Stripe::Plan.create(id: 'weekly-bread-1', amount: 500)
         create :subscription, subscriber: subscriber
       end
 
       it 'sets the subscriber\'s stripe id and active sub' do
-        subject.add('stripe_token')
+        subject.add(stripe_helper.generate_card_token)
 
         expect(subscriber.stripe_customer_id).to_not be_nil
         expect(subscriber.num_paid_subs).to eq(1)
@@ -27,7 +27,7 @@ describe StripeSub do
       end
 
       it 'returns true' do
-        expect(subject.add('strip_token')).to be_truthy
+        expect(subject.add(stripe_helper.generate_card_token)).to be_truthy
       end
     end
 
@@ -55,7 +55,7 @@ describe StripeSub do
       before do
         create :subscription, subscriber: subscriber
         subscriber.update stripe_customer_id: 'test_customer_sub'
-        customer = Stripe::Customer.create(id: subscriber.stripe_customer_id, card: 'tk')
+        customer = Stripe::Customer.create(id: subscriber.stripe_customer_id, card: stripe_helper.generate_card_token)
       end
 
       it 'updates num_paid_subs to nil' do
@@ -79,7 +79,7 @@ describe StripeSub do
     before do
       create :subscription, subscriber: subscriber
       subscriber.update stripe_customer_id: 'test_customer_sub'
-      customer = Stripe::Customer.create(id: subscriber.stripe_customer_id, card: 'tk')
+      customer = Stripe::Customer.create(id: subscriber.stripe_customer_id, card: stripe_helper.generate_card_token)
       customer.subscriptions.create({ :plan => 'weekly-bread-1' })
     end
 
@@ -88,5 +88,26 @@ describe StripeSub do
       subject.update
     end
 
+  end
+
+  describe '#refund' do
+    before do
+      create :subscription, subscriber: subscriber
+      subscriber.update stripe_customer_id: 'test_customer_sub'
+      # StripeMock.stop
+      # WebMock.disable_net_connect!
+      # Stripe::Customer.create(id: subscriber.stripe_customer_id, card: stripe_helper.generate_card_token)
+    end
+
+    #let(:charges) { 3.times.collect { Stripe::Charge.create(amount: 1000, customer: subscriber.stripe_customer_id) } }
+
+    it 'refunds the charges' do
+      skip
+      subject.refund_weeks 5
+
+      expect(charges[0]['data'].refunds).to be_blank
+      expect(charges[1]['data'].refunds).to be_blank
+      expect(charges[2]['data'].refunds).to be_blank
+    end
   end
 end
