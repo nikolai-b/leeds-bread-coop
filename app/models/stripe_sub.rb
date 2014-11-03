@@ -57,7 +57,7 @@ class StripeSub
       charges[0..-2].each do |charge|
         charge.refund
       end
-      charges[-1].refund amount: remainder
+      charges[-1].refund amount: remainder.to_i
     end
   end
 
