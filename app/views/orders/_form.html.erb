@@ -14,14 +14,14 @@
         <%= f.collection_select(:bread_type_id, BreadType.all, :id, :name) %>
         <%= f.number_field :quantity %>
 
-      <a href="#" class="remove">remove</a>
+      <a href="#" class="remove btn btn-mini btn-danger">remove</a>
 
       <%= f.hidden_field :id %>
       <%= f.hidden_field :_destroy %>
     </fieldset>
   <% end %>
   </div>
-  <a href="#" class="add">add line item</a>
+  <a href="#" class="add btn btn-small btn-success">add bread order</a>
   <script type="text/javascript">
     $(document).ready(function(e) {
         $('FORM').nestedFields();

@@ -69,6 +69,6 @@ class WholesaleCustomersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def wholesale_customer_params
-      params.require(:wholesale_customer).permit(:name, :address, :phone, :opening_time)
+      params.require(:wholesale_customer).permit(:name, :address, :phone, :opening_time, :delivery_receipt)
     end
 end

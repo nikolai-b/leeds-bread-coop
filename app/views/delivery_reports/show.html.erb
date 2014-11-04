@@ -1,6 +1,6 @@
 <h1>Delivery Report</h1>
 
-<%= link_to('Yesterday <', delivery_reports_path(date: (@delivery_report.date - 1.day).to_s)) %> 
+<%= link_to('Yesterday <', delivery_reports_path(date: (@delivery_report.date - 1.day).to_s)) %>
 &emsp;
 <%= @delivery_report.date.strftime("%a #{@delivery_report.date.day.ordinalize} %b %y") %>
 &emsp;
@@ -13,6 +13,7 @@
       <th>Invoiced</th>
       <th>Regular</th>
       <th>Sample</th>
+      <th>Receipt</th>
       <th>Bread Type</th>
       <th>Quantity</th>
     </tr>
@@ -26,9 +27,11 @@
         <td><%= wholesale.order.invoiced ? 'Y' : 'N' %></td>
         <td><%= wholesale.order.regular ? 'Y' : 'N' %></td>
         <td><%= wholesale.order.sample ? 'Y' : 'N' %></td>
+        <td><%= wholesale.wholesale_customer.delivery_receipt ? 'Y' : 'N' %></td>
       </tr>
       <% wholesale.items.try(:each) do |item| %>
         <tr>
+          <td> </td>
           <td> </td>
           <td> </td>
           <td> </td>
