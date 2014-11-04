@@ -92,8 +92,10 @@ class StripeSub
   end
 
   def last_charges(nth = 1)
-    sc = Stripe::Charge.all(customer: @subscriber.stripe_customer_id, count: nth)
-    return sc['data'] if sc
-    nil
+    if customer = @subscriber.stripe_customer_id
+      sc = Stripe::Charge.all(customer: @subscriber.stripe_customer_id, count: nth)
+      return sc['data'] if sc
+      nil
+    end
   end
 end
