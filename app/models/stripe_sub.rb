@@ -4,10 +4,10 @@ class StripeSub
   MONTHLY_COST_PENCE = 1000.freeze
   WEEKLY_COST_PENCE = MONTHLY_COST_PENCE/4.0.freeze
 
-  def self.refund
+  def self.refund_holidays
     Holiday.in_last_week.each do |hol|
-      strip = new hol.subscriber
-      strip.refund_weeks hol.will_miss
+      stripe = new hol.subscriber
+      stripe.refund_weeks hol.will_miss
     end
   end
 
