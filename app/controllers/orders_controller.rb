@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   before_action :set_wholesale_customer
 
   def index
-    @orders = Order.all
+    @orders = @wholesale_customer.orders
   end
 
   def show
