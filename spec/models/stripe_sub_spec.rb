@@ -113,7 +113,7 @@ describe StripeSub do
 
   it 'refunds holidays ending in last week' do
     create :subscription, subscriber: subscriber
-    hol_two_weeks = build :holiday, subscriber: subscriber, start_date: (Date.today - 20.days), end_date: (Date.today - 6.days)
+    hol_two_weeks = build :holiday, subscriber: subscriber, start_date: (Date.today.beginning_of_week - 14.days), end_date: (Date.today.beginning_of_week)
     hol_two_weeks.save validate: false
     expect_any_instance_of(StripeSub).to receive(:refund_weeks).with(2).once
     described_class.refund_holidays
