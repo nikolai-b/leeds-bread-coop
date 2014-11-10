@@ -28,6 +28,8 @@ describe Order do
     it 'has week_num=' do
       Order::Copy.week_num = 15
       expect(Order::Copy.week_num).to eq(15)
+      Order::Copy.week_num = 16
+      expect(Order::Copy.week_num).to eq(16)
     end
 
   end

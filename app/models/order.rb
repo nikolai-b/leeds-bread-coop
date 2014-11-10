@@ -9,7 +9,7 @@ class Order < ActiveRecord::Base
 
       def week_num=(val)
         if last
-          last.week_num = val
+          last.update week_num: val
         else
           create(week_num: val)
         end
