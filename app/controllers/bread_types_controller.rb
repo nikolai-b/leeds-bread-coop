@@ -4,7 +4,7 @@ class BreadTypesController < ApplicationController
   # GET /bread_types
   # GET /bread_types.json
   def index
-    @bread_types = BreadType.all
+    @bread_types = BreadType.paginate(page: params[:page])
   end
 
   # GET /bread_types/1

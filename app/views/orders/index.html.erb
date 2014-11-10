@@ -1,5 +1,6 @@
-<h1>Listing orders</h1>
+<h1>Orders</h1>
 
+<%= will_paginate @orders, renderer: BootstrapPagination::Rails %>
 <table>
   <thead>
     <tr>
@@ -27,5 +28,8 @@
     <% end %>
   </tbody>
 </table>
+<%= will_paginate @orders, renderer: BootstrapPagination::Rails %>
+
 <%= link_to t('.new', :default => t("helpers.links.new")), new_wholesale_customer_order_path(@wholesale_customer), :class => 'btn btn-primary' %>
+
 <br>

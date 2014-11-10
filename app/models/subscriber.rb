@@ -59,7 +59,14 @@ class Subscriber < ActiveRecord::Base
       subscriber.password = subscriber.email
       subscriber.address = row['Address']
       subscriber.first_name = row['Name'].split(' ')[0]
-      subscriber.last_name = row['Name'].split(' ')[1..-1].join(' ')
+      last_name = row['Name'].split(' ')[1..-1].join(' ')
+
+      if last_name.length < 3
+        subscriber.last_name = 'No Last Name'
+      else
+        subscriber.last_name = row['Name'].split(' ')[1..-1].join(' ')
+      end
+
       phone_length = subscriber.phone ? subscriber.phone.length : 0
       if phone_length > 13
         subscriber.phone = subscriber.phone.slice(0,13)

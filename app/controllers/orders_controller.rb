@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   before_action :set_wholesale_customer
 
   def index
-    @orders = @wholesale_customer.orders
+    @orders = @wholesale_customer.orders.paginate(:page => params[:page])
   end
 
   def show

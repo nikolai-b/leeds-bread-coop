@@ -5,7 +5,7 @@ class SubscribersController < ApplicationController
   # GET /subscribers
   # GET /subscribers.json
   def index
-    @subscribers = Subscriber.ordered
+    @subscribers = Subscriber.ordered.paginate(:page => params[:page])
   end
 
   def new
@@ -69,9 +69,9 @@ class SubscribersController < ApplicationController
   def import
     if params[:file]
       Subscriber.import(params[:file])
-      redirect_to subscribers_path, notice: "Subscribers imported!"
+      redirect_to admin_subscriber_index_path, notice: "Subscribers imported!"
     else
-      redirect_to subscribers_path, notice: "No file attached"
+      redirect_to admin_subscriber_index_path, notice: "No file attached"
     end
   end
 

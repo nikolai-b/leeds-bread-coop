@@ -4,6 +4,8 @@
     <%= t '.title', :default => "Subscribers" %>
   </h1>
 </div>
+<%= will_paginate @subscribers, renderer: BootstrapPagination::Rails %>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -54,3 +56,4 @@
 <% end %>
 
 <%= link_to t('.new', :default => t("helpers.links.new")), new_admin_subscriber_path, :class => 'btn btn-primary' %>
+<%= will_paginate @subscribers, renderer: BootstrapPagination::Rails %>
