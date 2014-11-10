@@ -1,22 +1,4 @@
 class Order < ActiveRecord::Base
-  class Copy < ActiveRecord::Base
-    class << self
-      table_name = "order_copies"
-
-      def week_num
-        last ? last.week_num : -1
-      end
-
-      def week_num=(val)
-        if last
-          last.update week_num: val
-        else
-          create(week_num: val)
-        end
-      end
-    end
-  end
-
   belongs_to :wholesale_customer
   has_many :line_items
   accepts_nested_attributes_for :line_items, allow_destroy: true

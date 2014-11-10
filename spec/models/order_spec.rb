@@ -18,19 +18,4 @@ describe Order do
     expect(orders.size).to eq (1)
   end
 
-  describe Order::Copy do
-    it 'has week_num' do
-      expect(Order::Copy.week_num).to eq(-1)
-      Order::Copy.create(week_num: 13)
-      expect(Order::Copy.week_num).to eq(13)
-    end
-
-    it 'has week_num=' do
-      Order::Copy.week_num = 15
-      expect(Order::Copy.week_num).to eq(15)
-      Order::Copy.week_num = 16
-      expect(Order::Copy.week_num).to eq(16)
-    end
-
-  end
 end
