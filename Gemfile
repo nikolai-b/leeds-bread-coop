@@ -45,6 +45,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'bootstrap_form'
 gem 'stripe-rails'
 gem 'will_paginate'
+gem 'has_scope'
 gem 'will_paginate-bootstrap', '< 1.0'
 
 gem 'awesome_nested_fields'

@@ -9,17 +9,17 @@ namespace :scheduler do
   task hourly: :environment do
     if Week.num != Date.current
       perform 'scheduler:daily'
+
       Week.num = Date.current
     end
   end
 
   desc "Called early every day"
   task daily: :environment do
-    perform 'scheduler:weekly' if Date.current.cwday == 1
+    perform 'scheduler:weekly' if Date.current.cwday == 7
+
     if (Date.current.cwday == 3) || (Date.current.cwday == 7)
-      if Time.now.hour == 14
-        system('python', 'compost.v2.py')
-      end
+      system('python', 'compost.v2.py') if Time.now.hour == 14
     end
   end
 

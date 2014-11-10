@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   has_many :line_items
   accepts_nested_attributes_for :line_items, allow_destroy: true
   has_many :bread_types, through: :line_items
+  scope :future, -> { where('date >= ?', Date.today) }
 
   def self.copy_regular_orders
     includes(:line_items).where(regular: true).where(date: Date.today..(Date.today + 6.days) ).each do |order|

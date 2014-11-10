@@ -1,9 +1,10 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :set_wholesale_customer
+  has_scope :future, type: :boolean, default: true
 
   def index
-    @orders = @wholesale_customer.orders.paginate(:page => params[:page])
+    @orders = apply_scopes(@wholesale_customer.orders.paginate(:page => params[:page]))
   end
 
   def show
