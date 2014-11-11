@@ -18,8 +18,8 @@
         <td><%= collection_point.address %></td>
         <td><%= collection_point.post_code %></td>
         <td><%= collection_point.notes %></td>
-        <td><%= link_to 'Edit', edit_collection_point_path(collection_point), class: 'btn btn-mini' %> </td>
-        <td><%= link_to 'Destroy', collection_point, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_collection_point_path(collection_point), class: 'btn btn-default btn-xs' %> </td>
+        <td><%= link_to 'Destroy', collection_point, method: :delete, class: 'btn btn-default btn-xs btn-danger', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -5,5 +5,5 @@
     <%= f.time_select :opening_time %>
     <%= f.check_box :delivery_receipt %>
     <% button_label = @wholesale_customer.persisted? ? "Update" : "Create" %>
-    <%= f.submit button_label, class: "btn btn-success" %>
+    <%= f.submit button_label, class: "btn btn-default btn-success" %>
 <% end %>

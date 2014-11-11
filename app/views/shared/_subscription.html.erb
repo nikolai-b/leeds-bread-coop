@@ -20,14 +20,14 @@
         <%= g.check_box :paid, inline: true %>
       <% end %>
     </div>
-    <a href="#" class="remove btn btn-mini btn-danger">remove</a>
+    <a href="#" class="remove btn btn-default btn-default btn-xs btn-danger">remove</a>
 
     <%= g.hidden_field :_destroy %>
   </fieldset>
   </br>
 <% end %>
 </div>
-<a href="#" class="add btn btn-small btn-success">add bread subscription</a>
+<a href="#" class="add btn btn-default btn-xs btn-success">add bread subscription</a>
 <script type="text/javascript">
   $(document).ready(function(e) {
       $('FORM').nestedFields();

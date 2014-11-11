@@ -4,5 +4,5 @@
     <%= f.text_area :notes %>
     <%= f.text_area :name %>
     <% button_label = @collection_point.persisted? ? "Update" : "Create" %>
-    <%= f.submit button_label, class: "btn btn-success" %>
+    <%= f.submit button_label, class: "btn btn-default btn-success" %>
 <% end %>

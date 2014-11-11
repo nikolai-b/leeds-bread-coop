@@ -18,8 +18,8 @@
         <td><%= bread_type.sour_dough %></td>
         <td><%= bread_type.wholesale_only %></td>
         <td><%= bread_type.notes %></td>
-        <td><%= link_to 'Edit', edit_bread_type_path(bread_type), class: 'btn btn-mini'  %></td>
-        <td><%= link_to 'Destroy', bread_type, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_bread_type_path(bread_type), class: 'btn btn-default btn-xs'  %></td>
+        <td><%= link_to 'Destroy', bread_type, method: :delete, class: 'btn btn-default btn-xs btn-danger', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -27,4 +27,4 @@
 
 <br>
 
-<%= link_to 'New Bread type', new_bread_type_path, class: 'btn btn-mini btn-success' %>
+<%= link_to 'New Bread type', new_bread_type_path, class: 'btn btn-default btn-xs btn-success' %>

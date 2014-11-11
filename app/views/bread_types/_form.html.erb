@@ -9,5 +9,5 @@
     <%= f.check_box :wholesale_only %>
     <%= f.text_area :notes %>
   <% button_label = @bread_type.persisted? ? "Update" : "Create" %>
-  <%= f.submit button_label, class: "btn btn-success" %>
+  <%= f.submit button_label, class: "btn btn-default btn-success" %>
 <% end %>

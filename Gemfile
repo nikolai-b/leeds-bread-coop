@@ -36,7 +36,7 @@ gem 'virtus'
 
 gem "therubyracer"
 gem "less-rails"
-gem "twitter-bootstrap-rails", '< 3.0'
+gem "twitter-bootstrap-rails"
 gem 'mustache'
 
 gem 'rails-i18n'
@@ -46,7 +46,7 @@ gem 'bootstrap_form'
 gem 'stripe-rails'
 gem 'will_paginate'
 gem 'has_scope'
-gem 'will_paginate-bootstrap', '< 1.0'
+gem 'will_paginate-bootstrap'
 
 gem 'awesome_nested_fields'
 

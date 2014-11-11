@@ -25,9 +25,9 @@
         <td><%= order.invoiced %></td>
         <td><%= order.regular %></td>
         <td><%= order.sample %></td>
-        <td><%= link_to 'Edit', edit_wholesale_customer_order_path(@wholesale_customer, order), class: 'btn btn-mini'  %></td>
+        <td><%= link_to 'Edit', edit_wholesale_customer_order_path(@wholesale_customer, order), class: 'btn btn-default btn-xs'  %></td>
         <td> <%= link_to 'Destroy', wholesale_customer_order_path(@wholesale_customer, order),
-          method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %></td>
+          method: :delete, class: 'btn btn-default btn-xs btn-danger', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

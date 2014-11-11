@@ -3,5 +3,5 @@
     <%= @email_template.name %>
     <%= f.text_area :body %>
     <% button_label = @email_template.persisted? ? "Update" : "Create" %>
-    <%= f.submit button_label, class: "btn btn-success" %>
+    <%= f.submit button_label, class: "btn btn-default btn-success" %>
 <% end %>
