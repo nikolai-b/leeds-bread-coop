@@ -21,7 +21,7 @@
     </fieldset>
   <% end %>
   </div>
-  <a href="#" class="add btn btn-small btn-success">add bread order</a>
+  <a href="#" class="add btn btn-sm btn-success">add bread order</a>
   <script type="text/javascript">
     $(document).ready(function(e) {
         $('FORM').nestedFields();
@@ -33,10 +33,10 @@ weekStart: 1,
 todayBtn: "linked"
 });
   </script>
-<%= f.form_group :payment do %>
-  <%= f.check_box :invoiced, inline: true %>
-  <%= f.check_box :sample, inline: true %>
-  <%= f.check_box :regular, inline: true %>
+<%= f.form_group :payment, class: "form-inline" do %>
+  <%= f.check_box :invoiced %>
+  <%= f.check_box :sample %>
+  <%= f.check_box :regular %>
 <% end %>
 
 <%= f.text_area :note %>

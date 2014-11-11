@@ -12,6 +12,9 @@
           <td>
             <%= g.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]], selected: g.object.collection_day ) ) %>
           </td>
+          <td>
+            <a href="#" class="remove btn btn-default btn-default btn-sm btn-danger">remove</a>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -20,7 +23,6 @@
         <%= g.check_box :paid, inline: true %>
       <% end %>
     </div>
-    <a href="#" class="remove btn btn-default btn-default btn-xs btn-danger">remove</a>
 
     <%= g.hidden_field :_destroy %>
   </fieldset>
@@ -38,5 +40,6 @@
       }
       });
 </script>
-
+</br>
 <%= f.text_area :notes %>
+</br>
