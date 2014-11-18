@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110202232) do
+ActiveRecord::Schema.define(version: 20141118202609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,10 +127,13 @@ ActiveRecord::Schema.define(version: 20141110202232) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "collection_day"
-    t.boolean  "paid",           default: false
+    t.boolean  "paid",                default: false
+    t.integer  "next_bread_type_id"
+    t.integer  "next_collection_day"
   end
 
   add_index "subscriptions", ["bread_type_id"], name: "index_subscriptions_on_bread_type_id", using: :btree
+  add_index "subscriptions", ["next_bread_type_id"], name: "index_subscriptions_on_next_bread_type_id", using: :btree
   add_index "subscriptions", ["subscriber_id"], name: "index_subscriptions_on_subscriber_id", using: :btree
 
   create_table "weeks", force: true do |t|

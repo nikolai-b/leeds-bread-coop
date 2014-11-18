@@ -1,22 +1,51 @@
 class Subscription < ActiveRecord::Base
   belongs_to :subscriber
   belongs_to :bread_type
+  belongs_to :next_bread_type, class: BreadType
 
-  validates :collection_day, numericality: { only_integer: true }
+  validates :collection_day, inclusion: [3, 5]
+  validates :next_collection_day, inclusion: [3, 5], allow_blank: true
   validates :bread_type, presence: true
-  validate :change_subscription_ok, on: :update
-  validate :bread_type_for_subscribers
+  validate  :bread_type_for_subscribers
 
   scope :delivery_day, ->(date) { where(collection_day: date.wday) }
 
+  before_save    :defer_changes
   before_create  :update_stripe
   before_destroy :update_stripe
+
+  def self.apply_defered_changes!
+    where.not(next_collection_day: nil).find_each &:apply_defered_changes!
+  end
 
   def collection_day_name
     Date::DAYNAMES[collection_day]
   end
 
+  def instant_change?
+    if (bread_type_id_changed? || collection_day_changed?)
+      wday = Date.today.wday
+      if ((wday..wday + 3).to_a & [collection_day, collection_day_was]).present?
+        return false
+      end
+    end
+    return true
+  end
+
+  def apply_defered_changes!
+    update! bread_type_id: next_bread_type_id, collection_day: next_collection_day
+    update! next_bread_type_id: nil, next_collection_day: nil
+  end
+
   private
+
+  def defer_changes
+    return if instant_change? || self.class.defer_changes_off?
+    self.next_bread_type_id = bread_type_id
+    self.bread_type_id = bread_type_id_was
+    self.next_collection_day = collection_day
+    self.collection_day = collection_day_was
+  end
 
   def bread_type_for_subscribers
     unless bread_type_id.in? BreadType.for_subscribers.pluck(:id)
@@ -28,18 +57,7 @@ class Subscription < ActiveRecord::Base
     subscriber.stripe_sub.update if subscriber.stripe_customer_id
   end
 
-  def change_subscription_ok
-    if (bread_type_id_changed?)
-      wday = Date.today.wday
-      if (wday..wday + 3).include? collection_day
-        errors.add(:bread_type_id, "can't be change until the day after collection, your bread has already been baked for this week")
-      end
-    end
-    if (collection_day_changed?)
-      wday = Date.today.wday
-      if (wday..wday + 3).include? collection_day
-        errors.add(:collection_day, "that is too soon, it takes us 3 days to make your bread")
-      end
-    end
+  def self.defer_changes_off?
+    Rails.env.test?
   end
 end
