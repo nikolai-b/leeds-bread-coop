@@ -20,5 +20,22 @@ describe Subscription do
       subscription.bread_type = wholesale_bread
       expect(subscription.valid?).to be_falsey
     end
+
+    it 'checks it changes can be instantly applied' do
+      mon = Date.today.beginning_of_week
+      allow(Date).to receive(:today).and_return(mon + 3.days)
+
+      subscriber.paid = !subscriber.paid
+      expect(subscriber.instant_change?).to be_truthy
+
+      subscriber.bread_type = create :bread_type
+      expect(subscriber.instant_change?).to be_falsey
+
+      allow(Date).to receive(:today).and_return(mon + 1.days)
+      expect(subscriber.instant_change?).to be_truthy
+
+      subscriber.collection_day = 3
+      expect(subscriber.instant_change?).to be_falsey
+    end
   end
 end
