@@ -221,49 +221,7 @@ $(function() {
               <li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-290">
                 <%= link_to "Home", "http://leedsbread.coop/" %>
               </li>
-
-              <% if current_subscriber%>
-                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <%= link_to 'Logout', destroy_subscriber_session_path, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-                </li>
-                <% unless admin? %>
-                  <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                    <%= link_to "Account Details", edit_subscriber_registration_path %>
-                  </li>
-                  <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                    <%= link_to "Payment", edit_stripe_sub_path %>
-                  </li>
-                  <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                    <%= link_to "Bread Subscriptions", edit_all_subscriptions_path %>
-                  </li>
-                  <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                    <%= link_to "Pause your Bread", new_subscriber_holiday_path(current_subscriber) %>
-                  </li>
-                <% end %>
-              <% end %>
-              <% if admin?%>
-                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <%= link_to 'Subscribers', admin_subscriber_index_path %>
-                </li>
-                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <%= link_to 'Collection Points', collection_points_path %>
-                </li>
-                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <%= link_to 'Bread Types', bread_types_path %>
-                </li>
-                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <%= link_to 'Email Templates', email_templates_path %>
-                </li>
-                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <%= link_to 'Wholesale', wholesale_customers_path %>
-                </li>
-                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <%= link_to 'Delivery', delivery_reports_path %>
-                </li>
-                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <%= link_to 'Production', production_reports_path %>
-                </li>
-              <% end %>
+              <%= render 'layouts/menu' %>
               </ul>
             </div>
           </div><!--/#navigation-->
