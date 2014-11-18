@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@subscriber, as: :subscriber, url: form_url, layout: :inline, html: { method: html_method }) do |f| %>
+<%= bootstrap_form_for(@subscriber, as: :subscriber, url: form_url, html: { method: html_method }) do |f| %>
   <% if @subscriber.errors.any? %>
     <div id="error_explanation">
       <div class="alert alert-error">
@@ -11,18 +11,18 @@
     <tbody>
       <tr>
         <td>
-          <%= f.text_field :first_name %>
+          <%= f.text_field :first_name, autofocus: true, inline: true  %>
         </td>
         <td>
-          <%= f.text_field :last_name %>
+          <%= f.text_field :last_name, inline: true  %>
         </td>
       </tr>
       <tr>
         <td>
-          <%= f.email_field :email, autofocus: true %>
+          <%= f.email_field :email, inline: true  %>
         </td>
         <td>
-          <%= f.phone_field :phone %>
+          <%= f.phone_field :phone, inline: true  %>
         </td>
       </tr>
     </tbody>
@@ -34,12 +34,6 @@
   <% unless @subscriber.persisted? %>
     <%= render 'shared/subscription', f: f %>
   <% end %>
-
-  <% unless current_subscriber.try(:admin?) %>
-    <% if devise_mapping.rememberable? -%>
-      <div><%= f.check_box :remember_me %> </div>
-    <% end -%>
-  <% end -%>
 
   <% if @subscriber.persisted? && !current_subscriber.try(:admin?)%>
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -54,6 +48,12 @@
   <% else %>
     <%= f.password_field :password, autocomplete: "off" %>
   <% end %>
+
+  <% unless current_subscriber.try(:admin?) %>
+    <% if devise_mapping.rememberable? -%>
+      <div><%= f.check_box :remember_me %> </div>
+    <% end -%>
+  <% end -%>
 
   <% button_label = @subscriber.persisted? ? "Update" : "Subscribe" %>
   <%= f.submit button_label, class: "btn btn-default btn-success" %>

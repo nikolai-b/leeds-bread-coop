@@ -5,14 +5,14 @@
     <table class="table table-striped">
       <tbody>
         <tr>
-          <td>
+          <td class="vert-align">
             <%= g.collection_select(:bread_type_id, BreadType.for_subscribers, :id, :name) %>
-
           </td>
-          <td>
+          <td class="vert-align">
             <%= g.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]], selected: g.object.collection_day ) ) %>
           </td>
-          <td>
+          <td class="vert-align">
+            </br>
             <a href="#" class="remove btn btn-default btn-default btn-sm btn-danger">remove</a>
           </td>
         </tr>
@@ -26,10 +26,10 @@
 
     <%= g.hidden_field :_destroy %>
   </fieldset>
-  </br>
 <% end %>
 </div>
-<a href="#" class="add btn btn-default btn-xs btn-success">add bread subscription</a>
+<a href="#" class="add btn btn-default btn-xs btn-success">Add bread subscription</a>
+</br>
 <script type="text/javascript">
   $(document).ready(function(e) {
       $('FORM').nestedFields();
