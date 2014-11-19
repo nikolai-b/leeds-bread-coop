@@ -9,6 +9,8 @@ class Subscription < ActiveRecord::Base
   validate  :bread_type_for_subscribers
 
   scope :delivery_day, ->(date) { where(collection_day: date.wday) }
+  scope :with_changes, ->       { where.not(next_collection_day: nil) }
+  scope :active, ->             { where.not(collection_day: nil) }
 
   before_save    :defer_changes
   before_create  :update_stripe
@@ -20,6 +22,10 @@ class Subscription < ActiveRecord::Base
 
   def collection_day_name
     Date::DAYNAMES[collection_day]
+  end
+
+  def next_collection_day_name
+    Date::DAYNAMES[next_collection_day]
   end
 
   def instant_change?

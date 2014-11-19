@@ -24,14 +24,27 @@
   <%= "#{@subscriber.collection_point.address}, #{@subscriber.collection_point.post_code}" %>
 </p>
 
-<p>
-  <strong>Bread subscripts:</strong>
-  <% bread_subs = @subscriber.subscriptions.try(:map) do |sub_item| %>
-    <% next unless sub_item.paid %>
-    <% "#{sub_item.bread_type.name} on #{sub_item.collection_day_name}" %>
+<% if subscriptions = @subscriber.subscriptions %>
+  <p>
+    <strong>Bread subscripts:</strong>
+    <% bread_subs = subscriptions.active.map do |sub_item| %>
+      <% next unless sub_item.paid %>
+      <% "#{sub_item.bread_type.name} on #{sub_item.collection_day_name}" %>
+    <% end %>
+    <%= bread_subs.join(', ') %>
+  </p>
+
+  <% if changed_subscriptions = subscriptions.with_changes %>
+    <p>
+      <strong>Changes next week:</strong>
+      <% bread_subs = changed_subscriptions.map do |sub_item| %>
+        <% now = sub_item.collection_day ? "#{sub_item.bread_type.name} on #{sub_item.collection_day_name} becomes" : "a new subscription of"  %>
+        <% "#{now} #{sub_item.next_bread_type.name} on #{sub_item.next_collection_day_name}" %>
+      <% end %>
+      <%= bread_subs.join(', ') %>
+    </p>
   <% end %>
-  <%= bread_subs.join(', ') %>
-</p>
+<% end %>
 
 <p>
   <strong>Monthly Payment</strong>

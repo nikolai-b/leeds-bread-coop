@@ -78,7 +78,7 @@ class SubscribersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_subscriber
-      @subscriber = Subscriber.find(params[:id])
+      @subscriber = current_subscriber.admin? ? Subscriber.find(params[:id]) : current_subscriber
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

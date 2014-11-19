@@ -6,11 +6,13 @@
       <tbody>
         <tr>
           <td class="vert-align">
-            <%= g.collection_select(:bread_type_id, BreadType.for_subscribers, :id, :name) %>
+            <%= g.collection_select(:bread_type_id, BreadType.for_subscribers, :id, :name, selected: g.object.next_bread_type_id || g.object.bread_type_id ) %>
           </td>
           <td class="vert-align">
-            <%= g.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]], selected: g.object.collection_day ) ) %>
+            <%= g.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]], selected: g.object.next_collection_day || g.object.collection_day )) %>
           </td>
+            <%= g.hidden_field :next_collection_day, value: nil %>
+            <%= g.hidden_field :next_bread_type_id, value: nil %>
           <td class="vert-align">
             </br>
             <a href="#" class="remove btn btn-default btn-default btn-sm btn-danger">remove</a>

@@ -21,7 +21,8 @@ class ApplicationController < ActionController::Base
   end
 
   def allowed_subscriber_parms
-    [:first_name, :last_name, :address, :phone, :collection_point_id, :quantity, :notes, subscriptions_attributes: [:bread_type_id, :collection_day, :id, :_destroy] ]
+    [:first_name, :last_name, :address, :phone, :collection_point_id, :quantity,
+     :notes, subscriptions_attributes: [:bread_type_id, :collection_day, :next_bread_type_id, :next_collection_day, :id, :_destroy] ]
   end
 
 end
