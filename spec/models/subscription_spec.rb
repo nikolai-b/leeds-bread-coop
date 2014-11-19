@@ -53,23 +53,26 @@ describe Subscription do
     end
 
     context 'with defered changes' do
-      let!(:fri_to_wed) { create :subscription, next_collection_day: 3, next_bread_type: bread_type, bread_type: bread_type }
-      let!(:bread_type) { create :bread_type }
-      let!(:new_bread_type) { create :subscription, next_bread_type: bread_type, next_collection_day: 5 }
-      let!(:unchaged) { create :subscription }
+      let!(:changed_bread_type) { create :subscription, next_bread_type: new_bread_type, next_collection_day: 5 }
+      let!(:changed_fri_to_wed) { create :subscription, next_bread_type: old_bread_type, next_collection_day: 3, bread_type: old_bread_type }
+      let!(:unchaged)           { create :subscription, updated_at: (Time.now - 1.day) }
+
+      let(:new_bread_type) { create :bread_type }
+      let(:old_bread_type) { changed_bread_type.bread_type }
+
 
       it 'applies defered changes' do
-        described_class.apply_defered_changes!
+        expect{ described_class.apply_defered_changes! }.to_not change{ unchaged.reload.updated_at }
 
-        expect(unchaged).to eq(unchaged.reload)
+        expect(changed_bread_type.reload.next_bread_type).to be_nil
+        expect(changed_bread_type.reload.next_collection_day).to be_nil
+        expect(changed_bread_type.reload.bread_type).to eq(new_bread_type)
+        expect(changed_bread_type.reload.collection_day).to eq(5)
 
-        expect(new_bread_type.reload.next_bread_type).to be_nil
-        expect(new_bread_type.reload.next_collection_day).to be_nil
-        expect(new_bread_type.reload.bread_type).to eq(bread_type)
-
-        expect(fri_to_wed.reload.next_bread_type).to be_nil
-        expect(fri_to_wed.reload.next_collection_day).to be_nil
-        expect(fri_to_wed.reload.collection_day).to eq(3)
+        expect(changed_fri_to_wed.reload.next_bread_type).to be_nil
+        expect(changed_fri_to_wed.reload.next_collection_day).to be_nil
+        expect(changed_fri_to_wed.reload.collection_day).to eq(3)
+        expect(changed_fri_to_wed.reload.bread_type).to eq(old_bread_type)
       end
 
     end
