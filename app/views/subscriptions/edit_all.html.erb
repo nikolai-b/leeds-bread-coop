@@ -1,6 +1,6 @@
 <% if (current_subscriber.stripe_customer_id) %>
 
-  <%= bootstrap_form_for(current_subscriber, as: :subscriptions, url: update_all_subscriptions_path, layout: :inline, html: { method: :put }) do |f| %>
+  <%= bootstrap_form_for(current_subscriber, as: :subscriptions, url: update_all_subscriptions_path, html: { method: :put }) do |f| %>
     <% if current_subscriber.errors.any? %>
       <div id="error_explanation">
         <div class="alert alert-error">
@@ -14,6 +14,6 @@
     <strong>Changing number of subscriptions will change your monthly payment on card ending in <%= current_subscriber.payment_card.last4 %></strong>
     </br>
 
-    <%= f.submit 'Update', class: "btn btn-default btn-success" %>
+    <%= f.submit 'Update', class: "btn btn-default btn-sm btn-success" %>
   <% end %>
 <% end %>
