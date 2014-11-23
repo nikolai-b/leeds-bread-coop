@@ -11,6 +11,11 @@
           <td class="vert-align">
             <%= g.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]], selected: g.object.next_collection_day || g.object.collection_day )) %>
           </td>
+          <td class="vert-align">
+            <% if current_subscriber.admin? %>
+              <%= g.check_box :paid, inline: true %>
+            <% end %>
+          </td>
             <%= g.hidden_field :next_collection_day, value: nil %>
             <%= g.hidden_field :next_bread_type_id, value: nil %>
           <td class="vert-align">
@@ -20,12 +25,6 @@
         </tr>
       </tbody>
     </table>
-    <div class="field">
-      <% if current_subscriber.try(:admin?) %>
-        <%= g.check_box :paid, inline: true %>
-      <% end %>
-    </div>
-
     <%= g.hidden_field :_destroy %>
   </fieldset>
 <% end %>
@@ -42,6 +41,4 @@
       }
       });
 </script>
-</br>
-<%= f.text_area :notes %>
 </br>

@@ -1,0 +1,28 @@
+<h1>Listing holidays</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start date</th>
+      <th>End date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @holidays.each do |holiday| %>
+      <tr>
+        <td><%= holiday.start_date %></td>
+        <td><%= holiday.end_date %></td>
+        <td><%= link_to 'Show', [@subscriber, holiday] %></td>
+        <% if current_subscriber.admin? %>
+          <td><%= link_to 'Edit', edit_subscriber_holiday_path(@subscriber, holiday) %></td>
+          <td><%= link_to 'Destroy', [@subscriber, holiday], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= link_to 'New Holiday', new_subscriber_holiday_path(@subscriber) %>

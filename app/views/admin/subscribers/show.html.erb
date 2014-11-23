@@ -1,30 +1,30 @@
 <p>
   <strong>Name:</strong>
-  <%= current_subscriber.full_name %>
+  <%= @subscriber.full_name %>
 </p>
 
 <p>
   <strong>Email:</strong>
-  <%= current_subscriber.email %>
+  <%= @subscriber.email %>
 </p>
 
 <p>
   <strong>Address:</strong>
-  <%= current_subscriber.address %>
+  <%= @subscriber.address %>
 </p>
 
 <p>
   <strong>Phone:</strong>
-  <%= current_subscriber.phone %>
+  <%= @subscriber.phone %>
 </p>
 
 <p>
   <strong>Collection point:</strong>
-  <%= current_subscriber.collection_point.name %><br>
-  <%= "#{current_subscriber.collection_point.address}, #{current_subscriber.collection_point.post_code}" %>
+  <%= @subscriber.collection_point.name %><br>
+  <%= "#{@subscriber.collection_point.address}, #{@subscriber.collection_point.post_code}" %>
 </p>
 
-<% if subscriptions = current_subscriber.subscriptions %>
+<% if subscriptions = @subscriber.subscriptions %>
   <p>
     <strong>Bread subscripts:</strong>
     <% bread_subs = subscriptions.active.map do |sub_item| %>
@@ -48,14 +48,19 @@
 
 <p>
   <strong>Monthly Payment</strong>
-  <%= number_to_currency current_subscriber.monthly_payment %>
+  <%= number_to_currency @subscriber.monthly_payment %>
+</p>
+
+<p>
+  <strong>Notes</strong>
+  <%= @subscriber.notes %>
 </p>
 
 <p>
   <strong>Created at</strong>
-  <%= current_subscriber.created_at.to_date %>
+  <%= @subscriber.created_at.to_date %>
 </p>
 <p>
   <strong>Updated at</strong>
-  <%= current_subscriber.updated_at.to_date %>
+  <%= @subscriber.updated_at.to_date %>
 </p>

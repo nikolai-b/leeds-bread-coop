@@ -1,0 +1,19 @@
+<% if (@subscriber.stripe_customer_id) %>
+
+  <%= bootstrap_form_for(@subscriber, as: :subscriptions, url: update_all_subscriptions_path, html: { method: :put }) do |f| %>
+    <% if @subscriber.errors.any? %>
+      <div id="error_explanation">
+        <div class="alert alert-error">
+          <%= "#{pluralize(@subscriber.errors.count, "error")} prohibited this booking from being saved:" %>
+        </div>
+      </div>
+    <% end %>
+
+    <%= render 'shared/subscription', f: f%>
+
+    <strong>Changing number of subscriptions will change your monthly payment on card ending in <%= @subscriber.payment_card.last4 %></strong>
+    </br>
+
+    <%= f.submit 'Update', class: "btn btn-default btn-sm btn-success" %>
+  <% end %>
+<% end %>
