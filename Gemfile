@@ -47,6 +47,7 @@ group :test do
   gem 'capybara-email'
   gem 'factory_girl_rails'
   gem 'stripe-ruby-mock'
+  gem 'shoulda-matchers'
 end
 
 group :development do

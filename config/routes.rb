@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     put 'update_all', on: :collection
   end
   resources :subscribers, only: :show do
-    resources :holidays
+    resources :holidays, only: [:new, :create, :show, :index]
   end
 
   resource :stripe_sub
