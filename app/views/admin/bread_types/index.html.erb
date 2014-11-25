@@ -14,12 +14,12 @@
   <tbody>
     <% @bread_types.each do |bread_type| %>
       <tr>
-        <td><%= link_to bread_type.name, bread_type %></td>
+        <td><%= link_to bread_type.name, [:admin, bread_type] %></td>
         <td><%= bread_type.sour_dough %></td>
         <td><%= bread_type.wholesale_only %></td>
         <td><%= bread_type.notes %></td>
-        <td><%= link_to 'Edit', edit_bread_type_path(bread_type), class: 'btn btn-default btn-xs'  %></td>
-        <td><%= link_to 'Destroy', bread_type, method: :delete, class: 'btn btn-default btn-xs btn-danger', data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', [:admin, bread_type], class: 'btn btn-default btn-xs'  %></td>
+        <td><%= link_to 'Destroy', [:admin, bread_type], method: :delete, class: 'btn btn-default btn-xs btn-danger', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -27,4 +27,4 @@
 
 <br>
 
-<%= link_to 'New Bread type', new_bread_type_path, class: 'btn btn-default btn-xs btn-success' %>
+<%= link_to 'New Bread type', new_admin_bread_type_path, class: 'btn btn-default btn-xs btn-success' %>

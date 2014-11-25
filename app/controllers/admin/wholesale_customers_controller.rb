@@ -1,4 +1,4 @@
-class Admin::WholesaleCustomersController < AdminController
+class Admin::WholesaleCustomersController < Admin::BaseController
   before_action :set_wholesale_customer, only: [:show, :edit, :update, :destroy]
 
   # GET /wholesale_customers

@@ -1,9 +1,7 @@
-class Admin::SubscribersController < AdminController
-  before_action :set_subscriber, only: [:show, :edit, :update, :destroy]
+class Admin::SubscribersController < Admin::BaseController
+  before_action :set_subscriber, only: [:edit_all, :update_all, :show, :edit, :update, :destroy]
   skip_before_action :authenticate_admin, only: [:show]
 
-  # GET /subscribers
-  # GET /subscribers.json
   def index
     @subscribers = Subscriber.ordered.paginate(:page => params[:page])
   end
@@ -12,58 +10,36 @@ class Admin::SubscribersController < AdminController
     @subscriber = Subscriber.new
   end
 
-  # GET /subscribers/1
-  # GET /subscribers/1.json
   def show
   end
 
-  # GET /subscribers/1/edit
   def edit
   end
 
-  # POST /subscribers
-  # POST /subscribers.json
   def create
     @subscriber = Subscriber.new(subscriber_params)
 
-    respond_to do |format|
-      if @subscriber.save
-        format.html { redirect_to @subscriber, notice: 'Subscriber was successfully created.' }
-        format.json { render :show, status: :created, location: @subscriber }
-      else
-        format.html { render :new }
-        format.json { render json: @subscriber.errors, status: :unprocessable_entity }
-      end
+    if @subscriber.save
+      render :show, status: :created, location: @subscriber
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /subscribers/1
-  # PATCH/PUT /subscribers/1.json
   def update
-    respond_to do |format|
-      update_params = subscriber_params
-      if update_params[:password] == '' || !update_params[:password]
-        update_params.delete :password
-      end
+    update_params = subscriber_params
+    update_params.delete :password if update_params[:password] == '' || !update_params[:password]
 
-      if @subscriber.update(update_params)
-        format.html { redirect_to @subscriber, notice: 'Subscriber was successfully updated.' }
-        format.json { render :show, status: :ok, location: @subscriber }
-      else
-        format.html { render :edit }
-        format.json { render json: @subscriber.errors, status: :unprocessable_entity }
-      end
+    if @subscriber.update(update_params)
+      redirect_to @subscriber, notice: 'Subscriber was successfully updated.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /subscribers/1
-  # DELETE /subscribers/1.json
   def destroy
     @subscriber.destroy
-    respond_to do |format|
-      format.html { redirect_to subscribers_url, notice: 'Subscriber was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to subscribers_url, notice: 'Subscriber was successfully destroyed.'
   end
 
   def import
@@ -75,20 +51,37 @@ class Admin::SubscribersController < AdminController
     end
   end
 
+  def edit_all
+  end
+
+  def update_all
+    if @subscriber.update bread_subscriptions_params
+      @subscriber.save
+      @subscriber.mark_subscriptions_payment_as true
+
+      redirect_to [:admin, @subscriber], notice: 'Bread subscription was successfully updated'
+    else
+      render :edit_all
+    end
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_subscriber
-      @subscriber = current_subscriber.admin? ? Subscriber.find(params[:id]) : current_subscriber
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def subscriber_params
-      params.require(:subscriber).permit(*add_paid_to_subscriptions)
-    end
+  def set_subscriber
+    @subscriber = Subscriber.find(params[:subscriber_id] || params[:id])
+  end
 
-    def add_paid_to_subscriptions
-      allowed = allowed_subscriber_parms.dup + [:email, :password]
-      allowed.find{ |i| i.class == Hash && i.keys.include?(:subscriptions_attributes) }[:subscriptions_attributes] << :paid
-      allowed
-    end
+  def subscriber_params
+    params.require(:subscriber).permit(*add_paid_to_subscriptions)
+  end
+
+  def bread_subscriptions_params
+    params.require(:subscriptions).permit(allowed_subscriber_parms)
+  end
+
+  def add_paid_to_subscriptions
+    allowed = allowed_subscriber_parms.dup + [:email, :password]
+    allowed.find{ |i| i.class == Hash && i.keys.include?(:subscriptions_attributes) }[:subscriptions_attributes] << :paid
+    allowed
+  end
 end

@@ -1,4 +1,4 @@
-class Admin::BreadTypesController < AdminController
+class Admin::BreadTypesController < Admin::BaseController
   before_action :set_bread_type, only: [:show, :edit, :update, :destroy]
 
   # GET /bread_types

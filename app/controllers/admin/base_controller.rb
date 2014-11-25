@@ -1,4 +1,4 @@
-class AdminController < ApplicationController
+class Admin::BaseController < ApplicationController
   before_action :authenticate_admin
 
   protected

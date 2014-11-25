@@ -19,7 +19,7 @@
     <% @email_templates.each do |email_template| %>
       <tr>
         <td>
-          <%= link_to email_template.name, email_template_path(email_template) %>
+          <%= link_to email_template.name, [:admin, email_template] %>
         </td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_email_template_path(email_template), :class => 'btn btn-default btn-xs' %>

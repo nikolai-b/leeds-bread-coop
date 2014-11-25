@@ -1,4 +1,4 @@
-class Admin::OrdersController < AdminController
+class Admin::OrdersController < Admin::BaseController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :set_wholesale_customer
   has_scope :future, type: :boolean, default: true

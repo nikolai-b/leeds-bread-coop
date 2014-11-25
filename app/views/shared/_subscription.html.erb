@@ -13,7 +13,7 @@
           </td>
           <td class="vert-align">
             <% if current_subscriber.admin? %>
-              <%= g.check_box :paid, inline: true %>
+              <%= g.check_box :paid %>
             <% end %>
           </td>
             <%= g.hidden_field :next_collection_day, value: nil %>

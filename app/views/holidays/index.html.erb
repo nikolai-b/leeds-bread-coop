@@ -1,4 +1,5 @@
 <h1>Listing holidays</h1>
+
 <table>
   <thead>
     <tr>
@@ -13,7 +14,7 @@
       <tr>
         <td><%= holiday.start_date %></td>
         <td><%= holiday.end_date %></td>
-        <td><%= link_to 'Show', [current_subscriber, holiday] %></td>
+        <td><%= link_to 'Show', [@subscriber, holiday] %></td>
       </tr>
     <% end %>
   </tbody>
@@ -21,4 +22,4 @@
 
 <br>
 
-<%= link_to 'New Holiday', new_subscriber_holiday_path(current_subscriber) %>
+<%= link_to 'New Holiday', new_subscriber_holiday_path(@subscriber) %>

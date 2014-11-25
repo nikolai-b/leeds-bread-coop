@@ -1,4 +1,4 @@
-class Admin::EmailTemplatesController < AdminController
+class Admin::EmailTemplatesController < Admin::BaseController
   before_action :set_email_template, only: [:show, :edit, :update, :destroy]
 
   # GET /email_templates

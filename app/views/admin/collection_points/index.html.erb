@@ -14,12 +14,12 @@
   <tbody>
     <% @collection_points.each do |collection_point| %>
       <tr>
-        <td><%= link_to collection_point.name, collection_point %></td>
+        <td><%= link_to collection_point.name, [:admin, collection_point] %></td>
         <td><%= collection_point.address %></td>
         <td><%= collection_point.post_code %></td>
         <td><%= collection_point.notes %></td>
-        <td><%= link_to 'Edit', edit_collection_point_path(collection_point), class: 'btn btn-default btn-xs' %> </td>
-        <td><%= link_to 'Destroy', collection_point, method: :delete, class: 'btn btn-default btn-xs btn-danger', data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', [:admin, collection_point], class: 'btn btn-default btn-xs' %> </td>
+        <td><%= link_to 'Destroy', [:admin, collection_point], method: :delete, class: 'btn btn-default btn-xs btn-danger', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -27,4 +27,4 @@
 
 <br>
 
-<%= link_to 'New Collection point', new_collection_point_path, :class => 'btn btn-primary btn-success' %>
+<%= link_to 'New Collection point', new_admin_collection_point_path, :class => 'btn btn-primary btn-success' %>

@@ -1,7 +1,5 @@
-<%= bootstrap_form_for(@email_template) do |f| %>
-
+<%= bootstrap_form_for([:admin, @email_template]) do |f| %>
     <%= @email_template.name %>
-    <%= f.text_area :body %>
-    <% button_label = @email_template.persisted? ? "Update" : "Create" %>
-    <%= f.submit button_label, class: "btn btn-default btn-success" %>
+    <%= f.input :body %>
+    <%= f.button :submit %>
 <% end %>

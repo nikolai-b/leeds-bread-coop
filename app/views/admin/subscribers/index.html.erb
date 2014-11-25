@@ -30,7 +30,7 @@
     <% @subscribers.each do |subscriber| %>
       <tr>
         <td>
-          <%= link_to subscriber.full_name, subscriber_path(subscriber) %>
+          <%= link_to subscriber.full_name, [:admin, subscriber] %>
         </td>
         <td>
           <%= subscriber.collection_point.name %>
@@ -42,16 +42,16 @@
           <%= subscriber.phone %>
         </td>
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_subscriber_path(subscriber), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_subscriber_path(subscriber), class: 'btn btn-default btn-xs' %>
           <%= link_to t('.subscriptions', :default => t("helpers.links.subscriptions")), admin_subscriber_edit_all_path(subscriber), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")), admin_subscriber_path(subscriber), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-default btn-xs btn-danger' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")), [:admin, subscriber], method: :delete, data: { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-default btn-xs btn-danger' %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= form_tag import_subscribers_path, multipart: true do %>
+<%= form_tag import_admin_subscribers_path, multipart: true do %>
   <%= file_field_tag :file %>
   <%= submit_tag "Import" %>
 <% end %>

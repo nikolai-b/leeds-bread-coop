@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@bread_type, layout: :vertical) do |f| %>
+<%= bootstrap_form_for([:admin, @bread_type], layout: :vertical) do |f| %>
   <% if @bread_type.errors.any? %>
     <div class="error_messages">
   </div>

@@ -1,10 +1,10 @@
 <h1>Production Report</h1>
 
-<%= link_to('Yesterday <', production_reports_path(date: (@production_report.date - 1.day).to_s)) %> 
+<%= link_to('Yesterday <', admin_production_reports_path(date: (@production_report.date - 1.day).to_s)) %> 
 &emsp;
 <%= @production_report.date.strftime("%a #{@production_report.date.day.ordinalize} %b %y") %>
 &emsp;
-<%= link_to('> Tomorrow', production_reports_path(date: (@production_report.date + 1.day).to_s)) %>
+<%= link_to('> Tomorrow', admin_production_reports_path(date: (@production_report.date + 1.day).to_s)) %>
 
 <table>
   <thead>
@@ -52,6 +52,4 @@
       <% end %>
   </tbody>
 </table>
-
 <br>
-

@@ -1,8 +1,7 @@
-<%= bootstrap_form_for(@collection_point) do |f| %>
-    <%= f.text_area :address %>
-    <%= f.text_area :post_code %>
-    <%= f.text_area :notes %>
-    <%= f.text_area :name %>
-    <% button_label = @collection_point.persisted? ? "Update" : "Create" %>
-    <%= f.submit button_label, class: "btn btn-default btn-success" %>
+<%= simple_form_for [:admin, @collection_point] do |f| %>
+    <%= f.input :address %>
+    <%= f.input :post_code %>
+    <%= f.input :notes %>
+    <%= f.input :name %>
+    <%= f.button :submit %>
 <% end %>

@@ -20,13 +20,13 @@
   <tbody>
     <% @orders.each do |order| %>
       <tr>
-        <td><%= link_to order.date, wholesale_customer_order_path(@wholesale_customer, order) %></td>
+        <td><%= link_to order.date, [:admin, @wholesale_customer, order] %></td>
         <td><%= order.line_items.map{|li| "#{li.quantity}x#{li.bread_type.name}" }.join(', ').truncate(40) %></td>
         <td><%= order.invoiced %></td>
         <td><%= order.regular %></td>
         <td><%= order.sample %></td>
-        <td><%= link_to 'Edit', edit_wholesale_customer_order_path(@wholesale_customer, order), class: 'btn btn-default btn-xs'  %></td>
-        <td> <%= link_to 'Destroy', wholesale_customer_order_path(@wholesale_customer, order),
+        <td><%= link_to 'Edit', edit_admin_wholesale_customer_order_path(@wholesale_customer, order), class: 'btn btn-default btn-xs'  %></td>
+        <td> <%= link_to 'Destroy', [:admin, @wholesale_customer, order],
           method: :delete, class: 'btn btn-default btn-xs btn-danger', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -34,6 +34,6 @@
 </table>
 <%= will_paginate @orders, renderer: BootstrapPagination::Rails %>
 
-<%= link_to t('.new', :default => t("helpers.links.new")), new_wholesale_customer_order_path(@wholesale_customer), :class => 'btn btn-primary' %>
+<%= link_to t('.new', :default => t("helpers.links.new")), new_admin_wholesale_customer_order_path(@wholesale_customer), :class => 'btn btn-primary' %>
 
 <br>

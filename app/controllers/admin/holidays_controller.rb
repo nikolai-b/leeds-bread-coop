@@ -1,4 +1,4 @@
-class Admin::HolidaysController < AdminController
+class Admin::HolidaysController < Admin::BaseController
   before_action :set_subscriber
   before_action :set_holiday, only: [:show, :edit, :update, :destroy]
   skip_before_action :authenticate_admin, only: [:new, :create, :show, :index]

@@ -20,5 +20,5 @@
   <%= @collection_point.name %>
 </p>
 
-<%= link_to 'Edit', edit_collection_point_path(@collection_point) %> |
-<%= link_to 'Back', collection_points_path %>
+<%= link_to 'Edit', [:admin, @collection_point] %> |
+<%= link_to 'Back', admin_collection_points_path %>

@@ -1,4 +1,4 @@
-class Admin::DeliveryReportsController < AdminController
+class Admin::DeliveryReportsController < Admin::BaseController
   before_action :set_delivery_report, only: [:show, :export]
 
   def show

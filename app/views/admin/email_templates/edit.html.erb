@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @email_template %> |
-<%= link_to 'Back', email_templates_path %>
+<%= link_to 'Show', [:admin, @email_template]%> |
+<%= link_to 'Back', admin_email_templates_path %>

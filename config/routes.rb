@@ -1,19 +1,25 @@
 Rails.application.routes.draw do
+  devise_for :subscribers, :controllers => { registrations: :registrations }
+
   root 'welcome#index'
 
   resources :subscriptions do
     get 'edit_all', on: :collection
     put 'update_all', on: :collection
   end
+  resources :subscribers, only: :show do
+    resources :holidays
+  end
 
   resource :stripe_sub
 
-  devise_for :subscribers, :controllers => { registrations: :registrations }
 
   namespace :admin do
     resources :subscribers do
       resources :holidays
       collection { post :import }
+      get 'edit_all'
+      put 'update_all'
     end
 
     get "/delivery_reports/:date", :to => "delivery_reports#show", defaults: { date: Date.current.strftime }, as: :delivery_reports
@@ -28,7 +34,4 @@ Rails.application.routes.draw do
     resources :collection_points
   end
 
-  resources :subscribers, only: :show do
-    resources :holidays
-  end
 end

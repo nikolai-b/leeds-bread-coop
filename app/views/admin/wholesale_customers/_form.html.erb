@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@wholesale_customer) do |f| %>
+<%= bootstrap_form_for [:admin, @wholesale_customer] do |f| %>
     <%= f.text_field :name %>
     <%= f.text_area :address %>
     <%= f.text_field :phone %>

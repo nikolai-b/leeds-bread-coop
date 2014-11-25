@@ -1,4 +1,4 @@
-class Admin::CollectionPointsController < AdminController
+class Admin::CollectionPointsController < Admin::BaseController
   before_action :set_collection_point, only: [:show, :edit, :update, :destroy]
 
   # GET /collection_points
