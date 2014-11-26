@@ -16,6 +16,10 @@ FactoryGirl.define do
       after(:build) {|s| s.subscriptions << FactoryGirl.build(:subscription, subscriber: s) }
     end
 
+    trait :with_payment_card do
+      after(:build) {|s| s.payment_card = FactoryGirl.build(:payment_card, subscriber: s) }
+    end
+
     trait :on_subscription_holiday do
       after(:create) do |s|
         s.subscriptions << FactoryGirl.create(:subscription, subscriber: s)

@@ -2,6 +2,13 @@ class StripeSubsController < ApplicationController
   before_action :set_stripe_sub
   skip_before_action :authenticate_admin
 
+  def new
+    if current_subscriber.stripe_customer_id
+      flash[:error] = 'You already have a payment card'
+      render :edit
+    end
+  end
+
   def edit
   end
 
@@ -12,7 +19,7 @@ class StripeSubsController < ApplicationController
       redirect_to current_subscriber
     else
       add_error_message
-      render :edit
+      render :new
     end
   end
 
