@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  resources :subscriptions do
+  resources :subscriptions, only: :index do
     get 'edit_all', on: :collection
     put 'update_all', on: :collection
   end

@@ -12,9 +12,9 @@ class RegistrationsController < Devise::RegistrationsController
     if successfully_updated
       set_flash_message :notice, :updated
       sign_in current_subscriber, :bypass => true
-      redirect_to after_update_path_for(current_subscriber)
+      redirect_to current_subscriber
     else
-      render "edit"
+      render :edit
     end
   end
 
