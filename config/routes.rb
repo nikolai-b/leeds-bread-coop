@@ -16,10 +16,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :subscribers do
+      resources :subscriptions, only: :index do
+        get 'edit_all', on: :collection
+        put 'update_all', on: :collection
+      end
       resources :holidays
       collection { post :import }
-      get 'edit_all'
-      put 'update_all'
     end
 
     get "/delivery_reports/:date", :to => "delivery_reports#show", defaults: { date: Date.current.strftime }, as: :delivery_reports

@@ -51,20 +51,6 @@ class Admin::SubscribersController < Admin::BaseController
     end
   end
 
-  def edit_all
-  end
-
-  def update_all
-    if @subscriber.update bread_subscriptions_params
-      @subscriber.save
-      @subscriber.mark_subscriptions_payment_as true
-
-      redirect_to [:admin, @subscriber], notice: 'Bread subscription was successfully updated'
-    else
-      render :edit_all
-    end
-  end
-
   private
 
   def set_subscriber
@@ -73,10 +59,6 @@ class Admin::SubscribersController < Admin::BaseController
 
   def subscriber_params
     params.require(:subscriber).permit(*add_paid_to_subscriptions)
-  end
-
-  def bread_subscriptions_params
-    params.require(:subscriptions).permit(allowed_subscriber_parms)
   end
 
   def add_paid_to_subscriptions

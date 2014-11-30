@@ -6,17 +6,27 @@ class Admin::SubscriptionsController < Admin::BaseController
   def index
   end
 
+  def edit_all
+  end
 
-  def destroy
+  def update_all
+    if @subscriber.update bread_subscriptions_params
+      @subscriber.save
+      @subscriber.mark_subscriptions_payment_as true
+
+      redirect_to [:admin, @subscriber], notice: 'Bread subscription was successfully updated'
+    else
+      render :edit_all
+    end
   end
 
   private
 
   def set_subscriber
-    @subscriber = current_subscriber.admin? ? Subscriber.find(params[:admin_subscriber_id]) : current_subscriber
+    @subscriber = Subscriber.find(params[:subscriber_id])
   end
 
-  def set_stripe_sub
-    @stripe_sub = current_subscriber.admin? ? StripeSub.new(Subscriber.find(params[:admin_subscriber_id])) : StripeSub.new(current_subscriber)
+  def bread_subscriptions_params
+    params.require(:subscriptions).permit(allowed_subscriber_parms)
   end
 end

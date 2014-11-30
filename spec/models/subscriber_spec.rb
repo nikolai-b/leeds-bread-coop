@@ -9,7 +9,7 @@ describe Subscriber do
     end
 
     it "adds subscribers (inc. accociations)" do
-      params_file = double('params_file').tap {|pf| pf.stub(:path).and_return('data/subscriber_import.csv')}
+      params_file = double('params_file').tap {|pf| pf.stub(:path).and_return('spec/fixtures/subscriber_import.csv')}
       described_class.import( params_file )
       ursula = described_class.find_by(email: "ursula@test.com")
       rachel = described_class.find_by(email: "rachel@test.com")

@@ -21,7 +21,7 @@ class Admin::OrdersController < Admin::BaseController
     @order = @wholesale_customer.orders.new(order_params)
 
     if @order.save(order_params)
-      redirect_to [@wholesale_customer, @order], notice: 'Order was successfully created.'
+      redirect_to [:admin, @wholesale_customer, @order], notice: 'Order was successfully created.'
     else
       render :new
     end
@@ -29,7 +29,7 @@ class Admin::OrdersController < Admin::BaseController
 
   def update
     if @order.update(order_params)
-      redirect_to [@wholesale_customer, @order], notice: 'Order was successfully updated.'
+      redirect_to [:admin, @wholesale_customer, @order], notice: 'Order was successfully updated.'
     else
       render :edit
     end
@@ -37,10 +37,7 @@ class Admin::OrdersController < Admin::BaseController
 
   def destroy
     @order.destroy
-    respond_to do |format|
-      format.html { redirect_to wholesale_customer_orders_url(@wholesale_customer), notice: 'Order was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to wholesale_customer_orders_url, notice: 'Order was successfully destroyed.'
   end
 
   private
