@@ -1,10 +1,5 @@
 class Admin::SubscriptionsController < Admin::BaseController
-  skip_before_action :authenticate_admin
-  before_action :set_stripe_sub, only: :update_all
-  before_action :set_subscriber, only: :edit_all
-
-  def index
-  end
+  before_action :set_subscriber, only: [:edit_all, :update_all]
 
   def edit_all
   end

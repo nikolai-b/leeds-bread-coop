@@ -1,5 +1,5 @@
 class Admin::DeliveryReportsController < Admin::BaseController
-  before_action :set_delivery_report, only: [:show, :export]
+  before_action :set_delivery_report, only: :show
 
   def show
     respond_to do |format|

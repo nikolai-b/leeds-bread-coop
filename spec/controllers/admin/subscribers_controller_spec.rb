@@ -32,7 +32,7 @@ describe Admin::SubscribersController, type: :controller do
   end
 
   describe 'create' do
-    before { post :create, subscriber: subscriber.attributes.merge(name: 'New subscriber') }
+    before { post :create, subscriber: subscriber.attributes.merge(email: 'new@email.com', password: 'password') }
 
     it { is_expected.to respond_with(:redirect) }
     it { is_expected.to set_the_flash.to(/successfully created/) }
@@ -64,6 +64,7 @@ describe Admin::SubscribersController, type: :controller do
       post :import, file: file
     end
 
-    it { is_expected.to respond_with(:success) }
+    it { is_expected.to redirect_to('/admin/subscribers')}
+    it { is_expected.to set_the_flash.to(/imported!/) }
   end
 end

@@ -14,7 +14,6 @@ describe Admin::BreadTypesController, type: :controller do
     it { is_expected.to route(:put,     '/admin/bread_types/1').to(action: :update, id: 1) }
     it { is_expected.to route(:delete,  '/admin/bread_types/1').to(action: :destroy, id: 1) }
   end
-
   describe 'index' do
     before { get :index }
 

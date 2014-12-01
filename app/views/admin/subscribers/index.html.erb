@@ -43,7 +43,7 @@
         </td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_subscriber_path(subscriber), class: 'btn btn-default btn-xs' %>
-          <%= link_to t('.subscriptions', :default => t("helpers.links.subscriptions")), admin_subscriber_edit_all_path(subscriber), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.subscriptions', :default => t("helpers.links.subscriptions")), edit_all_admin_subscriber_subscriptions_path(subscriber), :class => 'btn btn-default btn-xs' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")), [:admin, subscriber], method: :delete, data: { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-default btn-xs btn-danger' %>
         </td>
       </tr>

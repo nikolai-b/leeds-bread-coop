@@ -1,5 +1,5 @@
 <%= bootstrap_form_for([:admin, @email_template]) do |f| %>
     <%= @email_template.name %>
-    <%= f.input :body %>
+    <%= f.text_area :body %>
     <%= f.button :submit %>
 <% end %>

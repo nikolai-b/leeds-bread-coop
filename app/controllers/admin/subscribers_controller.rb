@@ -20,7 +20,7 @@ class Admin::SubscribersController < Admin::BaseController
     @subscriber = Subscriber.new(subscriber_params)
 
     if @subscriber.save
-      render :show, status: :created, location: @subscriber
+      redirect_to [:admin, @subscriber], notice: 'Subscriber was successfully created.'
     else
       render :new
     end
@@ -31,7 +31,7 @@ class Admin::SubscribersController < Admin::BaseController
     update_params.delete :password if update_params[:password] == '' || !update_params[:password]
 
     if @subscriber.update(update_params)
-      redirect_to @subscriber, notice: 'Subscriber was successfully updated.'
+      redirect_to [:admin, @subscriber], notice: 'Subscriber was successfully updated.'
     else
       render :edit
     end
@@ -39,15 +39,15 @@ class Admin::SubscribersController < Admin::BaseController
 
   def destroy
     @subscriber.destroy
-    redirect_to subscribers_url, notice: 'Subscriber was successfully destroyed.'
+    redirect_to admin_subscribers_url, notice: 'Subscriber was successfully destroyed.'
   end
 
   def import
     if params[:file]
       Subscriber.import(params[:file])
-      redirect_to admin_subscriber_index_path, notice: "Subscribers imported!"
+      redirect_to admin_subscribers_url, notice: "Subscribers imported!"
     else
-      redirect_to admin_subscriber_index_path, notice: "No file attached"
+      redirect_to admin_subscribers_url, notice: "No file attached"
     end
   end
 

@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@subscriber, as: :subscriptions, url: admin_subscriber_update_all_path, html: { method: :put }) do |f| %>
+<%= bootstrap_form_for(@subscriber, as: :subscriptions, url: update_all_admin_subscriber_subscriptions_path(@subscriber), html: { method: :put }) do |f| %>
   <% if @subscriber.errors.any? %>
     <div id="error_explanation">
       <div class="alert alert-error">
