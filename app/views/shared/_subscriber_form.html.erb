@@ -49,7 +49,9 @@
     <%= f.password_field :password, autocomplete: "off" %>
   <% end %>
 
-  <% unless current_subscriber.try(:admin?) %>
+  <% if current_subscriber.try(:admin?) %>
+    <div><%= f.text_area :notes %> </div>
+  <% else %>
     <% if devise_mapping.rememberable? -%>
       <div><%= f.check_box :remember_me %> </div>
     <% end -%>

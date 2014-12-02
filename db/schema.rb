@@ -105,7 +105,6 @@ ActiveRecord::Schema.define(version: 20141118202609) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.text     "notes"
     t.integer  "failed_attempts",           default: 0,  null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
@@ -114,6 +113,7 @@ ActiveRecord::Schema.define(version: 20141118202609) do
     t.date     "collection_day_updated_at"
     t.integer  "holidays_count",            default: 0,  null: false
     t.string   "last_name"
+    t.text     "notes"
   end
 
   add_index "subscribers", ["collection_point_id"], name: "index_subscribers_on_collection_point_id", using: :btree
