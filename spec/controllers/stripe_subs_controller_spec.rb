@@ -41,6 +41,6 @@ describe StripeSubsController, type: :controller do
 
   describe 'update' do
     before { put :update, stripeToken: stripe_helper.generate_card_token }
-    it { is_expected.to redirect_to('/subscriber')}
+    it { is_expected.to redirect_to("/subscribers/#{subscriber.id}")}
   end
 end

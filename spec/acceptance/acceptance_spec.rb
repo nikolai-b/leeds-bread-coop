@@ -29,7 +29,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
 
     pay_stripe
 
-    sleep(2)
+    sleep(3)
 
     see_success
 
@@ -52,7 +52,6 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     select "Wednesday",    from: "Collection day"
     select 'White sour'
     fill_in "Password",   with: 'password'
-    fill_in "Notes",      with: 'Thanks!'
 
     click_on 'Subscribe'
   end
@@ -63,6 +62,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     stripe = page.driver.window_handles.last
 
     Capybara.within_frame all('iframe[name=stripe_checkout_app]').last do
+      sleep(1)
 
       4.times { fill_with_keys "card_number", with: '4242' }
       fill_with_keys "cc-exp", with: (Date.current + 1.month).strftime('%m')
