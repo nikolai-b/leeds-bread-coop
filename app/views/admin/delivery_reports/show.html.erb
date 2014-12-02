@@ -57,7 +57,7 @@
   <tbody>
     <% @delivery_report.show.try(:each) do |delivery| %>
       <tr>
-        <td><strong><%= link_to admin_delivery.collection_point.name, delivery.collection_point %></strong></td>
+        <td><strong><%= link_to delivery.collection_point.name, [:admin, delivery.collection_point] %></strong></td>
       </tr>
       <% delivery.items.try(:each) do |item| %>
         <tr>

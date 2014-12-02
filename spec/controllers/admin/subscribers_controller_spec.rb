@@ -18,7 +18,7 @@ describe Admin::SubscribersController, type: :controller do
   end
 
   describe 'index' do
-    before { get :index }
+    before { subscriber; get :index }
 
     it { is_expected.to respond_with(:success) }
     it { is_expected.to render_template(:index) }

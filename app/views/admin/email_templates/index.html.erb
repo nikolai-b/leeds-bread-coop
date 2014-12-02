@@ -22,7 +22,7 @@
           <%= link_to email_template.name, [:admin, email_template] %>
         </td>
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_email_template_path(email_template), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_email_template_path(email_template), :class => 'btn btn-default btn-xs' %>
         </td>
       </tr>
     <% end %>

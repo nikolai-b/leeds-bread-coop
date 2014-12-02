@@ -17,7 +17,7 @@ describe Admin::OrdersController, type: :controller do
   end
 
   describe 'index' do
-    before { get :index, wholesale_customer_id: wholesale.id}
+    before { order; get :index, wholesale_customer_id: wholesale.id}
 
     it { is_expected.to respond_with(:success) }
     it { is_expected.to render_template(:index) }

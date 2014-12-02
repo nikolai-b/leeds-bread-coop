@@ -59,3 +59,6 @@
   <strong>Updated at</strong>
   <%= @subscriber.updated_at.to_date %>
 </p>
+
+<%= link_to 'Holidays', admin_subscriber_holidays_path(@subscriber) %> |
+<%= link_to 'Subscriptions', edit_all_admin_subscriber_subscriptions_path(@subscriber) %>

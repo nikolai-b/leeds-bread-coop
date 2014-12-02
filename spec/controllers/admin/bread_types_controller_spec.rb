@@ -15,7 +15,7 @@ describe Admin::BreadTypesController, type: :controller do
     it { is_expected.to route(:delete,  '/admin/bread_types/1').to(action: :destroy, id: 1) }
   end
   describe 'index' do
-    before { get :index }
+    before { bread_type; get :index }
 
     it { is_expected.to respond_with(:success) }
     it { is_expected.to render_template(:index) }

@@ -19,7 +19,7 @@ describe Admin::HolidaysController, type: :controller do
   end
 
   describe 'index' do
-    before { get :index, subscriber_id: subscriber.id}
+    before { holiday; get :index, subscriber_id: subscriber.id}
 
     it { is_expected.to respond_with(:success) }
     it { is_expected.to render_template(:index) }
