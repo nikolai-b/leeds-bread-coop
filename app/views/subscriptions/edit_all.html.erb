@@ -1,4 +1,4 @@
-<% if (current_subscriber.stripe_customer_id) %>
+<% if current_subscriber.pays_with_stripe? %>
 
   <%= bootstrap_form_for(current_subscriber, as: :subscriptions, url: update_all_subscriptions_path, html: { method: :put }) do |f| %>
     <% if current_subscriber.errors.any? %>

@@ -1,9 +1,14 @@
 class Admin::SubscribersController < Admin::BaseController
   before_action :set_subscriber, only: [:edit_all, :update_all, :show, :edit, :update, :destroy]
   skip_before_action :authenticate_admin, only: [:show]
+  has_scope :pays_with_stripe, type: :boolean, default: false
+  has_scope :pays_with_bacs, type: :boolean, default: false
 
   def index
-    @subscribers = Subscriber.ordered.paginate(:page => params[:page])
+    respond_to do |format|
+      format.html { @subscribers = apply_scopes(Subscriber.ordered.paginate(:page => params[:page])) }
+      format.csv { send_data Subscriber.to_csv }
+    end
   end
 
   def new

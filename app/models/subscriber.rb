@@ -24,6 +24,8 @@ class Subscriber < ActiveRecord::Base
   scope :active_on, ->(date) { includes(:holidays, :subscriptions).where('holidays_count = 0 OR DATE(?) NOT BETWEEN holidays.start_date AND holidays.end_date', date).
                                where("subscriptions.paid" => :true).where('subscriptions.collection_day' => date.wday).references(:subscriptions, :holidays) }
   scope :ordered, -> { order(:first_name, :last_name) }
+  scope :pays_with_stripe, -> { where.not(stripe_customer_id: nil) }
+  scope :pays_with_bacs,   -> { where(stripe_customer_id: nil) }
 
   def full_name
     "#{first_name} #{last_name}"
@@ -43,6 +45,10 @@ class Subscriber < ActiveRecord::Base
 
   def stripe_sub
     @stripe_sub ||= StripeSub.new(self)
+  end
+
+  def pays_with_stripe?
+    stripe_customer_id
   end
 
   def self.import(file)
@@ -84,6 +90,22 @@ class Subscriber < ActiveRecord::Base
 
     end
   end
+
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << ['Name', 'Collection point', 'Email', 'Phone', '(S)tripe or (B)ACS']
+      all.ordered.find_each do |subscriber|
+        csv << [
+          subscriber.full_name,
+          subscriber.collection_point.name,
+          subscriber.email,
+          subscriber.phone,
+          subscriber.pays_with_stripe? ? 'S' : 'B',
+        ]
+      end
+    end
+  end
+
 
   def mark_subscriptions_payment_as(paid)
     subscriptions.update_all paid: paid
