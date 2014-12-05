@@ -55,10 +55,7 @@ class Admin::WholesaleCustomersController < Admin::BaseController
   # DELETE /wholesale_customers/1.json
   def destroy
     @wholesale_customer.destroy
-    respond_to do |format|
-      format.html { redirect_to wholesale_customers_url, notice: 'Wholesale customer was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to admin_wholesale_customers_url, notice: 'Wholesale customer was successfully destroyed.'
   end
 
   private
