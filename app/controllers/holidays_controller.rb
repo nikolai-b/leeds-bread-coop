@@ -20,39 +20,24 @@ class HolidaysController < ApplicationController
   def create
     @holiday = Holiday.new(holiday_params.merge(subscriber: @subscriber))
 
-    respond_to do |format|
       if @holiday.save
-        format.html { redirect_to [@subscriber, @holiday], notice: 'Holiday was successfully created.' }
-        format.json { render :show, status: :created, location: @holiday }
+       redirect_to [@subscriber, @holiday], notice: 'Holiday was successfully created.'
       else
-        format.html { render :new }
-        format.json { render json: @holiday.errors, status: :unprocessable_entity }
-      end
+       render :new
     end
   end
 
-  # PATCH/PUT /holidays/1
-  # PATCH/PUT /holidays/1.json
   def update
-    respond_to do |format|
-      if @holiday.update(holiday_params)
-        format.html { redirect_to @holiday, notice: 'Holiday was successfully updated.' }
-        format.json { render :show, status: :ok, location: @holiday }
-      else
-        format.html { render :edit }
-        format.json { render json: @holiday.errors, status: :unprocessable_entity }
-      end
+    if @holiday.update(holiday_params)
+      redirect_to @holiday, notice: 'Holiday was successfully updated.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /holidays/1
-  # DELETE /holidays/1.json
   def destroy
     @holiday.destroy
-    respond_to do |format|
-      format.html { redirect_to holidays_url, notice: 'Holiday was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to admin_subscriber_holidays_url(@subscriber), notice: 'Holiday was successfully destroyed.'
   end
 
   private
