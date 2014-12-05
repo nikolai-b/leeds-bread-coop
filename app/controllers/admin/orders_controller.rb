@@ -37,7 +37,7 @@ class Admin::OrdersController < Admin::BaseController
 
   def destroy
     @order.destroy
-    redirect_to wholesale_customer_orders_url, notice: 'Order was successfully destroyed.'
+    redirect_to admin_wholesale_customer_orders_url(@wholesale_customer), notice: 'Order was successfully destroyed.'
   end
 
   private
