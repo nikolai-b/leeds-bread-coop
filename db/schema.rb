@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118202609) do
+ActiveRecord::Schema.define(version: 20141208213532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,19 @@ ActiveRecord::Schema.define(version: 20141118202609) do
 
   add_index "payment_cards", ["subscriber_id"], name: "index_payment_cards_on_subscriber_id", using: :btree
 
+  create_table "stripe_accounts", force: true do |t|
+    t.string   "customer_id"
+    t.integer  "subscriber_id"
+    t.integer  "last4"
+    t.integer  "exp_month"
+    t.integer  "exp_year"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "stripe_accounts", ["customer_id"], name: "index_stripe_accounts_on_customer_id", unique: true, using: :btree
+  add_index "stripe_accounts", ["subscriber_id"], name: "index_stripe_accounts_on_subscriber_id", using: :btree
+
   create_table "subscribers", force: true do |t|
     t.string   "first_name"
     t.text     "address"
@@ -109,7 +122,6 @@ ActiveRecord::Schema.define(version: 20141118202609) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.boolean  "admin"
-    t.string   "stripe_customer_id"
     t.date     "collection_day_updated_at"
     t.integer  "holidays_count",            default: 0,  null: false
     t.string   "last_name"

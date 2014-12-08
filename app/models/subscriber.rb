@@ -106,7 +106,6 @@ class Subscriber < ActiveRecord::Base
     end
   end
 
-
   def mark_subscriptions_payment_as(paid)
     subscriptions.update_all paid: paid
   end
@@ -120,7 +119,6 @@ class Subscriber < ActiveRecord::Base
   def cancel_stripe
     stripe_sub.cancel if stripe_customer_id
   end
-
 
   def self.csv_collection_point
     {
@@ -151,5 +149,4 @@ class Subscriber < ActiveRecord::Base
       "Fri" => 5,
     }.freeze
   end
-
 end

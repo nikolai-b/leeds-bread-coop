@@ -1,29 +1,28 @@
-describe StripeSub do
+describe StripeAccount do
   let(:notifier) { double('SubscriberNotifier', new_sub: true, sub_deleted: true) }
-  let(:subscriber) { create :subscriber}
   let(:stripe_helper) { StripeMock.create_test_helper }
 
   before do
     StripeMock.start
     Stripe::Plan.create(id: 'weekly-bread-1', amount: 1000, name: 'weekly-sub', currency: 'GBP', interval: 4)
+    Stripe::Plan.create(id: 'weekly-bread-2', amount: 2000, name: 'weekly-sub_2', currency: 'GBP', interval: 4)
+    create :subscription, subscriber: subscriber
   end
 
   after { StripeMock.stop }
 
-  subject { StripeSub.new(subscriber, notifier)}
+  subject { create :stripe_account }
 
   describe '#add' do
     context 'with no current sub' do
-      before do
-        create :subscription, subscriber: subscriber
-      end
-
       it 'sets the subscriber\'s stripe id and active sub' do
+        expect(subject.customer_id).to be_nil
+
         subject.add(stripe_helper.generate_card_token)
 
-        expect(subscriber.stripe_customer_id).to_not be_nil
+        expect(subject.reload.customer_id).to_not be_nil
+        expect(subject.last4).to eq(4242)
         expect(subscriber.num_paid_subs).to eq(1)
-        expect(subscriber.payment_card.last4).to eq(4242)
       end
 
       it 'returns true' do
@@ -50,14 +49,14 @@ describe StripeSub do
     end
   end
 
-  describe '#cancel' do
-    context 'happy path' do
-      before do
-        create :subscription, subscriber: subscriber
-        subscriber.update stripe_customer_id: 'test_customer_sub'
-        customer = Stripe::Customer.create(id: subscriber.stripe_customer_id, card: stripe_helper.generate_card_token)
-      end
+  context 'with a stipe account' do
+    before do
+      token = stripe_helper.generate_card_token
+      subject.update customer_id: token
+      Stripe::Customer.create(id: subscriber.stripe_customer_id, card: token)
+    end
 
+    describe '#cancel' do
       it 'updates num_paid_subs to nil' do
         expect(subscriber.num_paid_subs).to_not eq(0)
         subject.cancel
@@ -70,24 +69,24 @@ describe StripeSub do
 
       it 'sends an new_sub email' do
         expect(notifier).to receive(:sub_deleted)
-        subject.cancel
+        subject.cancel(notifier)
       end
     end
-  end
 
-  describe '#update' do
-    before do
-      create :subscription, subscriber: subscriber
-      subscriber.update stripe_customer_id: 'test_customer_sub'
-      customer = Stripe::Customer.create(id: subscriber.stripe_customer_id, card: stripe_helper.generate_card_token)
-      customer.subscriptions.create({ :plan => 'weekly-bread-1' })
+    describe '#update' do
+      it 'marks all subscriptions as paid' do
+        subscription = create :subscription, subscriber: subscriber, paid: false
+        subject.update
+        expect(subscription.reload.paid).to be_truthy
+      end
+
+      it 'marks all subscriptions as paid' do
+        subscription = create :subscription, subscriber: subscriber, paid: false
+        subject.update
+        stipe = Stripe::Customer.retrieve(subject.customer_id)
+        expect(stipe.subscriptions.first.plan).to eq('weekly-bread-2')
+      end
     end
-
-    it 'marks all subscriptions as paid' do
-      expect(subscriber).to receive(:mark_subscriptions_payment_as).once
-      subject.update
-    end
-
   end
 
   describe '#refund' do
