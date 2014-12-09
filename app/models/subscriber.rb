@@ -12,10 +12,10 @@ class Subscriber < ActiveRecord::Base
   validates :phone, length: {in: 10..13}
 
   belongs_to :collection_point
-  has_many :holidays
+  has_many :holidays, dependent: :destroy
   has_many :bread_types, through: :subscriptions
-  has_many :subscriptions
-  has_one :payment_card
+  has_many :subscriptions, dependent: :destroy
+  has_one :stripe_account, dependent: :destroy
 
   before_destroy :cancel_stripe
 

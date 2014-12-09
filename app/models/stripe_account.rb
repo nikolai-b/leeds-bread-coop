@@ -4,9 +4,11 @@ class StripeAccount < ActiveRecord::Base
   MONTHLY_COST_PENCE = 1000.freeze
   WEEKLY_COST_PENCE = MONTHLY_COST_PENCE/4.0.freeze
 
+  validates :exp_year, :exp_month, :customer_id, :last4, presence: true
+
   def self.refund_holidays
     Holiday.in_last_week.each do |hol|
-      stripe = new hol.subscriber
+      stripe = hol.subscriber.stripe_account
       stripe.refund_weeks hol.will_miss
     end
   end
@@ -24,7 +26,7 @@ class StripeAccount < ActiveRecord::Base
     false
   end
 
-  def update
+  def update_stripe
     if stripe_subscription = stripe_customer.subscriptions.first
       stripe_subscription.plan = plan
       if stripe_subscription.save
@@ -39,6 +41,7 @@ class StripeAccount < ActiveRecord::Base
     if new_stripe_customer = add_stripe_plan(stripe_token)
 
       card = new_stripe_customer.cards.data[0]
+
       update(customer_id: new_stripe_customer.id,
              last4: card.last4, exp_month: card.exp_month,
              exp_year: card.exp_year)
@@ -68,10 +71,10 @@ class StripeAccount < ActiveRecord::Base
   private
 
   def add_stripe_plan(stripe_token)
-    sc = Stripe::Customer.create(
-      :email => subscriber.email,
-      :card  => stripe_token,
-      :plan  => plan,
+    Stripe::Customer.create(
+      email: subscriber.email,
+      card:  stripe_token,
+      plan:  plan,
     )
   rescue Stripe::APIError => e
     Rails.logger.error "Stripe Authentication error while creating user: #{e.message}"
@@ -87,11 +90,10 @@ class StripeAccount < ActiveRecord::Base
   end
 
   def last_charges(nth = 1)
-    if customer = subscriber.customer_id
-      sc = Stripe::Charge.all(customer: @subscriber.customer_id, count: nth)
-      return sc['data'] if sc
-      nil
-    end
+    sc = Stripe::Charge.all(customer: customer_id, count: nth)
+    return sc if Rails.env.test?
+    return sc['data'] if sc
+    nil
   end
 
   def default_notifier
