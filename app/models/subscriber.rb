@@ -48,7 +48,7 @@ class Subscriber < ActiveRecord::Base
   end
 
   def pays_with_stripe?
-    stripe_customer_id
+    stripe_account.try(:customer_id).present?
   end
 
   def self.import(file)

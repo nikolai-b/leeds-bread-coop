@@ -34,22 +34,6 @@ ActiveRecord::Schema.define(version: 20141208214350) do
     t.datetime "updated_at"
   end
 
-  create_table "delayed_jobs", force: true do |t|
-    t.integer  "priority",   default: 0, null: false
-    t.integer  "attempts",   default: 0, null: false
-    t.text     "handler",                null: false
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
-
   create_table "email_templates", force: true do |t|
     t.string   "name"
     t.text     "body",       default: "Email body not set"
@@ -123,7 +107,6 @@ ActiveRecord::Schema.define(version: 20141208214350) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.text     "notes"
     t.integer  "failed_attempts",           default: 0,  null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
@@ -131,6 +114,7 @@ ActiveRecord::Schema.define(version: 20141208214350) do
     t.date     "collection_day_updated_at"
     t.integer  "holidays_count",            default: 0,  null: false
     t.string   "last_name"
+    t.text     "notes"
   end
 
   add_index "subscribers", ["collection_point_id"], name: "index_subscribers_on_collection_point_id", using: :btree
