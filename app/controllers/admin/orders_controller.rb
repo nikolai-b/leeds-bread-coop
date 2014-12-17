@@ -4,7 +4,7 @@ class Admin::OrdersController < Admin::BaseController
   has_scope :future, type: :boolean, default: true
 
   def index
-    @orders = apply_scopes(@wholesale_customer.orders.paginate(:page => params[:page]))
+    @orders = apply_scopes(@wholesale_customer.orders.ordered.paginate(:page => params[:page]))
   end
 
   def show
