@@ -18,7 +18,7 @@ class Admin::WholesaleCustomersController < Admin::BaseController
   def create
     @wholesale_customer = WholesaleCustomer.new(wholesale_customer_params)
     if @wholesale_customer.save
-      redirect_to @wholesale_customer, notice: 'Wholesale customer was successfully created.'
+      redirect_to [:admin, @wholesale_customer], notice: 'Wholesale customer was successfully created.'
     else
       render :new
     end
@@ -26,7 +26,7 @@ class Admin::WholesaleCustomersController < Admin::BaseController
 
   def update
     if @wholesale_customer.update(wholesale_customer_params)
-      redirect_to @wholesale_customer, notice: 'Wholesale customer was successfully updated.'
+      redirect_to [:admin, @wholesale_customer], notice: 'Wholesale customer was successfully updated.'
     else
       render :edit
     end
