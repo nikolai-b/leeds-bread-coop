@@ -7,10 +7,10 @@ class Order < ActiveRecord::Base
   scope :ordered, -> { order(date: :desc) }
 
   def self.copy_regular_orders
-    includes(:line_items).where(regular: true).where(date: Date.today..(Date.today + 6.days) ).each do |order|
+    includes(:line_items).where(regular: true).where(date: (Date.today + 14.days)..(Date.today + 20.days) ).each do |order|
       new_order = Order.create(
         wholesale_customer_id: order.wholesale_customer_id,
-        date: (order.date + 21.days),
+        date: (order.date + 7.days),
         regular: true,
         note: order.note
       )
