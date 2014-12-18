@@ -5,8 +5,7 @@ describe StripeSubsController, type: :controller do
     warden.set_user subscriber
   end
 
-  let(:stripe_helper) { StripeMock.create_test_helper }
-  let(:subscriber) { create :subscriber, :with_subscription, :with_payment_card }
+  include_context :stripe_customer
 
   describe 'routing' do
     it { is_expected.to route(:get,     '/stripe_sub/new').to(action: :new) }
@@ -19,6 +18,7 @@ describe StripeSubsController, type: :controller do
   describe 'new' do
     context 'with no stripe_customer_id' do
       before do
+        subscriber.update stripe_account: nil
         get :new
       end
       it { is_expected.to render_template(:new) }
@@ -26,7 +26,6 @@ describe StripeSubsController, type: :controller do
 
     context 'with a stripe_customer_id' do
       before do
-        subscriber.update stripe_customer_id: stripe_helper.generate_card_token
         get :new
       end
 

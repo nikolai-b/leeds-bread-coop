@@ -3,8 +3,9 @@ describe Admin::SubscriptionsController, type: :controller do
     warden.set_user admin
   end
 
+  include_context :stripe_customer
+
   let(:admin)        { create :subscriber, :admin }
-  let(:subscriber)   { create :subscriber, :with_subscription }
   let(:subscription) { subscriber.subscriptions.first }
 
   describe 'routing' do

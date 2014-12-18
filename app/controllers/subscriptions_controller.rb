@@ -1,6 +1,5 @@
 class SubscriptionsController < ApplicationController
   skip_before_action :authenticate_admin
-  before_action :set_stripe_sub, only: :update_all
 
   def index
   end
@@ -24,9 +23,5 @@ class SubscriptionsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def bread_subscriptions_params
     params.require(:subscriptions).permit(allowed_subscriber_parms)
-  end
-
-  def set_stripe_sub
-    @stripe_sub = StripeSub.new(current_subscriber)
   end
 end

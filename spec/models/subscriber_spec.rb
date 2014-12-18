@@ -51,11 +51,11 @@ describe Subscriber do
 
   describe 'active_on scope' do
     context 'with subscribers on holiday' do
-      let!(:subscriber) { create :subscriber, :with_subscription }
+      include_context :stripe_customer
 
       before do
-        subscriber_on_holiday = create :subscriber, :with_subscription
-        create :holiday, subscriber: subscriber_on_holiday
+        create :holiday, subscriber: subscriber_other
+        subscriber
       end
 
       it 'excludes the subscribers on holiday' do

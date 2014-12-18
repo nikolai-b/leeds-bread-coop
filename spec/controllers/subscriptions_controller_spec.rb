@@ -1,5 +1,6 @@
 describe SubscriptionsController, type: :controller do
   include_context :stripe_customer
+  let(:subscription) { build :subscription, subscriber: nil }
 
   before do
     warden.set_user subscriber

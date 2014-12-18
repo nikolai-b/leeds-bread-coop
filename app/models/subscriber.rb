@@ -43,10 +43,6 @@ class Subscriber < ActiveRecord::Base
     subscriptions.map &:collection_day
   end
 
-  def stripe_sub
-    @stripe_sub ||= StripeSub.new(self)
-  end
-
   def pays_with_stripe?
     stripe_account.try(:customer_id).present?
   end
@@ -111,13 +107,13 @@ class Subscriber < ActiveRecord::Base
   end
 
   def monthly_payment
-    num_paid_subs * StripeSub::MONTHLY_COST_PENCE / 100.0
+    num_paid_subs * StripeAccount::MONTHLY_COST_PENCE / 100.0
   end
 
   private
 
   def cancel_stripe
-    stripe_sub.cancel if stripe_customer_id
+    stripe_account.cancel if pays_with_stripe?
   end
 
   def self.csv_collection_point
