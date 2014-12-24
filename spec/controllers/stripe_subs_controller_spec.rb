@@ -42,4 +42,17 @@ describe StripeSubsController, type: :controller do
     before { put :update, stripeToken: stripe_helper.generate_card_token }
     it { is_expected.to redirect_to("/subscribers/#{subscriber.id}")}
   end
+
+  describe 'create' do
+    before do
+      notifier = double()
+
+      expect(SubscriberNotifier).to receive(:new).once.and_return(notifier)
+      expect(notifier).to receive(:new_sub).once
+
+      post :create, stripeToken: stripe_helper.generate_card_token
+    end
+    it { is_expected.to redirect_to("/subscribers/#{subscriber.id}")}
+  end
+
 end

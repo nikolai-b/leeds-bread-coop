@@ -10,7 +10,7 @@
   <%= render 'shared/subscription', f: f%>
 
   <% if @subscriber.pays_with_stripe? %>
-    <strong>Changing number of subscriptions will change your monthly payment on card ending in <%= @subscriber.payment_card.last4 %></strong>
+    <strong>Changing number of subscriptions will change your monthly payment on card ending in <%= @subscriber.stripe_account.last4 %></strong>
   <% else %>
     <strong>No card is recorded for this subscriber, they will need to edit standing order manually</strong>
   <% end %>

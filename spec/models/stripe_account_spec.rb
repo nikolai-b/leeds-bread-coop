@@ -1,4 +1,4 @@
-describe StripeAccount do
+describe StripeAccount, mock_stripe: true do
   let(:stripe_helper) { StripeMock.create_test_helper }
   let(:subscriber) { create :subscriber, :with_subscription, customer_id: stripe_customer.id }
   let(:card_token) { stripe_helper.generate_card_token }
@@ -6,12 +6,10 @@ describe StripeAccount do
   let(:default_account) { build :stripe_account }
 
   before do
-    StripeMock.start
     Stripe::Plan.create(id: 'weekly-bread-1', amount: 1000, name: 'weekly-sub', currency: 'GBP', interval: 4)
     Stripe::Plan.create(id: 'weekly-bread-2', amount: 2000, name: 'weekly-sub_2', currency: 'GBP', interval: 4)
   end
 
-  after { StripeMock.stop }
 
   subject { subscriber.build_stripe_account default_account.attributes }
 

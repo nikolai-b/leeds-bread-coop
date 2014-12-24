@@ -26,12 +26,12 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.treat_symbols_as_metadata_keys_with_true_values = true
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = false
-
   config.before :each do
     if Capybara.current_driver == :rack_test
       DatabaseCleaner.strategy = :transaction
@@ -39,10 +39,12 @@ RSpec.configure do |config|
       DatabaseCleaner.strategy = :truncation
     end
     DatabaseCleaner.start
+    StripeMock.start if RSpec.current_example.metadata.filter_applies?(:mock_stripe, true)
   end
 
   config.after do
     DatabaseCleaner.clean
+    StripeMock.stop if RSpec.current_example.metadata.filter_applies?(:mock_stripe, true)
   end
 
   config.render_views

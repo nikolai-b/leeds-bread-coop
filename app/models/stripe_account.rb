@@ -4,8 +4,6 @@ class StripeAccount < ActiveRecord::Base
   MONTHLY_COST_PENCE = 1000.freeze
   WEEKLY_COST_PENCE = MONTHLY_COST_PENCE/4.0.freeze
 
-  validates :exp_year, :exp_month, :customer_id, :last4, presence: true
-
   def self.refund_holidays
     Holiday.in_last_week.each do |hol|
       stripe = hol.subscriber.stripe_account

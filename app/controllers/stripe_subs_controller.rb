@@ -16,7 +16,7 @@ class StripeSubsController < ApplicationController
   end
 
   def create
-    if @stripe_account.add(params[:stripeToken])
+    if current_subscriber.create_stripe_account.add(params[:stripeToken])
       SubscriberNotifier.new(current_subscriber).new_sub
       flash[:notice] = "Montly Payment Plan created"
       redirect_to current_subscriber
