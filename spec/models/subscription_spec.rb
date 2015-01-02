@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Subscription do
-  context 'with a stipe customer id' do
-    include_context :stripe_customer
+  let(:subscriber)    { create :subscriber, :with_subscription }
 
+  context 'with a stipe customer id' do
     subject { create :subscription }
 
     let(:mon) { Date.today.beginning_of_week }

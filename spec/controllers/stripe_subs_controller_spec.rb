@@ -1,11 +1,10 @@
 describe StripeSubsController, type: :controller do
+  let(:subscriber)    { create :subscriber, :with_subscription }
+  let(:stripe_helper) { StripeMock.create_test_helper }
+
   before do
-    StripeMock.start
-    Stripe::Plan.create(id: 'weekly-bread-1', amount: 1000, name: 'weekly-sub', currency: 'GBP', interval: 4)
     warden.set_user subscriber
   end
-
-  include_context :stripe_customer
 
   describe 'routing' do
     it { is_expected.to route(:get,     '/stripe_sub/new').to(action: :new) }

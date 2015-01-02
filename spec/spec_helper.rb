@@ -39,12 +39,13 @@ RSpec.configure do |config|
       DatabaseCleaner.strategy = :truncation
     end
     DatabaseCleaner.start
-    StripeMock.start if RSpec.current_example.metadata.filter_applies?(:mock_stripe, true)
+    StripeMock.start
+    Stripe::Plan.create(id: 'weekly-bread-1', amount: 1000, name: 'weekly-sub', currency: 'GBP', interval: 4)
   end
 
   config.after do
     DatabaseCleaner.clean
-    StripeMock.stop if RSpec.current_example.metadata.filter_applies?(:mock_stripe, true)
+    StripeMock.stop
   end
 
   config.render_views
@@ -53,6 +54,8 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+  config.filter_run_excluding type: :feature unless ENV['SLOW']
+
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing

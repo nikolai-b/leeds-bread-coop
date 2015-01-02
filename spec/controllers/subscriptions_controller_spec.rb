@@ -1,5 +1,5 @@
 describe SubscriptionsController, type: :controller do
-  include_context :stripe_customer
+  let(:subscriber)   { create :subscriber, :with_subscription }
   let(:subscription) { build :subscription, subscriber: nil }
 
   before do
