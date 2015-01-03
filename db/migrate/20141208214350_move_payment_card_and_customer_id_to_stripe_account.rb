@@ -11,7 +11,7 @@ class MovePaymentCardAndCustomerIdToStripeAccount < ActiveRecord::Migration
              INNER JOIN payment_cards pc
                 ON pc.subscriber_id = s.id
              WHERE stripe_customer_id IS NOT NULL"
-    remove_column :subscribers, :stripe_customer_id, :string
-    drop_table :payment_cards
+    rename_column :subscribers, :stripe_customer_id, :zzz_stripe_customer_id
+    rename_table :payment_cards, :zzz_payment_cards
   end
 end
