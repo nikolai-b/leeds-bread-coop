@@ -78,6 +78,16 @@ describe Subscriber do
     expect(described_class.ordered[2].first_name).to eq('Zzzz')
   end
 
+  it 'has pays with stripe scope' do
+    create :subscriber, :with_subscription
+    expect(described_class.pays_with_stripe.count).to eq(1)
+  end
+
+  it 'has pays with stripe scope' do
+    create :subscription
+    expect(described_class.pays_with_bacs.count).to eq(1)
+  end
+
   it 'has a monthly cost' do
     expect(subject.monthly_payment).to eq(0)
     create :subscription, subscriber: subject, paid: true
