@@ -10,28 +10,28 @@ describe StripeAccount, mock_stripe: true do
 
   subject { subscriber.create_stripe_account }
 
-  describe '#add' do
+  describe '#add_token' do
     context 'with no current sub' do
       it 'sets the subscriber\'s stripe id and active sub' do
-        subject.add(card_token)
+        subject.add_token(card_token)
 
         expect(subject.reload.customer_id).to_not be_nil
         expect(subject.last4).to eq(4242)
       end
 
       it 'sets the subscribers active sub' do
-        expect{subject.add(card_token)}.to change{subscriber.reload.num_paid_subs}.by(1)
+        expect{subject.add_token(card_token)}.to change{subscriber.reload.num_paid_subs}.by(1)
       end
 
       it 'returns true' do
-        expect(subject.add(card_token)).to be_truthy
+        expect(subject.add_token(card_token)).to be_truthy
       end
     end
   end
 
   context 'with a stipe account' do
     before do
-      subject.add(card_token)
+      subject.add_token(card_token)
     end
 
     describe '#cancel' do

@@ -35,7 +35,7 @@ class StripeAccount < ActiveRecord::Base
     raise ActiveRecord::Rollback, 'Stripe Customer could not be updated'
   end
 
-  def add(stripe_token)
+  def add_token(stripe_token)
     if new_stripe_customer = add_stripe_plan(stripe_token)
 
       card = new_stripe_customer.cards.data[0]
