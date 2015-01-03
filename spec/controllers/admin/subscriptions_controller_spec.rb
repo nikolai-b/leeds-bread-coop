@@ -2,10 +2,9 @@ describe Admin::SubscriptionsController, type: :controller do
   before do
     warden.set_user admin
   end
-
-  let(:admin)        { create :subscriber, :admin }
-  let(:subscriber)   { create :subscriber, :with_subscription }
+  let(:subscriber)    { create :subscriber, :with_subscription }
   let(:subscription) { subscriber.subscriptions.first }
+  let(:admin)        { create :subscriber, :admin }
 
   describe 'routing' do
     it { is_expected.to route(:get, "/admin/subscribers/#{subscriber.id}/subscriptions/edit_all").to(action: :edit_all, subscriber_id: subscriber.id) }

@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :subscriber do
+    ignore { customer_id 'tok' }
     first_name "Lizzie"
     last_name  "Surname"
     sequence(:email) {|n| "lizzie#{n}@test.com"}
@@ -13,11 +14,10 @@ FactoryGirl.define do
     end
 
     trait :with_subscription do
-      after(:build) {|s| s.subscriptions << FactoryGirl.build(:subscription, subscriber: s) }
-    end
-
-    trait :with_payment_card do
-      after(:build) {|s| s.payment_card = FactoryGirl.build(:payment_card, subscriber: s) }
+      after(:build) do |s, evl|
+        s.stripe_account = FactoryGirl.build(:stripe_account, subscriber: s, customer_id: evl.customer_id)
+        s.subscriptions << FactoryGirl.build(:subscription, subscriber: s)
+      end
     end
 
     trait :on_subscription_holiday do

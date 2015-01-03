@@ -16,4 +16,5 @@ NEW_SUB_BODY ="Welcome {{subscriber.first_name}}!
       body NEW_SUB_BODY
     end
   end
+
 end

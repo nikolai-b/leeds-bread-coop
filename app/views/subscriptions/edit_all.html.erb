@@ -11,7 +11,7 @@
 
     <%= render 'shared/subscription', f: f%>
 
-    <strong>Changing number of subscriptions will change your monthly payment on card ending in <%= current_subscriber.payment_card.last4 %></strong>
+    <strong>Changing number of subscriptions will change your monthly payment on card ending in <%= current_subscriber.stripe_account.last4 %></strong>
     </br>
 
     <%= f.submit 'Update', class: "btn btn-default btn-sm btn-success" %>

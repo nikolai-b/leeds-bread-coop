@@ -60,7 +60,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def update_stripe
-    subscriber.stripe_sub.update if subscriber.stripe_customer_id
+    subscriber.stripe_account.update_stripe if subscriber.stripe_account
   end
 
   def self.defer_changes_off?

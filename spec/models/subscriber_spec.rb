@@ -51,11 +51,11 @@ describe Subscriber do
 
   describe 'active_on scope' do
     context 'with subscribers on holiday' do
-      let!(:subscriber) { create :subscriber, :with_subscription }
+      let(:subscriber_other)   { create :subscriber, :with_subscription }
 
       before do
-        subscriber_on_holiday = create :subscriber, :with_subscription
-        create :holiday, subscriber: subscriber_on_holiday
+        create :holiday, subscriber: subscriber_other
+        create :subscription, subscriber: subject
       end
 
       it 'excludes the subscribers on holiday' do
@@ -63,7 +63,7 @@ describe Subscriber do
       end
 
       it 'excludes unpaid subscribers' do
-        subscriber.subscriptions[0].update_attribute :paid, false
+        subject.subscriptions[0].update_attribute :paid, false
         expect(described_class.active_on(Date.tomorrow.beginning_of_week + 18.days).count).to eq 0
       end
     end

@@ -1,13 +1,10 @@
 describe SubscriptionsController, type: :controller do
+  let(:subscriber)   { create :subscriber, :with_subscription }
+  let(:subscription) { build :subscription, subscriber: nil }
+
   before do
-    StripeMock.start
-    Stripe::Plan.create(id: 'weekly-bread-1', amount: 1000, name: 'weekly-sub', currency: 'GBP', interval: 4)
     warden.set_user subscriber
   end
-
-  let(:stripe_helper) { StripeMock.create_test_helper }
-  let(:subscriber)    { create :subscriber, :with_subscription, :with_payment_card }
-  let(:subscription)  { build :subscription, subscriber: subscriber}
 
   describe 'routing' do
     it { is_expected.to route(:get,     '/subscriptions/edit_all'    ).to(action: :edit_all  ) }

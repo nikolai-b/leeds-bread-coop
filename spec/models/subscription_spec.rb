@@ -1,14 +1,15 @@
 require 'spec_helper'
 
 describe Subscription do
+  let(:subscriber)    { create :subscriber, :with_subscription }
+
   context 'with a stipe customer id' do
     subject { create :subscription }
 
-    let(:subscriber) { create :subscriber, stripe_customer_id: "stripeid" }
     let(:mon) { Date.today.beginning_of_week }
 
     it 'updates stripe if a subscription is created or destroyed' do
-      expect(subscriber.stripe_sub).to receive(:update).twice.and_return(true)
+      expect(subscriber.stripe_account).to receive(:update_stripe).twice.and_return(true)
       si = create :subscription, subscriber: subscriber
       si.destroy
     end

@@ -134,7 +134,7 @@ GEM
     minitest (5.4.2)
     multi_json (1.10.1)
     mustache (0.99.6)
-    netrc (0.8.0)
+    netrc (0.9.0)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     orm_adapter (0.5.0)
@@ -232,7 +232,7 @@ GEM
     stripe-rails (0.3.1)
       rails (>= 3)
       stripe
-    stripe-ruby-mock (2.0.0)
+    stripe-ruby-mock (2.0.1)
       dante (>= 0.2.0)
       jimson-temp
       stripe (>= 1.15.0)

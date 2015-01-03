@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'thin'
 
 feature "New user, new sign-up", type: :feature,  js: true  do
 
@@ -14,6 +13,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
    # Capybara.javascript_driver = :poltergeist
    # Capybara.current_driver = :poltergeist
     Capybara.javascript_driver = :selenium
+    StripeMock.stop
   end
 
   scenario "New subscription" do

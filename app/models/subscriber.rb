@@ -12,10 +12,10 @@ class Subscriber < ActiveRecord::Base
   validates :phone, length: {in: 10..13}
 
   belongs_to :collection_point
-  has_many :holidays
+  has_many :holidays, dependent: :destroy
   has_many :bread_types, through: :subscriptions
-  has_many :subscriptions
-  has_one :payment_card
+  has_many :subscriptions, dependent: :destroy
+  has_one :stripe_account, dependent: :destroy
 
   before_destroy :cancel_stripe
 
@@ -43,12 +43,8 @@ class Subscriber < ActiveRecord::Base
     subscriptions.map &:collection_day
   end
 
-  def stripe_sub
-    @stripe_sub ||= StripeSub.new(self)
-  end
-
   def pays_with_stripe?
-    stripe_customer_id
+    stripe_account.try(:customer_id).present?
   end
 
   def self.import(file)
@@ -106,21 +102,19 @@ class Subscriber < ActiveRecord::Base
     end
   end
 
-
   def mark_subscriptions_payment_as(paid)
     subscriptions.update_all paid: paid
   end
 
   def monthly_payment
-    num_paid_subs * StripeSub::MONTHLY_COST_PENCE / 100.0
+    num_paid_subs * StripeAccount::MONTHLY_COST_PENCE / 100.0
   end
 
   private
 
   def cancel_stripe
-    stripe_sub.cancel if stripe_customer_id
+    stripe_account.cancel if pays_with_stripe?
   end
-
 
   def self.csv_collection_point
     {
@@ -151,5 +145,4 @@ class Subscriber < ActiveRecord::Base
       "Fri" => 5,
     }.freeze
   end
-
 end

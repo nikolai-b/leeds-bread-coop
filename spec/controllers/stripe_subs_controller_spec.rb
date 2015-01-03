@@ -1,12 +1,10 @@
 describe StripeSubsController, type: :controller do
+  let(:subscriber)    { create :subscriber, :with_subscription }
+  let(:stripe_helper) { StripeMock.create_test_helper }
+
   before do
-    StripeMock.start
-    Stripe::Plan.create(id: 'weekly-bread-1', amount: 1000, name: 'weekly-sub', currency: 'GBP', interval: 4)
     warden.set_user subscriber
   end
-
-  let(:stripe_helper) { StripeMock.create_test_helper }
-  let(:subscriber) { create :subscriber, :with_subscription, :with_payment_card }
 
   describe 'routing' do
     it { is_expected.to route(:get,     '/stripe_sub/new').to(action: :new) }
@@ -19,6 +17,7 @@ describe StripeSubsController, type: :controller do
   describe 'new' do
     context 'with no stripe_customer_id' do
       before do
+        subscriber.update stripe_account: nil
         get :new
       end
       it { is_expected.to render_template(:new) }
@@ -26,7 +25,6 @@ describe StripeSubsController, type: :controller do
 
     context 'with a stripe_customer_id' do
       before do
-        subscriber.update stripe_customer_id: stripe_helper.generate_card_token
         get :new
       end
 
@@ -43,4 +41,17 @@ describe StripeSubsController, type: :controller do
     before { put :update, stripeToken: stripe_helper.generate_card_token }
     it { is_expected.to redirect_to("/subscribers/#{subscriber.id}")}
   end
+
+  describe 'create' do
+    before do
+      notifier = double()
+
+      expect(SubscriberNotifier).to receive(:new).once.and_return(notifier)
+      expect(notifier).to receive(:new_sub).once
+
+      post :create, stripeToken: stripe_helper.generate_card_token
+    end
+    it { is_expected.to redirect_to("/subscribers/#{subscriber.id}")}
+  end
+
 end

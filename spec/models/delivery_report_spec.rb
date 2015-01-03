@@ -1,10 +1,14 @@
 describe DeliveryReport do
   subject { DeliveryReport.new(date) }
   let(:collection_point) { create :collection_point }
+  let(:stripe_helper) { StripeMock.create_test_helper }
+
+  def stripe_customer
+    Stripe::Customer.create email: 'email@email.com', card: stripe_helper.generate_card_token, plan: 'weekly-bread-1'
+  end
 
   before do
-    4.times { subscriber = create :subscriber, :with_subscription, collection_point: collection_point }
-
+    4.times { subscriber = create :subscriber, :with_subscription, collection_point: collection_point, customer_id: stripe_customer.id }
     unpaid_subscriber = create :subscriber, first_name: 'NotPaid', collection_point: collection_point
     create :subscription, subscriber: unpaid_subscriber, paid: false
 
