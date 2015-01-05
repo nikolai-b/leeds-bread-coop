@@ -15,12 +15,12 @@ describe StripeAccount, mock_stripe: true do
       it 'sets the subscriber\'s stripe id and active sub' do
         subject.add_token(card_token)
 
-        expect(subject.reload.customer_id).to_not be_nil
+        expect(subject.customer_id).to_not be_nil
         expect(subject.last4).to eq(4242)
       end
 
       it 'sets the subscribers active sub' do
-        expect{subject.add_token(card_token)}.to change{subscriber.reload.num_paid_subs}.by(1)
+        expect{subject.add_token(card_token)}.to change{subscriber.num_paid_subs}.by(1)
       end
 
       it 'returns true' do
@@ -79,8 +79,9 @@ describe StripeAccount, mock_stripe: true do
       end
 
       it 'refunds holidays ending in last week' do
-        hol_two_weeks = build :holiday, subscriber: subscriber, start_date: (Date.today.beginning_of_week - 14.days), end_date: (Date.today.beginning_of_week)
-        hol_two_weeks.save validate: false
+        hol_two_weeks = create :holiday, subscriber: subscriber, start_date: (Date.today.beginning_of_week + 7.days), end_date: (Date.today.beginning_of_week + 21.days)
+        allow(Date).to receive(:today).and_return(Date.today + 21.days)
+
         described_class.refund_holidays
         refund = Stripe::Charge.retrieve(charge.id).refunds.first
         expect(refund.amount).to eq(500)
