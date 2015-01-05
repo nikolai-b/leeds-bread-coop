@@ -2,6 +2,7 @@
     <%= f.input :address %>
     <%= f.input :post_code %>
     <%= f.input :notes %>
+    <%= f.input :valid_days, as: :check_boxes, collection: [['Wed', 3], ['Fri', 5]] %>
     <%= f.input :name %>
     <%= f.button :submit %>
 <% end %>

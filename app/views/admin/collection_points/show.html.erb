@@ -11,6 +11,11 @@
 </p>
 
 <p>
+  <strong>Valid days:</strong>
+  <%= @collection_point.valid_day_names %>
+</p>
+
+<p>
   <strong>Notes:</strong>
   <%= @collection_point.notes %>
 </p>
@@ -20,5 +25,5 @@
   <%= @collection_point.name %>
 </p>
 
-<%= link_to 'Edit', [:admin, @collection_point] %> |
+<%= link_to 'Edit', edit_admin_collection_point_path(@collection_point) %> |
 <%= link_to 'Back', admin_collection_points_path %>

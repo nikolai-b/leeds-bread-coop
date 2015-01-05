@@ -66,14 +66,23 @@ describe Subscription do
         expect{ described_class.apply_defered_changes! }.to_not change{ unchaged.reload.updated_at }
 
         expect(changed_bread_type.reload.next_bread_type).to be_nil
-        expect(changed_bread_type.reload.next_collection_day).to be_nil
-        expect(changed_bread_type.reload.bread_type).to eq(new_bread_type)
-        expect(changed_bread_type.reload.collection_day).to eq(5)
+        expect(changed_bread_type.next_collection_day).to be_nil
+        expect(changed_bread_type.bread_type).to eq(new_bread_type)
+        expect(changed_bread_type.collection_day).to eq(5)
 
         expect(changed_fri_to_wed.reload.next_bread_type).to be_nil
-        expect(changed_fri_to_wed.reload.next_collection_day).to be_nil
-        expect(changed_fri_to_wed.reload.collection_day).to eq(3)
-        expect(changed_fri_to_wed.reload.bread_type).to eq(old_bread_type)
+        expect(changed_fri_to_wed.next_collection_day).to be_nil
+        expect(changed_fri_to_wed.collection_day).to eq(3)
+        expect(changed_fri_to_wed.bread_type).to eq(old_bread_type)
+      end
+
+      it 'validates collection_day is in collection_point valid_days' do
+        subject.subscriber.collection_point.update! valid_days: [3]
+        subject.reload.collection_day = 3
+        expect(subject.valid?).to be_truthy
+
+        subject.collection_day = 5
+        expect(subject.valid?).to be_falsey
       end
 
     end

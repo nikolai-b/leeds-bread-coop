@@ -3,10 +3,9 @@ class Subscription < ActiveRecord::Base
   belongs_to :bread_type
   belongs_to :next_bread_type, class: BreadType
 
-  validates :collection_day, inclusion: [3, 5]
-  validates :next_collection_day, inclusion: [3, 5], allow_blank: true
   validates :bread_type, presence: true
   validate  :bread_type_for_subscribers
+  validate  :collection_day_for_subscribers
 
   scope :delivery_day, ->(date) { where(collection_day: date.wday) }
   scope :with_changes, ->       { where.not(next_collection_day: nil) }
@@ -56,6 +55,12 @@ class Subscription < ActiveRecord::Base
   def bread_type_for_subscribers
     unless bread_type_id.in? BreadType.for_subscribers.pluck(:id)
       errors.add(:bread_type_id, "must be a bread avaliable to subscribers")
+    end
+  end
+
+  def collection_day_for_subscribers
+    unless collection_day.in? subscriber.collection_point.valid_days
+      errors.add(:collection_day, "must be a collection day avaliable to subscribers")
     end
   end
 

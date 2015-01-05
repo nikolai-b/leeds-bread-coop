@@ -46,6 +46,6 @@ class Admin::CollectionPointsController < Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def collection_point_params
-      params.require(:collection_point).permit(:address, :post_code, :notes, :name)
+      params.require(:collection_point).permit(:address, :post_code, :notes, :name, valid_days: [])
     end
 end

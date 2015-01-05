@@ -37,7 +37,7 @@ describe Admin::CollectionPointsController, type: :controller do
   end
 
   describe 'update' do
-    before { put :update, id: collection_point.to_param, collection_point: collection_point.attributes.merge(name: 'New point') }
+    before { put :update, id: collection_point.to_param, collection_point: collection_point.attributes.merge(name: 'New point', valid_days: [3,5]) }
 
     it { is_expected.to redirect_to("/admin/collection_points/#{collection_point.to_param}") }
   end
