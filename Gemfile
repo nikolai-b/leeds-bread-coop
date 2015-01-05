@@ -54,6 +54,7 @@ group :development do
   gem "letter_opener"
   gem "binding_of_caller"
   gem "better_errors"
+  gem 'quiet_assets'
 end
 
 group :production do
