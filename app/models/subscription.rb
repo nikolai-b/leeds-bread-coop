@@ -59,6 +59,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def collection_day_for_subscribers
+    return unless subscriber
     unless collection_day.in? subscriber.collection_point.valid_days
       errors.add(:collection_day, "must be a collection day avaliable to subscribers")
     end
