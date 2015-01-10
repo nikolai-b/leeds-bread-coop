@@ -17,7 +17,7 @@ class SubscriberNotifier
     template = EmailTemplate.find_by name: 'stripe_invoice'
     @emailer.send_mail(to: @subscriber.email,
          subject: 'Leeds Bread Co-op: Invoice',
-         body: Mustache.render( template.body, subscriber_details.merge(invoice: invoice) ),
+         body: Mustache.render( template.body, subscriber_details.merge(invoice: @invoice) ),
          content_type: 'text/html; charset=UTF-8')
   end
 

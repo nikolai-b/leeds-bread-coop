@@ -1,31 +1,40 @@
 class StripeAPI
   include Stripe::Callbacks
 
-  after_customer_subscription_deleted! do |subscription, event|
-    stripe_customer_id = subscription.customer
-
-    subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
-
-    if subscriber
-      subscriber.mark_subscriptions_payment_as false
-      subscriber.save!
-
-      SubscriberNotifier.new(subscriber).sub_deleted
-    end
+  after_customer_subscription_deleted! do |stripe_data, event|
+    after_customer_subscription_deleted(stripe_data, event)
   end
 
-  after_invoice_created! do |invoice, event|
-    stripe_customer_id = invoice.customer
-
-    subscriber = Subscriber.find_by_stripe_customer_id stripe_customer_id
-
-    formatted_invoice = Invoice.new(invoice)
-
-    SubscriberNotifier.new(subscriber, formatted_invoice).stripe_invoice
+  after_invoice_created! do |stripe_data, event|
+    after_invoice_created(stripe_data, event)
   end
 
   after_charge_dispute_created! do |charge, event|
-    stripe_dispute(charge)
+    SubscriberNotifier.stripe_dispute(charge)
+  end
+
+  class << self
+    def after_customer_subscription_deleted(stripe_data, event)
+      if subscriber = retrieve_subsciber(stripe_data)
+        subscriber.mark_subscriptions_payment_as false
+        subscriber.save!
+
+        SubscriberNotifier.new(subscriber).sub_deleted
+      end
+    end
+
+    def after_invoice_created(stripe_data, event)
+      invoice = Invoice.new(stripe_data)
+      subscriber = retrieve_subsciber(stripe_data)
+      SubscriberNotifier.new(subscriber, invoice).stripe_invoice
+    end
+
+    private
+
+    def retrieve_subsciber(stripe_data)
+      stripe_account = StripeAccount.find_by_customer_id stripe_data.customer
+      stripe_account.try :subscriber
+    end
   end
 
   class Invoice
