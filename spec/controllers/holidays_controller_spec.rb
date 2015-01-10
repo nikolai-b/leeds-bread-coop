@@ -28,6 +28,11 @@ describe HolidaysController, type: :controller do
     end
   end
 
+  describe 'new' do
+    before { get :new, subscriber_id: subscriber.to_param }
+    it { is_expected.to respond_with(:success) }
+  end
+
   describe 'create' do
     before { post :create, subscriber_id: subscriber.to_param, holiday: holiday.attributes }
     it { is_expected.to redirect_to("/subscribers/#{subscriber.id}/holidays/#{Holiday.last.id}") }
