@@ -5,15 +5,6 @@ namespace :scheduler do
     end
   end
 
-  desc "This task is called by the Heroku scheduler add-on hourly"
-  task hourly: :environment do
-    if Week.num != Date.current
-      perform 'scheduler:daily'
-
-      Week.num = Date.current
-    end
-  end
-
   desc "Called early every day"
   task daily: :environment do
     perform 'scheduler:weekly' if Date.current.cwday == 6
