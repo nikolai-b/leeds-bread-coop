@@ -26,8 +26,10 @@ Rails.application.routes.draw do
       collection { post :import }
     end
 
-    get "/delivery_reports/:date", :to => "delivery_reports#show", defaults: { date: Date.current.strftime }, as: :delivery_reports
-    get "/production_reports/:date", :to => "production_reports#show", defaults: { date: Date.current.strftime }, as: :production_reports
+    get "/delivery_reports/:date", :to => "delivery_reports#show"
+    get "/delivery_reports/", :to => "delivery_reports#show", as: :delivery_reports
+    get "/production_reports/:date", :to => "production_reports#show"
+    get "/production_reports/", :to => "production_reports#show", as: :production_reports
 
     resources :wholesale_customers do
       resources :orders

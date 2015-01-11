@@ -5,6 +5,23 @@
 <%= @delivery_report.date.strftime("%a #{@delivery_report.date.day.ordinalize} %b %y") %>
 &emsp;
 <%= link_to('> Tomorrow', admin_delivery_reports_path(date: (@delivery_report.date + 1.day).to_s)) %>
+
+<%= form_tag("/admin/delivery_reports/", method: "get") do %>
+  <%= label_tag(:date, "Jump to date:") %>
+  <%= text_field_tag(:date) %>
+  <%= submit_tag("Go") %>
+<% end %>
+<script type="text/javascript">
+  $(document).ready(function(e) {
+
+  $('#date').datepicker({ format: "dd/mm/yyyy", weekStart: 1,
+      todayBtn: "linked", autoclose: true
+      });
+  });
+
+</script>
+
+
 <table>
   <thead>
     <tr>
