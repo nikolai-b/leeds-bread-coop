@@ -77,7 +77,7 @@ class Subscriber < ActiveRecord::Base
         subscriber.phone = " "*(10 - phone_length) + subscriber.phone.to_s
       end
 
-      subscriber.save
+      subscriber.save!
 
       subscriber.subscriptions.create(
         bread_type_id: BreadType.find_by( name: csv_bread_type[row["Bread"]] ).id,

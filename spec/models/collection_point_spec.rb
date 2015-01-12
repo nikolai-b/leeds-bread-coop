@@ -16,4 +16,9 @@ describe CollectionPoint do
     subject.update valid_days: [3,5]
     expect(subject.valid_day_names).to eq('Wed, Fri')
   end
+
+  it 'has ordered scope' do
+    create :collection_point
+    expect(described_class.ordered.size).to eq(1)
+  end
 end

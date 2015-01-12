@@ -20,10 +20,10 @@ class HolidaysController < ApplicationController
   def create
     @holiday = Holiday.new(holiday_params.merge(subscriber: @subscriber))
 
-      if @holiday.save
-       redirect_to [@subscriber, @holiday], notice: 'Holiday was successfully created.'
-      else
-       render :new
+    if @holiday.save
+      redirect_to [@subscriber, @holiday], notice: 'Holiday was successfully created.'
+    else
+      render :new
     end
   end
 

@@ -2,7 +2,7 @@ class Admin::WholesaleCustomersController < Admin::BaseController
   before_action :set_wholesale_customer, only: [:show, :edit, :update, :destroy]
 
   def index
-    @wholesale_customers = WholesaleCustomer.all
+    @wholesale_customers = WholesaleCustomer.all.ordered
   end
 
   def show

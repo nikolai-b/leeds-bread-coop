@@ -2,7 +2,7 @@ class Admin::EmailTemplatesController < Admin::BaseController
   before_action :set_email_template, only: [:show, :edit, :update, :destroy]
 
   def index
-    @email_templates = EmailTemplate.all
+    @email_templates = EmailTemplate.all.ordered
   end
 
   def show

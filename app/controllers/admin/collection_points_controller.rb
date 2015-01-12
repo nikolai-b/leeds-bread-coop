@@ -2,7 +2,7 @@ class Admin::CollectionPointsController < Admin::BaseController
   before_action :set_collection_point, only: [:show, :edit, :update, :destroy]
 
   def index
-    @collection_points = CollectionPoint.all
+    @collection_points = CollectionPoint.all.ordered
   end
 
   def show

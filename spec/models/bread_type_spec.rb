@@ -1,6 +1,6 @@
-describe WholesaleCustomer do
+describe BreadType do
   it 'has ordered scope' do
-    create :wholesale_customer
+    create :bread_type
     expect(described_class.ordered.size).to eq(1)
   end
 end

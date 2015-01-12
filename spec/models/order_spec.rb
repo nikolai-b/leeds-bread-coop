@@ -1,8 +1,9 @@
 describe Order do
-  let!(:wholesale_customer_regular) { create :wholesale_customer, :with_regular_order }
-  let!(:wholesale_customer_non_regular) { create :wholesale_customer, :with_order }
+  let(:wholesale_customer_regular) { create :wholesale_customer, :with_regular_order }
+  let(:wholesale_customer_non_regular) { create :wholesale_customer, :with_order }
 
   it 'copies regular orders 3 weeks into the future' do
+    wholesale_customer_non_regular
     wholesale_customer_regular.orders.first.update date: Date.today + 19.days
     described_class.copy_regular_orders
     orders = wholesale_customer_regular.reload.orders
@@ -13,12 +14,18 @@ describe Order do
   end
 
   it 'leaves non-regular orders' do
+    wholesale_customer_regular
     wholesale_customer_non_regular.orders.first.update date: Date.today + 19.days
 
     described_class.copy_regular_orders
     orders = wholesale_customer_non_regular.reload.orders
 
     expect(orders.size).to eq (1)
+  end
+
+  it 'has ordered scope' do
+    create :order
+    expect(described_class.ordered.size).to eq(1)
   end
 
 end

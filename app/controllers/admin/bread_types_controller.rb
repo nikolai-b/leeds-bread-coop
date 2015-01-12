@@ -2,7 +2,7 @@ class Admin::BreadTypesController < Admin::BaseController
   before_action :set_bread_type, only: [:show, :edit, :update, :destroy]
 
   def index
-    @bread_types = BreadType.paginate(page: params[:page])
+    @bread_types = BreadType.ordered.paginate(page: params[:page])
   end
 
   def show
