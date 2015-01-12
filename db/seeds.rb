@@ -3,14 +3,14 @@ unless (Subscriber.find_by email: 'Leeds Bread Co-op')
 end
 unless (CollectionPoint.find_by name: 'Green Action')
   collection_points = CollectionPoint.create([
-    {name: "Green Action", address: "LUU", post_code: 'LS2 ...', notes: "Nice students"},
-    {name: "LILAC", address: "Kirstall", post_code: 'LS? ...', notes: "Very eco"}
+    {name: "Green Action", address: "LUU", post_code: 'LS2 ...', notes: "Nice students", valid_days: [3, 5]},
+    {name: "LILAC", address: "Kirstall", post_code: 'LS? ...', notes: "Very eco", valid_days: [3, 5]}
   ])
 end
 
 def create_collection_point(name)
   unless (CollectionPoint.find_by name: name)
-    CollectionPoint.create( {name: name } )
+    CollectionPoint.create!( {name: name, valid_days: [3, 5] } )
   end
 end
 
