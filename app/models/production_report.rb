@@ -40,6 +40,7 @@ class ProductionReport
           where(bread_type_id: bread_type.id).
           where(paid: true).
           where('subscribers.holidays_count = 0 OR DATE(?) NOT BETWEEN holidays.start_date AND holidays.end_date', @date + days_in_future).
+          where('subscribers.admin = ?', false).
           references(:holidays, :subscribers).
           count
   end

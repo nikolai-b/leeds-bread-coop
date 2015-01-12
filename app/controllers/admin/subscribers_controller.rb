@@ -6,7 +6,7 @@ class Admin::SubscribersController < Admin::BaseController
 
   def index
     respond_to do |format|
-      format.html { @subscribers = apply_scopes(Subscriber.ordered.paginate(:page => params[:page])) }
+      format.html { @subscribers = apply_scopes(Subscriber.ordered.not_admin.paginate(:page => params[:page])) }
       format.csv { send_data Subscriber.to_csv }
     end
   end

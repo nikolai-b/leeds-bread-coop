@@ -26,6 +26,7 @@ class Subscriber < ActiveRecord::Base
   scope :ordered,          -> { order(:first_name, :last_name) }
   scope :pays_with_stripe, -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].not_eq(nil)) }
   scope :pays_with_bacs,   -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].eq(nil)) }
+  scope :not_admin,        -> { where(admin: false) }
 
   def full_name
     "#{first_name} #{last_name}"
