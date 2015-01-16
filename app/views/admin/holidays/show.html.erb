@@ -2,12 +2,12 @@
 
 <p>
   <strong>Start date:</strong>
-  <%= @holiday.start_date %>
+  <%= @holiday.start_date.strftime("%d/%m/%y") %>
 </p>
 
 <p>
   <strong>End date:</strong>
-  <%= @holiday.end_date %>
+  <%= @holiday.end_date.strftime("%d/%m/%y") %>
 </p>
 
 <%= link_to 'Edit', [:admin, @subscriber, @holiday] %> |

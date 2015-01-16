@@ -12,8 +12,8 @@
   <tbody>
     <% @holidays.each do |holiday| %>
       <tr>
-        <td><%= holiday.start_date %></td>
-        <td><%= holiday.end_date %></td>
+        <td><%= holiday.start_date.strftime("%d/%m/%y") %></td>
+        <td><%= holiday.end_date.strftime("%d/%m/%y") %></td>
         <td><%= link_to 'Show', [:admin, @subscriber, holiday] %></td>
         <td><%= link_to 'Edit', edit_admin_subscriber_holiday_path(@subscriber, holiday) %></td>
         <td><%= link_to 'Destroy', [:admin, @subscriber, holiday], method: :delete, data: { confirm: 'Are you sure?' } %></td>
