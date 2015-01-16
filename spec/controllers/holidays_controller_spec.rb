@@ -4,12 +4,6 @@ describe HolidaysController, type: :controller do
   end
   let(:subscriber) { create :subscriber }
   let(:holiday)    { build :holiday, subscriber_id: subscriber.id }
-  let(:holiday_attributes) do
-    holiday.attributes.tap do |attrs|
-      attrs['start_date'] = holiday.start_date.strftime
-      attrs['end_date'] = holiday.end_date.strftime
-    end
-  end
 
   describe 'routing' do
     it { is_expected.to route(:get,  '/subscribers/1/holidays').to(action: :index, subscriber_id: 1) }
@@ -40,7 +34,7 @@ describe HolidaysController, type: :controller do
   end
 
   describe 'create' do
-    before { post :create, subscriber_id: subscriber.to_param, holiday: holiday_attributes }
+    before { post :create, subscriber_id: subscriber.to_param, holiday: holiday.attributes }
     it { is_expected.to redirect_to("/subscribers/#{subscriber.id}/holidays/#{Holiday.last.id}") }
   end
 end

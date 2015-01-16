@@ -8,13 +8,6 @@ describe Admin::HolidaysController, type: :controller do
   let(:subscriber) { holiday.subscriber }
   let(:new_holiday) { build :holiday, start_date: (Date.today + 40.days), end_date: (Date.today + 50.days), subscriber: subscriber }
 
-  def strftime_attributes(hol)
-    hol.attributes.tap do |attrs|
-      attrs['start_date'] = hol.start_date.strftime
-      attrs['end_date'] = hol.end_date.strftime
-    end
-  end
-
   describe 'routing' do
     it { is_expected.to route(:get,     "/admin/subscribers/#{subscriber.id}/holidays"       ).to(action: :index,   subscriber_id: subscriber.id) }
     it { is_expected.to route(:post,    "/admin/subscribers/#{subscriber.id}/holidays"       ).to(action: :create,  subscriber_id: subscriber.id) }
@@ -40,7 +33,7 @@ describe Admin::HolidaysController, type: :controller do
   end
 
   describe 'create' do
-    before { post :create, holiday: strftime_attributes(new_holiday), subscriber_id: subscriber.id }
+    before { post :create, holiday: new_holiday.attributes, subscriber_id: subscriber.id }
 
     it { is_expected.to respond_with(:redirect) }
     it { is_expected.to set_the_flash.to(/successfully created/) }
@@ -48,7 +41,7 @@ describe Admin::HolidaysController, type: :controller do
 
   describe 'update' do
     before { put :update, id: holiday.to_param,
-             holiday: strftime_attributes(holiday).merge(end_date: (Date.today + 40.days).strftime),
+             holiday: holiday.attributes.merge(end_date: (Date.today + 40.days)),
              subscriber_id: subscriber.id}
 
     it { is_expected.to redirect_to("/admin/subscribers/#{subscriber.id}/holidays/#{holiday.to_param}") }
