@@ -28,7 +28,7 @@ class DeliveryReport
 
   def to_csv(options = {})
     CSV.generate(options) do |csv|
-      csv << ["Wholesale Customer", "Order Notes", "Invoiced", "Regular", "Sample", "Receipt", "Bread", "Quantity"]
+      csv << ["Wholesale Customer", "Order Notes", "Invoiced", "Regular", "Sample", "Delivery Receipt", "Bread", "Quantity"]
       wholesale_show.try(:each) do |delivery|
         csv << [
           delivery.wholesale_customer.name,
