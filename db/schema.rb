@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150112123707) do
+ActiveRecord::Schema.define(version: 20150128172058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "bread_types", force: true do |t|
     t.text     "name"
-    t.boolean  "sour_dough"
+    t.boolean  "sour_dough",     default: false
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20150112123707) do
     t.boolean  "invoiced",              default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "regular",               default: false
+    t.boolean  "regular",               default: true
     t.boolean  "sample",                default: false
     t.text     "note"
   end
