@@ -17,7 +17,7 @@
 
 <p>
   <strong>Opening time:</strong>
-  <%= @wholesale_customer.opening_time.strftime('%H:%M') %>
+  <%= @wholesale_customer.opening_time.try(:strftime, '%H:%M') %>
 </p>
 
 <%= link_to 'Edit', edit_admin_wholesale_customer_path(@wholesale_customer) %> |

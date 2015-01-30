@@ -1,6 +1,6 @@
 describe Order do
   let(:wholesale_customer_regular) { create :wholesale_customer, :with_regular_order }
-  let(:wholesale_customer_non_regular) { create :wholesale_customer, :with_order }
+  let(:wholesale_customer_non_regular) { create :wholesale_customer, :with_nonregular_order }
 
   it 'copies regular orders 3 weeks into the future' do
     wholesale_customer_non_regular

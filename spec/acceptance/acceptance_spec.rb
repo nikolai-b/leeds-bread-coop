@@ -6,13 +6,15 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     create :collection_point
     create :bread_type
     create :email_template, :with_real_template
+
     Capybara.current_driver = :selenium
+    Capybara.javascript_driver = :selenium
+
    # Capybara.register_driver :poltergeist do |app|
    #   Capybara::Poltergeist::Driver.new(app, js_errors: false)
    # end
    # Capybara.javascript_driver = :poltergeist
    # Capybara.current_driver = :poltergeist
-    Capybara.javascript_driver = :selenium
     StripeMock.stop
   end
 
@@ -43,7 +45,9 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   end
 
   def fill_in_details
+    sleep(3)
     fill_in 'First name', with: 'Lizzie'
+    sleep(30)
     fill_in 'Last name',  with: 'Surname'
     fill_in "Email",      with: 'lizzie@example.com'
     fill_in "Address",    with: 'Somewhere in Leeds'
@@ -59,8 +63,17 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   def pay_stripe
     click_on 'Pay for 1 loaf'
 
-    stripe = page.driver.window_handles.last
+   # stripe = page.driver.window_handles.last
 
+   # page.within_window stripe do
+   #   fill_in "card_number", :with => "4242424242424242"
+   #   fill_in "cc-exp", with: (Date.current + 1.month).strftime('%m%y')
+   #   fill_in "City", :with => "Berlin"
+   #   fill_in "cc-csc", with: '123'
+   #   page.save_and_open_page
+   #   click_button "Payment Info"
+
+   # end
     Capybara.within_frame all('iframe[name=stripe_checkout_app]').last do
       sleep(1)
 
