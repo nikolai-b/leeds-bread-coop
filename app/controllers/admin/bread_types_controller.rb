@@ -35,7 +35,7 @@ class Admin::BreadTypesController < Admin::BaseController
 
   def destroy
     @bread_type.destroy
-    redirect_to [:admin, bread_types_url], notice: 'Bread type was successfully destroyed.'
+    redirect_to admin_bread_types_url, notice: 'Bread type was successfully destroyed.'
   end
 
   private

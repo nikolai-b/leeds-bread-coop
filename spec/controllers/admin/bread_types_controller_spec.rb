@@ -54,4 +54,11 @@ describe Admin::BreadTypesController, type: :controller do
     it { is_expected.to respond_with(:success) }
     it { is_expected.to render_template(:edit) }
   end
+
+  describe 'destroy' do
+    before { delete :destroy, id: bread_type.to_param }
+
+    it { is_expected.to redirect_to("/admin/bread_types") }
+  end
+
 end
