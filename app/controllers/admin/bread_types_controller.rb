@@ -33,11 +33,6 @@ class Admin::BreadTypesController < Admin::BaseController
     end
   end
 
-  def destroy
-    @bread_type.destroy
-    redirect_to admin_bread_types_url, notice: 'Bread type was successfully destroyed.'
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bread_type

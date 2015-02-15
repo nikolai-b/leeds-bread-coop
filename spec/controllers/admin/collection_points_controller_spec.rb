@@ -12,7 +12,6 @@ describe Admin::CollectionPointsController, type: :controller do
     it { is_expected.to route(:get,     '/admin/collection_points/1').to(action: :show, id: 1) }
     it { is_expected.to route(:get,     '/admin/collection_points/1/edit').to(action: :edit, id: 1) }
     it { is_expected.to route(:put,     '/admin/collection_points/1').to(action: :update, id: 1) }
-    it { is_expected.to route(:delete,  '/admin/collection_points/1').to(action: :destroy, id: 1) }
   end
 
   describe 'index' do

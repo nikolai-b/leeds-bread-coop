@@ -12,8 +12,8 @@ describe Admin::BreadTypesController, type: :controller do
     it { is_expected.to route(:get,     '/admin/bread_types/1').to(action: :show, id: 1) }
     it { is_expected.to route(:get,     '/admin/bread_types/1/edit').to(action: :edit, id: 1) }
     it { is_expected.to route(:put,     '/admin/bread_types/1').to(action: :update, id: 1) }
-    it { is_expected.to route(:delete,  '/admin/bread_types/1').to(action: :destroy, id: 1) }
   end
+
   describe 'index' do
     before { bread_type; get :index }
 
@@ -54,11 +54,4 @@ describe Admin::BreadTypesController, type: :controller do
     it { is_expected.to respond_with(:success) }
     it { is_expected.to render_template(:edit) }
   end
-
-  describe 'destroy' do
-    before { delete :destroy, id: bread_type.to_param }
-
-    it { is_expected.to redirect_to("/admin/bread_types") }
-  end
-
 end

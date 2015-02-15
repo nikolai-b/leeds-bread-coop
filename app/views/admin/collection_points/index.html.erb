@@ -8,7 +8,7 @@
       <th>Post code</th>
       <th>Valid Days</th>
       <th>Notes</th>
-      <th colspan="2"></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -21,7 +21,6 @@
         <td><%= collection_point.valid_day_names %></td>
         <td><%= collection_point.notes %></td>
         <td><%= link_to 'Edit', edit_admin_collection_point_path(collection_point), class: 'btn btn-default btn-xs' %> </td>
-        <td><%= link_to 'Destroy', [:admin, collection_point], method: :delete, class: 'btn btn-default btn-xs btn-danger', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

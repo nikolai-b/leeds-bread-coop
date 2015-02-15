@@ -36,8 +36,8 @@ Rails.application.routes.draw do
     end
 
     resources :email_templates, only: [:index, :edit, :show, :update]
-    resources :bread_types
-    resources :collection_points
+    resources :bread_types, only: [:new, :create, :edit, :update, :show, :index]
+    resources :collection_points, only: [:new, :create, :edit, :update, :show, :index]
   end
 
 end

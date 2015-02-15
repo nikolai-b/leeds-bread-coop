@@ -33,11 +33,6 @@ class Admin::CollectionPointsController < Admin::BaseController
     end
   end
 
-  def destroy
-    @collection_point.destroy
-    redirect_to admin_collection_points_url, notice: 'Collection point was successfully destroyed.'
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_collection_point
