@@ -18,7 +18,7 @@ describe DeliveryReport do
   describe '#show' do
 
     context 'on Friday' do
-      let(:date) { Date.today.next_week.advance(days: 11) }
+      let(:date) { Date.today.next_week.advance(days: 18) }
 
       it "returns an array with size of delivaries" do
         expect(subject.show[0].items.size).to eq(4)
@@ -71,7 +71,7 @@ describe DeliveryReport do
   describe '#to_csv' do
 
     context 'on Friday' do
-      let(:date) { Date.today.next_week.advance(days: 11) }
+      let(:date) { Date.today.next_week.advance(days: 18) }
 
       it "outputs a csv with subscriber info" do
         csv = CSV.parse(subject.to_csv)

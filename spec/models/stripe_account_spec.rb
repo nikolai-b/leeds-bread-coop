@@ -79,8 +79,8 @@ describe StripeAccount, mock_stripe: true do
       end
 
       it 'refunds holidays ending in last week' do
-        hol_two_weeks = create :holiday, subscriber: subscriber, start_date: (Date.today.beginning_of_week + 7.days), end_date: (Date.today.beginning_of_week + 21.days)
-        allow(Date).to receive(:today).and_return(Date.today + 21.days)
+        hol_two_weeks = create :holiday, subscriber: subscriber, start_date: (Date.today.beginning_of_week + 14.days), end_date: (Date.today.beginning_of_week + 28.days)
+        allow(Date).to receive(:today).and_return(Date.today + 28.days)
 
         described_class.refund_holidays
         refund = Stripe::Charge.retrieve(charge.id).refunds.first

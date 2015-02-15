@@ -2,7 +2,7 @@ describe ProductionReport do
   subject { ProductionReport.new(today) }
 
   describe '#show' do
-    let(:today) { Date.today.beginning_of_week + 15.days}
+    let(:today) { Date.today.beginning_of_week + 22.days}
 
     before do
       subscriber_on_holiday = create :subscriber, :on_subscription_holiday
