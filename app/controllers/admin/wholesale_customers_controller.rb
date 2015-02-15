@@ -32,11 +32,6 @@ class Admin::WholesaleCustomersController < Admin::BaseController
     end
   end
 
-  def destroy
-    @wholesale_customer.destroy
-    redirect_to admin_wholesale_customers_url, notice: 'Wholesale customer was successfully destroyed.'
-  end
-
   private
     def set_wholesale_customer
       @wholesale_customer = WholesaleCustomer.find(params[:id])

@@ -12,7 +12,6 @@ describe Admin::WholesaleCustomersController, type: :controller do
     it { is_expected.to route(:get,     '/admin/wholesale_customers/1').to(action: :show, id: 1) }
     it { is_expected.to route(:get,     '/admin/wholesale_customers/1/edit').to(action: :edit, id: 1) }
     it { is_expected.to route(:put,     '/admin/wholesale_customers/1').to(action: :update, id: 1) }
-    it { is_expected.to route(:delete,  '/admin/wholesale_customers/1').to(action: :destroy, id: 1) }
   end
   describe 'index' do
     before { wholesale_customer; get :index }
