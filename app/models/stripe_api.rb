@@ -24,9 +24,10 @@ class StripeAPI
     end
 
     def after_invoice_created(stripe_data, event)
-      invoice = Invoice.new(stripe_data)
-      subscriber = retrieve_subsciber(stripe_data)
-      SubscriberNotifier.new(subscriber, invoice).stripe_invoice
+      if subscriber = retrieve_subsciber(stripe_data)
+        invoice = Invoice.new(stripe_data)
+        SubscriberNotifier.new(subscriber, invoice).stripe_invoice
+      end
     end
 
     private
