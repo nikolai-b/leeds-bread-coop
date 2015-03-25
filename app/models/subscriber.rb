@@ -133,10 +133,10 @@ class Subscriber < ActiveRecord::Base
 
   def self.csv_bread_type
     {
-      "WS" => "White Sour",
-      "SS" => "Seedy Sour",
-      "RY" => "100% Rye",
-      "SP" => "Special",
+      "WS" => "White Sourdough",
+      "SS" => "Seedy Sourdough",
+      "RY" => "Vollkornbrot (100% rye)",
+      "SP" => "Weekly Special",
     }.freeze
   end
 

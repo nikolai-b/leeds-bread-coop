@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :bread_type do
-    name "White sour"
+    name "White Sourdough"
     sour_dough true
 
     trait :yeasty do

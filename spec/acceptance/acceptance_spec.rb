@@ -54,7 +54,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     fill_in "Phone",      with: '01132222222'
     select 'Green Action', from: :subscriber_collection_point_id
     select "Wednesday",    from: "Collection day"
-    select 'White sour'
+    select 'White Sourdough'
     fill_in "Password",   with: 'password'
 
     click_on 'Subscribe'
@@ -88,7 +88,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
 
   def see_success
     expect(page).to have_content 'lizzie'
-    expect(page).to have_content 'White sour'
+    expect(page).to have_content 'White Sourdough'
   end
 
   def get_email

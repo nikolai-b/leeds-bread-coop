@@ -14,11 +14,11 @@ describe Subscriber do
       ursula = described_class.find_by(email: "ursula@test.com")
       rachel = described_class.find_by(email: "rachel@test.com")
 
-      expect(ursula.bread_types[0].name).to eq('100% Rye')
+      expect(ursula.bread_types[0].name).to eq('Vollkornbrot (100% rye)')
       expect(ursula.collection_point.name).to eq('Green Action')
       expect(ursula.subscriptions[0].collection_day_name).to eq('Wednesday')
 
-      expect(rachel.bread_types[0].name).to eq('Special')
+      expect(rachel.bread_types[0].name).to eq('Weekly Special')
       expect(rachel.collection_point.name).to eq('Fabrication')
       expect(rachel.subscriptions[0].collection_day_name).to eq('Friday')
     end

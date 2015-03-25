@@ -28,7 +28,7 @@ describe ProductionReport do
         case bread_production.name
         when "Ciabatta"
           expect(bread_production.num).to eq(21)
-        when "White sour"
+        when "White Sourdough"
           expect(bread_production.num).to eq(6)
         end
       end
@@ -45,7 +45,7 @@ describe ProductionReport do
         case bread_ferment.name
         when "Ciabatta"
           expect(bread_ferment.num).to eq(20)
-        when "White sour"
+        when "White Sourdough"
           expect(bread_ferment.num).to eq(6)
         end
       end

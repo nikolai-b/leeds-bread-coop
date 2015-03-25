@@ -30,7 +30,7 @@ describe DeliveryReport do
 
         expect(first_delivery.collection_point.name).to eq('Green Action')
         expect(first_delivery_first_item.subscriber.first_name).to include('Lizzie')
-        expect(first_delivery_first_item.bread_type.name).to eq('White sour')
+        expect(first_delivery_first_item.bread_type.name).to eq('White Sourdough')
       end
 
       it 'excludes subscriber who have not paid' do
@@ -75,18 +75,18 @@ describe DeliveryReport do
 
       it "outputs a csv with subscriber info" do
         csv = CSV.parse(subject.to_csv)
-        expect(csv[8]).to eq([nil, "Lizzie Surname", "White sour"])
+        expect(csv[8]).to eq([nil, "Lizzie Surname", "White Sourdough"])
       end
 
       context 'a subscriber with more bread_types than paid subs' do
         before do
           subscriber = Subscriber.last
-          bread_type = create :bread_type, name: '100% Rye'
+          bread_type = create :bread_type, name: 'Vollkornbrot (100% rye)'
           create :subscription, bread_type: bread_type, paid: false
         end
 
         it "doesn't show the unpaid breads" do
-          expect(subject.to_csv).to_not include('100% Rye')
+          expect(subject.to_csv).to_not include('Vollkornbrot (100% rye)')
         end
       end
     end

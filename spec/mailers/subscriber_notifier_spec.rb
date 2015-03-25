@@ -20,7 +20,7 @@ describe SubscriberNotifier do
     create :subscription, subscriber: subscriber
     subject.sub_deleted
     email = ActionMailer::Base.deliveries.last
-    expect(email.body).to include("White sour and White sour")
+    expect(email.body).to include("White Sourdough and White Sourdough")
     expect(email.cc).to include("info@leedsbread.coop")
   end
 

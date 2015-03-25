@@ -25,20 +25,20 @@ end
 ].each {|c| create_collection_point(c) }
 
 
-unless (BreadType.find_by name: 'White sour' )
-  BreadType.create( {name: "White Sour", sour_dough: true, notes: "Tates great!"} )
+unless (BreadType.find_by name: 'White Sour' )
+  BreadType.create( {name: "White Sourdough", sour_dough: true, notes: "Tates great!"} )
 end
 
-unless (BreadType.find_by name: 'Seedy sour' )
-  BreadType.create( {name: "Seedy Sour", sour_dough: true, notes: "Lots of seeds"} )
+unless (BreadType.find_by name: 'Seedy Sourdough' )
+  BreadType.create( {name: "Seedy Sourdough", sour_dough: true, notes: "Lots of seeds"} )
 end
 
-unless (BreadType.find_by name: '100% Rye' )
-  BreadType.create( {name: '100% Rye', sour_dough: false, notes: "Not sure if this is sour or not"} )
+unless (BreadType.find_by name: 'Vollkornbrot (100% rye)' )
+  BreadType.create( {name: 'Vollkornbrot (100% rye)', sour_dough: false, notes: "Not sure if this is sour or not"} )
 end
 
-unless (BreadType.find_by name: 'Special' )
-  BreadType.create( {name: 'Special', sour_dough: false, notes: "Not sure if this is sour or not"} )
+unless (BreadType.find_by name: 'Weekly Special' )
+  BreadType.create( {name: 'Weekly Special', sour_dough: false, notes: "Not sure if this is sour or not"} )
 end
 
 unless (EmailTemplate.find_by name: 'new_sub' )

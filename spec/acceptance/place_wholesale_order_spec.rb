@@ -26,7 +26,7 @@ feature "Place wholesale order", type: :feature,  js: true  do
 
     expect(page).to have_content "Order was successfully created."
 
-    expect(page).to have_content "White sour: 12"
+    expect(page).to have_content "White Sourdough: 12"
   end
 
   def sign_in_as_admin
@@ -44,7 +44,7 @@ feature "Place wholesale order", type: :feature,  js: true  do
     page.find('.add').trigger('click')
 
     fill_in "Quantity", with: 12
-    select "White sour"
+    select "White Sourdough"
 
     click_on 'Create'
   end
