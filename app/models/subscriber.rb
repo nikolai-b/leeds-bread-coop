@@ -49,42 +49,45 @@ class Subscriber < ActiveRecord::Base
   end
 
   def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
+    ActiveRecord::Base.transaction do
+      CSV.foreach(file.path, headers: true) do |row|
 
-      email = row["Email"].strip.downcase
-      next if find_by( email: email)
+        email = row["Email"].strip.downcase
+        next if find_by( email: email)
 
-      subscriber = new
+        subscriber = new
 
-      subscriber.collection_point = CollectionPoint.find_by( name: csv_collection_point[row["Drop-off"]] )
-      subscriber.email = email
-      subscriber.phone = row['Phone']
-      subscriber.password = subscriber.email
-      subscriber.address = row['Address']
-      subscriber.first_name = row['Name'].split(' ')[0]
-      last_name = row['Name'].split(' ')[1..-1].join(' ')
+        subscriber.collection_point = CollectionPoint.find_by( name: csv_collection_point[row["Drop-off"]] )
+        subscriber.email = email
+        subscriber.phone = row['Phone']
+        subscriber.password = subscriber.email
+        subscriber.address = row['Address']
+        subscriber.first_name = row['Name'].split(' ')[0]
+        last_name = row['Name'].split(' ')[1..-1].join(' ')
 
-      if last_name.length < 3
-        subscriber.last_name = 'No Last Name'
-      else
-        subscriber.last_name = row['Name'].split(' ')[1..-1].join(' ')
+        if last_name.length < 3
+          subscriber.last_name = 'No Last Name'
+        else
+          subscriber.last_name = row['Name'].split(' ')[1..-1].join(' ')
+        end
+
+        phone_length = subscriber.phone ? subscriber.phone.length : 0
+        if phone_length > 13
+          subscriber.phone = subscriber.phone.slice(0,13)
+        elsif phone_length < 10
+          subscriber.phone = " "*(10 - phone_length) + subscriber.phone.to_s
+        end
+
+        subscriber.subscriptions.build(
+          bread_type_id: BreadType.find_by( name: csv_bread_type[row["Bread"]] ).id,
+          collection_day: csv_collection_day[row['Days']],
+          paid: true
+        )
+
+        unless subscriber.save
+          raise "Could not save #{subscriber}"
+        end
       end
-
-      phone_length = subscriber.phone ? subscriber.phone.length : 0
-      if phone_length > 13
-        subscriber.phone = subscriber.phone.slice(0,13)
-      elsif phone_length < 10
-        subscriber.phone = " "*(10 - phone_length) + subscriber.phone.to_s
-      end
-
-      subscriber.save!
-
-      subscriber.subscriptions.create(
-        bread_type_id: BreadType.find_by( name: csv_bread_type[row["Bread"]] ).id,
-        collection_day: csv_collection_day[row['Days']],
-        paid: true
-      )
-
     end
   end
 
