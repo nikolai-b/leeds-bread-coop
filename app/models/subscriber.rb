@@ -127,7 +127,7 @@ class Subscriber < ActiveRecord::Base
       "F" => "Haley & Clifford",
       "G" => "Opposite (Chapel Allerton)",
       "H" => "Cafe 164",
-      "I" => "Green Action Food Coop",
+      "I" => "Green Action Food Co-op",
     }.freeze
   end
 

@@ -1,9 +1,9 @@
 unless (Subscriber.find_by email: 'Leeds Bread Co-op')
   Subscriber.create first_name: 'Leeds', last_name: 'Bread Co-op', email: 'info@leedsbread.coop', phone: '0113 262 5155', collection_point_id: 2, password: 'password', admin: true
 end
-unless (CollectionPoint.find_by name: 'Green Action Food Coop')
+unless (CollectionPoint.find_by name: 'Green Action Food Co-op')
   collection_points = CollectionPoint.create([
-    {name: "Green Action Food Coop", address: "LUU", post_code: 'LS2 ...', notes: "Nice students", valid_days: [3, 5]},
+    {name: "Green Action Food Co-op", address: "LUU", post_code: 'LS2 ...', notes: "Nice students", valid_days: [3, 5]},
     {name: "Lilac", address: "Kirstall", post_code: 'LS? ...', notes: "Very eco", valid_days: [3, 5]}
   ])
 end
