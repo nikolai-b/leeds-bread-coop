@@ -28,7 +28,7 @@ describe DeliveryReport do
         first_delivery = subject.show[0]
         first_delivery_first_item = first_delivery.items[0]
 
-        expect(first_delivery.collection_point.name).to eq('Green Action')
+        expect(first_delivery.collection_point.name).to eq('Green Action Food Coop')
         expect(first_delivery_first_item.subscriber.first_name).to include('Lizzie')
         expect(first_delivery_first_item.bread_type.name).to eq('White Sourdough')
       end

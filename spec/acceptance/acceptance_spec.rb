@@ -52,7 +52,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
     fill_in "Email",      with: 'lizzie@example.com'
     fill_in "Address",    with: 'Somewhere in Leeds'
     fill_in "Phone",      with: '01132222222'
-    select 'Green Action', from: :subscriber_collection_point_id
+    select 'Green Action Food Coop', from: :subscriber_collection_point_id
     select "Wednesday",    from: "Collection day"
     select 'White Sourdough'
     fill_in "Password",   with: 'password'
@@ -94,7 +94,7 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   def get_email
     open_email "lizzie@example.com"
     expect(current_email).to have_content "Somewhere in Leeds"
-    expect(current_email).to have_content "Green Action"
+    expect(current_email).to have_content "Green Action Food Coop"
   end
 
   def fill_with_keys(el, opts)

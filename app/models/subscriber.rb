@@ -121,13 +121,13 @@ class Subscriber < ActiveRecord::Base
     {
       "A" => "Wharf Chambers",
       "B" => "Greenhouse",
-      "C" => "LILAC",
+      "C" => "Lilac",
       "D" => "Fabrication",
-      "E" => "Woodhouse",
-      "F" => "Haley&Cliff",
-      "G" => "Opposite",
+      "E" => "Woodhouse Community Centre",
+      "F" => "Haley & Clifford",
+      "G" => "Opposite (Chapel Allerton)",
       "H" => "Cafe 164",
-      "I" => "Green Action",
+      "I" => "Green Action Food Coop",
     }.freeze
   end
 

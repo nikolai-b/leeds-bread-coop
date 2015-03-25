@@ -1,10 +1,10 @@
 unless (Subscriber.find_by email: 'Leeds Bread Co-op')
   Subscriber.create first_name: 'Leeds', last_name: 'Bread Co-op', email: 'info@leedsbread.coop', phone: '0113 262 5155', collection_point_id: 2, password: 'password', admin: true
 end
-unless (CollectionPoint.find_by name: 'Green Action')
+unless (CollectionPoint.find_by name: 'Green Action Food Coop')
   collection_points = CollectionPoint.create([
-    {name: "Green Action", address: "LUU", post_code: 'LS2 ...', notes: "Nice students", valid_days: [3, 5]},
-    {name: "LILAC", address: "Kirstall", post_code: 'LS? ...', notes: "Very eco", valid_days: [3, 5]}
+    {name: "Green Action Food Coop", address: "LUU", post_code: 'LS2 ...', notes: "Nice students", valid_days: [3, 5]},
+    {name: "Lilac", address: "Kirstall", post_code: 'LS? ...', notes: "Very eco", valid_days: [3, 5]}
   ])
 end
 
@@ -18,9 +18,9 @@ end
   "Wharf Chambers",
   "Greenhouse",
   "Fabrication",
-  "Woodhouse",
-  "Haley&Cliff",
-  "Opposite",
+  "Woodhouse Community Centre",
+  "Haley & Clifford",
+  "Opposite (Chapel Allerton)",
   "Cafe 164"
 ].each {|c| create_collection_point(c) }
 

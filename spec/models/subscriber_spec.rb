@@ -15,7 +15,7 @@ describe Subscriber do
       rachel = described_class.find_by(email: "rachel@test.com")
 
       expect(ursula.bread_types[0].name).to eq('Vollkornbrot (100% rye)')
-      expect(ursula.collection_point.name).to eq('Green Action')
+      expect(ursula.collection_point.name).to eq('Green Action Food Coop')
       expect(ursula.subscriptions[0].collection_day_name).to eq('Wednesday')
 
       expect(rachel.bread_types[0].name).to eq('Weekly Special')
