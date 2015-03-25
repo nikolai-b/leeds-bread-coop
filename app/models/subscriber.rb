@@ -49,7 +49,7 @@ class Subscriber < ActiveRecord::Base
   end
 
   def self.import(file)
-    ActiveRecord::Base.transaction do
+    transaction do
       CSV.foreach(file.path, headers: true) do |row|
 
         email = row["Email"].strip.downcase
@@ -76,6 +76,10 @@ class Subscriber < ActiveRecord::Base
           subscriber.phone = subscriber.phone.slice(0,13)
         elsif phone_length < 10
           subscriber.phone = " "*(10 - phone_length) + subscriber.phone.to_s
+        end
+
+        unless subscriber.valid?
+          raise "Could not save #{subscriber.attributes}"
         end
 
         subscriber.subscriptions.build(
