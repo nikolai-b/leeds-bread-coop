@@ -16,7 +16,7 @@ end
 
 [
   "Wharf Chambers",
-  "Greenhouse",
+  "Opposite (Chapel Allerton)",
   "Fabrication",
   "Woodhouse Community Centre",
   "Haley & Clifford",

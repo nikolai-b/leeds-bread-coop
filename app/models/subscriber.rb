@@ -127,7 +127,7 @@ class Subscriber < ActiveRecord::Base
   def self.csv_collection_point
     {
       "A" => "Wharf Chambers",
-      "B" => "Greenhouse",
+      "B" => "Opposite (Chapel Allerton)",
       "C" => "Lilac",
       "D" => "Fabrication",
       "E" => "Woodhouse Community Centre",
