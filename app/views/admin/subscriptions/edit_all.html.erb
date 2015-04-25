@@ -1,3 +1,5 @@
+<h3> <%= @subscriber.full_name %> </h3>
+
 <%= bootstrap_form_for(@subscriber, as: :subscriptions, url: update_all_admin_subscriber_subscriptions_path(@subscriber), html: { method: :put }) do |f| %>
   <% if @subscriber.errors.any? %>
     <div id="error_explanation">
