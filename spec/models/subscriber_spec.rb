@@ -72,10 +72,10 @@ describe Subscriber do
   it 'has ordered scope' do
     create :subscriber, first_name: 'Aaa1', last_name: 'Zzzzz'
     create :subscriber, first_name: 'Aaa1', last_name: 'Aaaaa'
-    create :subscriber, first_name: 'Zzzz', last_name: 'Aaaaa'
-    expect(described_class.ordered[0].last_name).to eq('Aaaaa')
-    expect(described_class.ordered[1].first_name).to eq('Aaa1')
-    expect(described_class.ordered[2].first_name).to eq('Zzzz')
+    create :subscriber, first_name: 'Xyz', last_name: 'Aaaaa'
+    expect(described_class.ordered[0].first_name).to eq('Aaa1')
+    expect(described_class.ordered[1].first_name).to eq('Xyz')
+    expect(described_class.ordered[2].last_name).to eq('Zzzzz')
   end
 
   it 'has pays with stripe scope' do
@@ -86,6 +86,15 @@ describe Subscriber do
   it 'has pays with stripe scope' do
     create :subscription
     expect(described_class.pays_with_bacs.count).to eq(1)
+  end
+
+  it 'has a search scope' do
+    create :subscriber, first_name: 'FirSt', last_name: 'Last'
+    create :subscriber, first_name: 'Needs', last_name: 'Space'
+    expect(described_class.search('fIrsT lAsT').count).to eq(1)
+    expect(described_class.search('IRs').count).to eq(1)
+    expect(described_class.search('NeedsSpace').count).to eq(0)
+    expect(described_class.search('Needs Space').count).to eq(1)
   end
 
   it 'has a monthly cost' do

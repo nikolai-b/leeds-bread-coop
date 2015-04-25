@@ -3,6 +3,7 @@ class Admin::SubscribersController < Admin::BaseController
   skip_before_action :authenticate_admin, only: [:show]
   has_scope :pays_with_stripe, type: :boolean, default: false
   has_scope :pays_with_bacs, type: :boolean, default: false
+  has_scope :search
 
   def index
     respond_to do |format|

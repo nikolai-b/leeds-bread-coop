@@ -23,10 +23,11 @@ class Subscriber < ActiveRecord::Base
 
   scope :active_on, ->(date) { includes(:holidays, :subscriptions).where('holidays_count = 0 OR DATE(?) NOT BETWEEN holidays.start_date AND holidays.end_date', date).
                                where("subscriptions.paid" => :true).where('subscriptions.collection_day' => date.wday).references(:subscriptions, :holidays) }
-  scope :ordered,          -> { order(:first_name, :last_name) }
+  scope :ordered,          -> { order(:last_name, :first_name) }
   scope :pays_with_stripe, -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].not_eq(nil)) }
   scope :pays_with_bacs,   -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].eq(nil)) }
   scope :not_admin,        -> { where(admin: false) }
+  scope :search, -> (search)  { where("LOWER(CONCAT(first_name, ' ', last_name)) LIKE :s", s: "%#{search.downcase}%") }
 
   def full_name
     "#{first_name} #{last_name}"
