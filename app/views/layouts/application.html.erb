@@ -89,12 +89,14 @@ html.ie #author-info {behavior: url("http://leedsbread.coop/wp-content/themes/sk
       }
     }
   </style>
+  <%= javascript_include_tag "application" %>
+
   <!-- end Responsive Select CSS -->
 
   <!-- Responsive Select JS
 ================================================================ -->
   <script type="text/javascript">
-    jQuery(document).ready( function($){
+    $(document).ready( function($){
         $( '.responsiveMenuSelect' ).change(function() {
           var loc = $(this).find( 'option:selected' ).val();
           if( loc != '' && loc != '#' ) window.location = loc;
@@ -179,7 +181,6 @@ $(function() {
   <%= csrf_meta_tags %>
 
   <%= stylesheet_link_tag "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
 
 
 </head>
