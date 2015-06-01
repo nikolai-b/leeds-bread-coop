@@ -1,36 +1,42 @@
 <h4> Subscriptions </h4>
 <div class="items">
-  <%= f.nested_fields_for :subscriptions do |g| %>
-    <fieldset class="item">
-    <table class="table table-striped">
-      <tbody>
-        <tr>
-          <td class="vert-align">
-            <%= g.collection_select(:bread_type_id, BreadType.for_subscribers, :id, :name, selected: g.object.next_bread_type_id || g.object.bread_type_id ) %>
-          </td>
-          <td class="vert-align">
-            <%= g.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]], selected: g.object.next_collection_day || g.object.collection_day )) %>
-          </td>
-          <td class="vert-align">
-            <% if current_subscriber.try(:admin?) %>
-              <%= g.check_box :paid %>
-            <% end %>
-          </td>
-            <%= g.hidden_field :next_collection_day, value: nil %>
-            <%= g.hidden_field :next_bread_type_id, value: nil %>
-          <td class="vert-align">
-            </br>
-            <a href="#" class="remove btn btn-default btn-default btn-sm btn-danger">remove</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <%= g.hidden_field :_destroy %>
-  </fieldset>
+  <%= f.nested_fields_for :subscriptions, show_empty: true do |g| %>
+    <% if g %>
+      <fieldset class="item">
+        <table class="table table-striped">
+          <tbody>
+            <tr>
+              <td class="vert-align">
+                <%= g.collection_select(:bread_type_id, BreadType.for_subscribers, :id, :name, selected: g.object.next_bread_type_id || g.object.bread_type_id ) %>
+              </td>
+              <td class="vert-align">
+                <%= g.select(:collection_day, options_for_select([['Wednesday', 3], ['Friday', 5]], selected: g.object.next_collection_day || g.object.collection_day )) %>
+              </td>
+              <td class="vert-align">
+                <% if current_subscriber.try(:admin?) %>
+                  <%= g.check_box :paid %>
+                <% end %>
+              </td>
+                <%= g.hidden_field :next_collection_day, value: nil %>
+                <%= g.hidden_field :next_bread_type_id, value: nil %>
+                <%= g.hidden_field :_destroy %>
+                <%= g.hidden_field :id  %>
+              <td class="vert-align">
+                </br>
+                <a href="#" class="remove btn btn-default btn-default btn-sm btn-danger">remove</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </fieldset>
+    <% else %>
+      <p class="empty">No bread subscriptions yet...</p>
+    <% end %>
 <% end %>
 </div>
 <a href="#" class="add btn btn-default btn-xs btn-success">Add bread subscription</a>
 </br>
+
 <script type="text/javascript">
   $(document).ready(function(e) {
     $('form').nestedFields();

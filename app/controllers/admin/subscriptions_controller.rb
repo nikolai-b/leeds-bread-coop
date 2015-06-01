@@ -5,7 +5,7 @@ class Admin::SubscriptionsController < Admin::BaseController
   end
 
   def update_all
-    if @subscriber.update bread_subscriptions_params
+    if params[:subscriptions] && @subscriber.update(bread_subscriptions_params)
       @subscriber.save
       @subscriber.mark_subscriptions_payment_as true
 

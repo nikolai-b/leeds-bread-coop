@@ -19,9 +19,16 @@ describe Admin::SubscriptionsController, type: :controller do
   end
 
   describe 'update_all' do
-    before { put :update_all, subscriptions: {subscriptions_attributes: {"1" => subscription.attributes }}, subscriber_id: subscriber.to_param  }
+    context 'with subscriptions' do
+      before { put :update_all, subscriptions: {subscriptions_attributes: {"1" => subscription.attributes }}, subscriber_id: subscriber.to_param  }
 
-    it { is_expected.to set_the_flash.to(/successfully updated/) }
-    it { is_expected.to redirect_to("/admin/subscribers/#{subscriber.to_param}") }
+      it { is_expected.to set_the_flash.to(/successfully updated/) }
+      it { is_expected.to redirect_to("/admin/subscribers/#{subscriber.to_param}") }
+    end
+    context 'without subscriptions' do
+      before { put :update_all, subscriber_id: subscriber.to_param  }
+
+      it { is_expected.to respond_with(:ok) }
+    end
   end
 end
