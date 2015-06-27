@@ -13,21 +13,19 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin
-    unless current_subscriber.try(:admin?)
-      redirect_to(root_path, :alert => "You need to be in Leeds Bread Co-op to see that page")
+    unless current_subscriber.try :admin?
+      redirect_to(root_path, alert: "You need to be in Leeds Bread Co-op to see that page")
       return
     end
   end
 
   def allowed_subscriber_params
     [:first_name, :last_name, :address, :phone, :collection_point_id, :quantity,
-     :notes, allowed_subscription_params]
+     :notes, subscriptions_attributes: allowed_subscription_params]
   end
 
   def allowed_subscription_params
-    subscription_params = [:bread_type_id, :collection_day, :next_bread_type_id, :next_collection_day, :id, :_destroy]
-    common += [:paid_till] if current_subscriber.admin?
-    { subscriptions_attributes:  }
+    [:bread_type_id, :collection_day, :next_bread_type_id, :next_collection_day, :id, :_destroy]
   end
 
 end

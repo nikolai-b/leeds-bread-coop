@@ -9,4 +9,12 @@ class Admin::BaseController < ApplicationController
       return
     end
   end
+
+  def allowed_subscriber_params
+    super + [:email, :password, :notes]
+  end
+
+  def allowed_subscription_params
+    super + [:paid_till]
+  end
 end

@@ -23,7 +23,7 @@ class Admin::SubscribersController < Admin::BaseController
   end
 
   def create
-    @subscriber = Subscriber.new(subscriber_params)
+    @subscriber = Subscriber.new subscriber_params
 
     if @subscriber.save
       redirect_to [:admin, @subscriber], notice: 'Subscriber was successfully created.'
@@ -64,12 +64,6 @@ class Admin::SubscribersController < Admin::BaseController
   end
 
   def subscriber_params
-    params.require(:subscriber).permit(*add_paid_to_subscriptions)
-  end
-
-  def add_paid_to_subscriptions
-    allowed = allowed_subscriber_params.dup + [:email, :password, :notes]
-    allowed.find{ |i| i.class == Hash && i.keys.include?(:subscriptions_attributes) }[:subscriptions_attributes] << :paid
-    allowed
+    params.require(:subscriber).permit(allowed_subscriber_params)
   end
 end
