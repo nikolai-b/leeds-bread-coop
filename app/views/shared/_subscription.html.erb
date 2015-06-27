@@ -14,7 +14,9 @@
               </td>
               <td class="vert-align">
                 <% if current_subscriber.try(:admin?) %>
-                  <%= g.check_box :paid %>
+                  <div class="paid-till">
+                    <%= g.text_field :paid_till %>
+                  </div>
                 <% end %>
               </td>
                 <%= g.hidden_field :next_collection_day, value: nil %>
@@ -40,6 +42,9 @@
 <script type="text/javascript">
   $(document).ready(function(e) {
     $('form').nestedFields();
+    $('.paid-till input').datepicker({ format: "dd/mm/yyyy",
+      todayBtn: "linked", autoclose: true
+    });
   });
 </script>
 </br>

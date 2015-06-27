@@ -22,7 +22,7 @@ class Subscriber < ActiveRecord::Base
   accepts_nested_attributes_for :subscriptions, allow_destroy: true
 
   scope :active_on, ->(date) { includes(:holidays, :subscriptions).where('holidays_count = 0 OR DATE(?) NOT BETWEEN holidays.start_date AND holidays.end_date', date).
-                               where("subscriptions.paid" => :true).where('subscriptions.collection_day' => date.wday).references(:subscriptions, :holidays) }
+                               where("subscriptions.paid_till >= ?", date).where('subscriptions.collection_day' => date.wday).references(:subscriptions, :holidays) }
   scope :ordered,          -> { order(:last_name, :first_name) }
   scope :pays_with_stripe, -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].not_eq(nil)) }
   scope :pays_with_bacs,   -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].eq(nil)) }
@@ -34,15 +34,15 @@ class Subscriber < ActiveRecord::Base
   end
 
   def num_unpaid_subs
-    subscriptions.where(paid: false).count
+    subscriptions.where('paid_till < ? OR paid_till IS NULL', Date.today).count
   end
 
   def num_paid_subs
-    subscriptions.where(paid: true).count
+    subscriptions.where('paid_till >= ?', Date.today).count
   end
 
   def collection_days
-    subscriptions.map &:collection_day
+    subscriptions.map(&:collection_day)
   end
 
   def pays_with_stripe?
@@ -86,7 +86,7 @@ class Subscriber < ActiveRecord::Base
         subscriber.subscriptions.build(
           bread_type_id: BreadType.find_by( name: csv_bread_type[row["Bread"]] ).id,
           collection_day: csv_collection_day[row['Days']],
-          paid: true
+          paid_till: 4.weeks.from_now
         )
 
         unless subscriber.save
@@ -109,10 +109,6 @@ class Subscriber < ActiveRecord::Base
         ]
       end
     end
-  end
-
-  def mark_subscriptions_payment_as(paid)
-    subscriptions.update_all paid: paid
   end
 
   def monthly_payment

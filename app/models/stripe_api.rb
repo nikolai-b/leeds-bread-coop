@@ -13,12 +13,14 @@ class StripeAPI
     SubscriberNotifier.stripe_dispute(charge)
   end
 
+  after_invoice_payment_succeeded! do |charge, event|
+    after_invoice_payment_succeeded(charge, event)
+  end
+
   class << self
     def after_customer_subscription_deleted(stripe_data, event)
       if subscriber = retrieve_subsciber(stripe_data)
-        subscriber.mark_subscriptions_payment_as false
-        subscriber.save!
-
+        subscriber.subscriptions.update_all(paid_till: nil)
         SubscriberNotifier.new(subscriber).sub_deleted
       end
     end
@@ -27,6 +29,12 @@ class StripeAPI
       if subscriber = retrieve_subsciber(stripe_data)
         invoice = Invoice.new(stripe_data)
         SubscriberNotifier.new(subscriber, invoice).stripe_invoice
+      end
+    end
+
+    def after_invoice_payment_succeeded(stripe_data, event)
+      if subscriber = retrieve_subsciber(stripe_data)
+        subscriber.subscriptions.update_all paid_till: 4.weeks.from_now
       end
     end
 

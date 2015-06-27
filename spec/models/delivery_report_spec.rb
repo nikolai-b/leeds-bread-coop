@@ -10,7 +10,7 @@ describe DeliveryReport do
   before do
     4.times { subscriber = create :subscriber, :with_subscription, collection_point: collection_point, customer_id: stripe_customer.id }
     unpaid_subscriber = create :subscriber, first_name: 'NotPaid', collection_point: collection_point
-    create :subscription, subscriber: unpaid_subscriber, paid: false
+    create :subscription, subscriber: unpaid_subscriber, paid_till: nil
 
     create :subscriber, :on_subscription_holiday, first_name: 'Holiday', collection_point: collection_point
   end
@@ -82,7 +82,7 @@ describe DeliveryReport do
         before do
           subscriber = Subscriber.last
           bread_type = create :bread_type, name: 'Vollkornbrot (100% rye)'
-          create :subscription, bread_type: bread_type, paid: false
+          create :subscription, bread_type: bread_type, paid_till: nil
         end
 
         it "doesn't show the unpaid breads" do

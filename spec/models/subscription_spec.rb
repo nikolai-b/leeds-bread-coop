@@ -28,7 +28,6 @@ describe Subscription do
     it 'checks it changes can be instantly applied' do
       allow(Date).to receive(:today).and_return(mon + 3.days)
 
-      subject.paid = !subject.paid
       expect(subject.instant_change?).to be_truthy
 
       subject.bread_type = create :bread_type

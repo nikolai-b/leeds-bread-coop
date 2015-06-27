@@ -27,8 +27,7 @@
 <% if subscriptions = current_subscriber.subscriptions %>
   <p>
     <strong>Bread subscripts:</strong>
-    <% bread_subs = subscriptions.active.map do |sub_item| %>
-      <% next unless sub_item.paid %>
+    <% bread_subs = subscriptions.not_deferred.paid_untill(Date.today).map do |sub_item| %>
       <% "#{sub_item.bread_type.name} on #{sub_item.collection_day_name}" %>
     <% end %>
     <%= bread_subs.join(', ') %>

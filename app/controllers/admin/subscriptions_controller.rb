@@ -7,8 +7,6 @@ class Admin::SubscriptionsController < Admin::BaseController
   def update_all
     if params[:subscriptions] && @subscriber.update(bread_subscriptions_params)
       @subscriber.save
-      @subscriber.mark_subscriptions_payment_as true
-
       redirect_to [:admin, @subscriber], notice: 'Bread subscription was successfully updated'
     else
       render :edit_all

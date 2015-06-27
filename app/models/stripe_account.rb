@@ -12,9 +12,9 @@ class StripeAccount < ActiveRecord::Base
   end
 
   def cancel(notifier = default_notifier)
-    stripe_customer.subscriptions.each { |s| s.delete() }
+    stripe_customer.subscriptions.each(&:delete) # remote (stripe) subscriptions
+    subscriber.subscriptions.each(&:delete) # local (db) subscriptions
 
-    subscriber.mark_subscriptions_payment_as false
     notifier.sub_deleted
 
     true
@@ -27,10 +27,7 @@ class StripeAccount < ActiveRecord::Base
   def update_stripe
     if stripe_subscription = stripe_customer.subscriptions.first
       stripe_subscription.plan = plan
-      if stripe_subscription.save
-        subscriber.mark_subscriptions_payment_as true
-        return
-      end
+      return stripe_subscription.save
     end
     raise ActiveRecord::Rollback, 'Stripe Customer could not be updated'
   end
@@ -43,9 +40,6 @@ class StripeAccount < ActiveRecord::Base
       update(customer_id: new_stripe_customer.id,
              last4: card.last4, exp_month: card.exp_month,
              exp_year: card.exp_year)
-
-      subscriber.mark_subscriptions_payment_as true
-
       true
     else
       errors.add :base, "Our system is temporarily unable to process credit cards."

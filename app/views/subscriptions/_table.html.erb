@@ -4,6 +4,7 @@
       <th>Bread Type</th>
       <th>Collection Point</th>
       <th>Delivery Day</th>
+      <th>Paid Until</th>
     </tr>
   </thead>
 
@@ -13,6 +14,7 @@
         <td><%= subscription.bread_type.name %></td>
         <td><%= current_subscriber.collection_point.name %></td>
         <td><%= subscription.collection_day_name %></td>
+        <td><%= subscription.paid_till %></td>
       </tr>
     <% end %>
   </tbody>

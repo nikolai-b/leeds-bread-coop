@@ -3,6 +3,6 @@ FactoryGirl.define do
     bread_type
     subscriber
     collection_day 5
-    paid true
+    paid_till { 1.year.from_now }
   end
 end

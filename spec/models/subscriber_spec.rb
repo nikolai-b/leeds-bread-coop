@@ -27,7 +27,7 @@ describe Subscriber do
   context "with subscriber items" do
     before do
       4.times {create :subscription, subscriber: subject}
-      create :subscription, subscriber: subject, paid: false
+      create :subscription, subscriber: subject, paid_till: nil
     end
 
     it "returns the num paid subscriber items" do
@@ -63,7 +63,7 @@ describe Subscriber do
       end
 
       it 'excludes unpaid subscribers' do
-        subject.subscriptions[0].update_attribute :paid, false
+        subject.subscriptions[0].update_attribute :paid_till, Date.yesterday
         expect(described_class.active_on(Date.tomorrow.beginning_of_week + 18.days).count).to eq 0
       end
     end
@@ -99,7 +99,7 @@ describe Subscriber do
 
   it 'has a monthly cost' do
     expect(subject.monthly_payment).to eq(0)
-    create :subscription, subscriber: subject, paid: true
+    create :subscription, subscriber: subject
     subject.reload
     expect(subject.monthly_payment).to eq(10)
   end

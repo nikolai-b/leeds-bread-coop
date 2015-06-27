@@ -10,8 +10,6 @@ class SubscriptionsController < ApplicationController
   def update_all
     if current_subscriber.update bread_subscriptions_params
       current_subscriber.save
-      current_subscriber.mark_subscriptions_payment_as true
-
       redirect_to current_subscriber, notice: 'Bread subscription was successfully updated'
     else
       render :edit_all
