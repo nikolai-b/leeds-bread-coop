@@ -68,7 +68,7 @@ class Admin::SubscribersController < Admin::BaseController
   end
 
   def add_paid_to_subscriptions
-    allowed = allowed_subscriber_parms.dup + [:email, :password, :notes]
+    allowed = allowed_subscriber_params.dup + [:email, :password, :notes]
     allowed.find{ |i| i.class == Hash && i.keys.include?(:subscriptions_attributes) }[:subscriptions_attributes] << :paid
     allowed
   end

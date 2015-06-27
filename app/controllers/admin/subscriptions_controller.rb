@@ -22,6 +22,6 @@ class Admin::SubscriptionsController < Admin::BaseController
   end
 
   def bread_subscriptions_params
-    params.require(:subscriptions).permit(allowed_subscriber_parms)
+    params.require(:subscriptions).permit(allowed_subscriber_params)
   end
 end
