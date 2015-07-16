@@ -10,5 +10,5 @@
   <%= @holiday.end_date.strftime("%d/%m/%y") %>
 </p>
 
-<%= link_to 'Edit', [:admin, @subscriber, @holiday] %> |
+<%= link_to 'Edit', edit_admin_subscriber_holiday_path(@subscriber, @holiday) %> |
 <%= link_to 'Back', admin_subscriber_holidays_path(@subscriber) %>

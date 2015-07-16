@@ -19,16 +19,24 @@ class Admin::HolidaysController < Admin::BaseController
   def create
     @holiday = Holiday.new(holiday_params.merge(subscriber: @subscriber))
 
-    if @holiday.save
-      redirect_to [:admin, @subscriber, @holiday], notice: 'Holiday was successfully created.'
+    if @holiday.save_as_admin
+      if @holiday.valid?
+        redirect_to [:admin, @subscriber, @holiday], notice: 'Holiday was successfully created.'
+      else
+        redirect_to [:admin, @subscriber, @holiday], flash: {warning: "Holiday created with warning: #{@holiday.errors.full_messages.join}"}
+      end
     else
       render :new
     end
   end
 
   def update
-    if @holiday.update(holiday_params)
-      redirect_to [:admin, @subscriber, @holiday], notice: 'Holiday was successfully updated.'
+    if @holiday.update_as_admin(holiday_params)
+      if @holiday.valid?
+        redirect_to [:admin, @subscriber, @holiday], notice: 'Holiday was successfully updated.'
+      else
+        redirect_to [:admin, @subscriber, @holiday], flash: {warning: "Holiday updated with warning: #{@holiday.errors.full_messages.join}"}
+      end
     else
       render :edit
     end

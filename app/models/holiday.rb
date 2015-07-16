@@ -3,16 +3,24 @@ class Holiday < ActiveRecord::Base
 
   validates :start_date, :end_date, :subscriber, presence: true
   validate :not_overlapping
-  validate :not_in_the_past
+  validate :start_date_not_in_the_past 
+  validate :end_date_not_in_the_past
   validate :end_date_after_start_date
-  validate :start_date_too_close
+  validate :start_date_too_close 
 
   scope :in_last_week, ->{ t = Date.today; where(end_date: (t-6.days..t)) }
-
 
   def will_miss
     subscriber_collection_days = subscriber.collection_days
     (start_date..end_date).select{ |k| subscriber_collection_days.include?(k.wday) }.size
+  end
+
+  def save_as_admin
+    as_admin { save }
+  end
+
+  def update_as_admin(attrs)
+    as_admin { update(attrs) }
   end
 
   private
@@ -29,9 +37,17 @@ class Holiday < ActiveRecord::Base
     end
   end
 
-  def not_in_the_past
-    return unless start_date
-    errors.add :start_date, 'is in the past' if start_date < Date.current
+  def start_date_not_in_the_past
+    not_in_the_past(:start_date) unless instance_variable_defined?(:@admin)
+  end
+
+  def end_date_not_in_the_past
+    not_in_the_past(:end_date)
+  end
+
+  def not_in_the_past(date)
+    return unless self.send date
+    errors.add date, 'is in the past' if self.send(date) < Date.current
   end
 
   def end_date_after_start_date
@@ -40,7 +56,14 @@ class Holiday < ActiveRecord::Base
   end
 
   def start_date_too_close
-    return unless start_date
+    return if !start_date || instance_variable_defined?(:@admin)
     errors.add :start_date, 'is too close and your bread has been started' if start_date < Date.current + 3.days
+  end
+
+  def as_admin
+    @admin = true
+    to_return = yield
+    remove_instance_variable(:@admin)
+    to_return
   end
 end

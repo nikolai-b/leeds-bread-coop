@@ -39,12 +39,26 @@ describe Admin::HolidaysController, type: :controller do
     it { is_expected.to set_the_flash.to(/successfully created/) }
   end
 
+  describe 'create with warning' do
+    before { post :create, holiday: new_holiday.attributes.merge(start_date: Date.tomorrow), subscriber_id: subscriber.id }
+    it { is_expected.to set_the_flash.to(/with warning: Start date is/) }
+  end
+
   describe 'update' do
     before { put :update, id: holiday.to_param,
              holiday: holiday.attributes.merge(end_date: (Date.today + 40.days)),
              subscriber_id: subscriber.id}
 
     it { is_expected.to redirect_to("/admin/subscribers/#{subscriber.id}/holidays/#{holiday.to_param}") }
+  end
+
+  describe 'update with warning' do
+    before { put :update, id: holiday.to_param,
+             holiday: holiday.attributes.merge(start_date: Date.tomorrow, end_date: (Date.today + 40.days)),
+             subscriber_id: subscriber.id}
+
+    it { is_expected.to redirect_to("/admin/subscribers/#{subscriber.id}/holidays/#{holiday.to_param}") }
+    it { is_expected.to set_the_flash.to(/with warning: Start date is/) }
   end
 
   describe 'new' do
