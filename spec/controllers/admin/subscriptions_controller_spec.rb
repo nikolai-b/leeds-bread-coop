@@ -1,4 +1,5 @@
 describe Admin::SubscriptionsController, type: :controller do
+
   before do
     warden.set_user admin
   end
@@ -20,7 +21,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
   describe 'update_all' do
     context 'with subscriptions' do
-      before { put :update_all, subscriptions: {subscriptions_attributes: {"1" => subscription.attributes }}, subscriber_id: subscriber.to_param  }
+      before { put :update_all, subscriptions: {subscription_attributes: {"1437125740314" => subscription.attributes }}, subscriber_id: subscriber.to_param  }
 
       it { is_expected.to set_the_flash.to(/successfully updated/) }
       it { is_expected.to redirect_to("/admin/subscribers/#{subscriber.to_param}") }

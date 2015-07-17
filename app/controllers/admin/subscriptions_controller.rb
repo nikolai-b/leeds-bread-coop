@@ -5,7 +5,7 @@ class Admin::SubscriptionsController < Admin::BaseController
   end
 
   def update_all
-    if params[:subscriptions] && @subscriber.update(bread_subscriptions_params)
+    if params[:subscriptions] && @subscriber.update(bread_params_with_admin)
       @subscriber.save
       redirect_to [:admin, @subscriber], notice: 'Bread subscription was successfully updated'
     else
@@ -21,5 +21,11 @@ class Admin::SubscriptionsController < Admin::BaseController
 
   def bread_subscriptions_params
     params.require(:subscriptions).permit(allowed_subscriber_params)
+  end
+
+  def bread_params_with_admin
+    bread_params_with_admin = bread_subscriptions_params.dup
+    bread_params_with_admin[:subscriptions_attributes].each { |k, v| v.merge! as_admin: true } if bread_params_with_admin[:subscriptions_attributes]
+    bread_params_with_admin
   end
 end

@@ -1,9 +1,9 @@
 class Subscription < ActiveRecord::Base
-  belongs_to :subscriber
+  belongs_to :subscriber, inverse_of: :subscriptions
   belongs_to :bread_type
   belongs_to :next_bread_type, class: BreadType
 
-  validates :bread_type, presence: true
+  validates :bread_type, :subscriber, presence: true
   validate  :bread_type_for_subscribers
   validate  :collection_day_for_subscribers
 
@@ -12,12 +12,14 @@ class Subscription < ActiveRecord::Base
   scope :not_deferred, ->       { where.not(collection_day: nil) }
   scope :paid_untill,  ->(date) { where('paid_till > ?', date ) }
 
-  before_save    :defer_changes
-  before_create  :update_stripe
-  before_destroy :update_stripe
+  before_validation :defer_changes
+  before_create     :update_stripe
+  before_destroy    :update_stripe
+
+  attr_accessor :as_admin
 
   def self.apply_defered_changes!
-    where.not(next_collection_day: nil).find_each &:apply_defered_changes!
+    where.not(next_collection_day: nil).find_each(&:apply_defered_changes!)
   end
 
   def collection_day_name
@@ -46,7 +48,7 @@ class Subscription < ActiveRecord::Base
   private
 
   def defer_changes
-    return if instant_change? || self.class.defer_changes_off?
+    return if instant_change? || self.class.defer_changes_off? || as_admin
     self.next_bread_type_id = bread_type_id
     self.bread_type_id = bread_type_id_was
     self.next_collection_day = collection_day

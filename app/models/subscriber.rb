@@ -14,7 +14,7 @@ class Subscriber < ActiveRecord::Base
   belongs_to :collection_point
   has_many :holidays, dependent: :destroy
   has_many :bread_types, through: :subscriptions
-  has_many :subscriptions, dependent: :destroy
+  has_many :subscriptions, inverse_of: :subscriber, dependent: :destroy
   has_one :stripe_account, dependent: :destroy
 
   before_destroy :cancel_stripe

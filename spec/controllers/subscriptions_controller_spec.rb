@@ -4,6 +4,7 @@ describe SubscriptionsController, type: :controller do
 
   before do
     warden.set_user subscriber
+    Stripe::Plan.create(id: 'weekly-bread-2', amount: 2000, name: 'weekly-sub_2', currency: 'GBP', interval: 4)
   end
 
   describe 'routing' do

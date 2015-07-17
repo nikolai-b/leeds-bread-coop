@@ -43,13 +43,37 @@ describe Subscription do
       expect(subject.instant_change?).to be_falsey
     end
 
-    it 'defers changes that that cannot be applied instantly' do
-      allow(described_class).to receive(:defer_changes_off?).and_return(false)
-      allow(Date).to receive(:today).and_return(mon)
-      subject.update! collection_day: 3
 
-      expect(subject.next_collection_day).to eq(3)
-      expect(subject.collection_day).to eq(5)
+    context 'with deffered changes in real mode' do
+      before do
+        allow(described_class).to receive(:defer_changes_off?).and_return(false)
+      end
+
+      let(:subscriber) { subject.subscriber }
+
+      it 'defers changes that that cannot be applied instantly' do
+        allow(Date).to receive(:today).and_return(mon)
+        subject.update! collection_day: 3
+
+        expect(subject.next_collection_day).to eq(3)
+        expect(subject.collection_day).to eq(5)
+      end
+
+      it 'as admin skips checks for instant changes' do
+        allow(Date).to receive(:today).and_return(mon)
+
+        subscriber.update( {subscriptions_attributes:
+                           {"1437125740314" => subject.attributes.merge(collection_day: 3) }})
+        subscriber.reload
+
+        expect(subscriber.subscriptions.map(&:collection_day)).to_not include(3)
+
+        subscriber.update( {subscriptions_attributes:
+                           {"1437125740314" => subject.attributes.merge(as_admin: true, collection_day: 3) }})
+        subscriber.reload
+
+        expect(subscriber.subscriptions.map(&:collection_day)).to include(3)
+      end
     end
 
     context 'with defered changes' do
