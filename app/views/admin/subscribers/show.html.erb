@@ -38,7 +38,7 @@
       <strong>Changes next week:</strong>
       <% bread_subs = changed_subscriptions.map do |sub_item| %>
         <% now = sub_item.collection_day ? "#{sub_item.bread_type.name} on #{sub_item.collection_day_name} becomes" : "a new subscription of"  %>
-        <% "#{now} #{sub_item.next_bread_type.name} on #{sub_item.next_collection_day_name}" %>
+        <% "#{now} #{sub_item.next_bread_type.name} on #{sub_item.collection_day_name}" %>
       <% end %>
       <%= bread_subs.join(', ') %>
     </p>

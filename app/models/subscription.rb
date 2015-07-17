@@ -22,12 +22,20 @@ class Subscription < ActiveRecord::Base
     where.not(next_collection_day: nil).find_each(&:apply_defered_changes!)
   end
 
+  def now_or_next_collection_day
+    collection_day || next_collection_day
+  end
+
+  def now_or_next_bread_type
+    bread_type || next_bread_type
+  end
+
   def collection_day_name
-    Date::DAYNAMES[collection_day]
+    Date::DAYNAMES[now_or_next_collection_day]
   end
 
   def next_collection_day_name
-    Date::DAYNAMES[next_collection_day]
+    Date::DAYNAMES[now_or_next_collection_day]
   end
 
   def instant_change?

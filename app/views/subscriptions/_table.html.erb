@@ -11,7 +11,7 @@
   <tbody>
     <% current_subscriber.subscriptions.try(:each) do |subscription| %>
       <tr>
-        <td><%= subscription.bread_type.name %></td>
+        <td><%= subscription.now_or_next_bread_type.name %></td>
         <td><%= current_subscriber.collection_point.name %></td>
         <td><%= subscription.collection_day_name %></td>
         <td><%= subscription.paid_till %></td>
