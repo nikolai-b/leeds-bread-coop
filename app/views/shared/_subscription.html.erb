@@ -43,7 +43,7 @@
   $(document).ready(function(e) {
     $('form').nestedFields();
     $('.paid-till input').datepicker({ format: "dd/mm/yyyy",
-      todayBtn: "linked", autoclose: true
+      todayBtn: "linked", autoclose: true, startDate: new Date()
     });
   });
 </script>
