@@ -26,13 +26,13 @@
   <thead>
     <tr>
       <th>Wholesale Customer</th>
+      <th>Bread Type</th>
+      <th>Quantity</th>
       <th>Order Notes</th>
       <th>Invoiced</th>
       <th>Regular</th>
       <th>Sample</th>
       <th>Delivery Receipt</th>
-      <th>Bread Type</th>
-      <th>Quantity</th>
     </tr>
   </thead>
 
@@ -40,6 +40,8 @@
     <% @delivery_report.wholesale_show.try(:each) do |wholesale| %>
       <tr>
         <td><strong><%= link_to wholesale.wholesale_customer.name, admin_wholesale_customer_order_path(wholesale.wholesale_customer, wholesale.order) %></strong></td>
+        <td></td>
+        <td></td>
         <td><%= wholesale.order.note %></td>
         <td><%= wholesale.order.invoiced ? 'Y' : 'N' %></td>
         <td><%= wholesale.order.regular ? 'Y' : 'N' %></td>
@@ -48,12 +50,7 @@
       </tr>
       <% wholesale.items.try(:each) do |item| %>
         <tr>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-          <td> </td>
+          <td></td>
           <td><%= item.bread_type.name %></td>
           <td><%= item.quantity %></td>
       </tr>
