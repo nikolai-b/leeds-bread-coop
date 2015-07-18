@@ -7,7 +7,7 @@ class DeliveryReport
   def show
     collection_points = CollectionPoint.includes(subscribers: {subscriptions: :bread_type})
 
-    collection_points.map do |collection_point|
+    collection_points.ordered.map do |collection_point|
       deliverys_at_collection_point = collection_point.subscribers.active_on(@date).flat_map do |subscriber|
         subscriber.subscriptions.map do |sub_item|
           BreadDeliveryItem.new(subscriber: subscriber, bread_type: sub_item.bread_type)
@@ -18,8 +18,8 @@ class DeliveryReport
   end
 
   def wholesale_show
-    Order.all.where(date: @date).map do |order|
-      items = order.line_items.map do |line_item|
+    Order.where(date: @date).includes(:line_items, :wholesale_customer).order('wholesale_customers.name ASC').references(:wholesale_customer).map do |order|
+      items = order.line_items.ordered.map do |line_item|
         WholesaleDeliveryItem.new(bread_type: line_item.bread_type, quantity: line_item.quantity)
       end
       WholesaleDelivery.new(wholesale_customer: order.wholesale_customer, items: items, order: order)
@@ -55,7 +55,7 @@ class DeliveryReport
       csv << ["Drop-off", "Name", "Bread"]
       show.try(:each) do |delivery|
         delivery.items.each do |item|
-          csv << [delivery.collection_point.name, item.subscriber.full_name.humanize, item.bread_type.name, @date]
+          csv << [delivery.collection_point.name, item.subscriber.full_name, item.bread_type.name, @date]
         end
       end
     end

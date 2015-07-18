@@ -52,7 +52,7 @@ class ProductionReport
 
 
   def bread_type
-    @bread_types ||= BreadType.all
+    @bread_types ||= BreadType.ordered
   end
 
   class BreadProduction

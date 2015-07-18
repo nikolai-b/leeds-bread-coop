@@ -75,7 +75,9 @@ describe DeliveryReport do
 
       it "outputs a csv with subscriber info" do
         csv = CSV.parse(subject.to_csv)
-        expect(csv[8]).to eq([nil, "Lizzie Surname", "White Sourdough"])
+        expect(csv[8]).to include("Lizzie Surname")
+        expect(csv[8]).to include("White Sourdough")
+        expect(csv[8]).to include("Green Action Food Co-op")
       end
 
       context 'a subscriber with more bread_types than paid subs' do
