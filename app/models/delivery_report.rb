@@ -52,10 +52,8 @@ class DeliveryReport
 
       csv << ["Drop-off", "Name", "Bread"]
       show.try(:each) do |delivery|
-        csv << [delivery.collection_point.name, nil, nil]
-
         delivery.items.each do |item|
-          csv << [nil, item.subscriber.full_name, item.bread_type.name]
+          csv << [delivery.collection_point.name, item.subscriber.full_name, item.bread_type.name, @date]
         end
       end
     end
