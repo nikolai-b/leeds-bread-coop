@@ -5,6 +5,7 @@ class Order < ActiveRecord::Base
   has_many :bread_types, through: :line_items
   scope :future, -> { where('date >= ?', Date.today) }
   scope :ordered, -> { order(date: :asc) }
+  validates :date, presence: true
 
   def self.copy_regular_orders
     includes(:line_items).where(regular: true).where(date: (Date.today + 14.days)..(Date.today + 20.days) ).each do |order|
