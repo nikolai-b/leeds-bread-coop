@@ -22,10 +22,12 @@
           <%= link_to wholesale_customer.name, admin_wholesale_customer_path(wholesale_customer) %>
         </td>
         <td>
-          <%= link_to "New Order", new_admin_wholesale_customer_order_path(wholesale_customer), class: "btn btn-default btn-xs"; %>
-          <%= link_to 'Show orders', admin_wholesale_customer_orders_path(wholesale_customer),  class: 'btn btn-default btn-xs' %>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_wholesale_customer_path(wholesale_customer), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")), admin_wholesale_customer_path(wholesale_customer), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-default btn-xs btn-danger' %>
+          <div class='btn-group'>
+            <%= link_to "New Order", new_admin_wholesale_customer_order_path(wholesale_customer), class: "btn btn-default btn-xs"; %>
+            <%= link_to 'Show orders', admin_wholesale_customer_orders_path(wholesale_customer),  class: 'btn btn-default btn-xs' %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_wholesale_customer_path(wholesale_customer), :class => 'btn btn-default btn-xs' %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")), admin_wholesale_customer_path(wholesale_customer), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-default btn-xs btn-danger' %>
+          </div>
         </td>
       </tr>
     <% end %>
