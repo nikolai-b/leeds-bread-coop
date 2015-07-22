@@ -12,7 +12,7 @@ class Subscription < ActiveRecord::Base
   scope :not_deferred, ->       { where.not(collection_day: nil) }
   scope :paid_untill,  ->(date) { where('paid_till > ?', date ) }
 
-  before_validation :defer_changes
+  before_save       :defer_changes
   before_create     :update_stripe
   before_destroy    :update_stripe
 

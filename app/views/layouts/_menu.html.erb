@@ -19,7 +19,7 @@
 <% end %>
 <% if admin?%>
   <li class="menu-item menu-item-type-post_type menu-item-object-page">
-    <%= link_to 'Subscribers', admin_subscribers_path %>
+    <%= link_to 'Subscribers', admin_subscribers_path(pays_with: :bacs) %>
   </li>
   <li class="menu-item menu-item-type-post_type menu-item-object-page">
     <%= link_to 'Collection Points', admin_collection_points_path %>

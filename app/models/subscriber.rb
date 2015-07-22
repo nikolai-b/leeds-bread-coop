@@ -40,10 +40,9 @@ class Subscriber < ActiveRecord::Base
   scope :pays_with_so,        -> { pays_without_stripe.where(payment_type_id: 1) }
   scope :not_admin,           -> { where(admin: false) }
   scope :search,              -> (search)  { where("LOWER(CONCAT(first_name, ' ', last_name)) LIKE :s", s: "%#{search.downcase}%") }
-
+  scope :paid_till_order,     -> { includes(:subscriptions).reorder("subscriptions.paid_till ASC").references(:subscriptions) }
 
   class << self
-
     def pays_with(type)
       if type.in? %w(stripe bacs so)
         send("pays_with_#{type}")

@@ -1,8 +1,9 @@
 class Admin::SubscribersController < Admin::BaseController
   before_action :set_subscriber, only: [:edit_all, :update_all, :show, :edit, :update, :destroy]
   skip_before_action :authenticate_admin, only: [:show]
-  has_scope :pays_with, default: false
+  has_scope :pays_with
   has_scope :search
+  has_scope :paid_till_order, type: :boolean
 
   def index
     respond_to do |format|
