@@ -7,9 +7,8 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>
-        <%= model_class.human_attribute_name(:name) %>
-      </th>
+      <th> <%= model_class.human_attribute_name(:name) %> </th>
+      <th> Invoice Type </th>
       <th>
         <%= t '.actions', :default => t("helpers.actions") %>
       </th>
@@ -20,6 +19,9 @@
       <tr>
         <td>
           <%= link_to wholesale_customer.name, admin_wholesale_customer_path(wholesale_customer) %>
+        </td>
+        <td>
+          <%= wholesale_customer.invoice_type %>
         </td>
         <td>
           <div class='btn-group'>

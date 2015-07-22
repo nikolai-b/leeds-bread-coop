@@ -83,9 +83,14 @@ describe Subscriber do
     expect(described_class.pays_with_stripe.count).to eq(1)
   end
 
-  it 'has pays with stripe scope' do
-    create :subscription
+  it 'has pays with BACS scope' do
+    create :subscriber, payment_type_id: 2
     expect(described_class.pays_with_bacs.count).to eq(1)
+  end
+
+  it 'has pays with SO scope' do
+    create :subscriber, payment_type_id: 1
+    expect(described_class.pays_with_so.count).to eq(1)
   end
 
   it 'has a search scope' do

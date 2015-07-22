@@ -35,7 +35,7 @@ class DeliveryReport
           nil,
           nil,
           delivery.order.note,
-          delivery.order.invoiced                      ? 'T' : 'F',
+          delivery.wholesale_customer.invoice_type,
           delivery.order.regular                       ? 'T' : 'F',
           delivery.order.sample                        ? 'T' : 'F',
           delivery.wholesale_customer.delivery_receipt ? 'T' : 'F',

@@ -10,7 +10,6 @@
     <tr>
       <th>Date</th>
       <th>Items</th>
-      <th>Invoiced</th>
       <th>Regular</th>
       <th>Sample</th>
       <th></th>
@@ -22,7 +21,6 @@
       <tr>
         <td><%= link_to order.date.strftime("%d/%m/%y"), [:admin, @wholesale_customer, order] %></td>
         <td><%= order.line_items.ordered.map{|li| "#{li.quantity}x#{li.bread_type.name}" }.join('</br>').html_safe %></td>
-        <td><%= order.invoiced %></td>
         <td><%= order.regular %></td>
         <td><%= order.sample %></td>
         <td>

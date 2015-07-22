@@ -4,6 +4,7 @@
     <%= f.text_field :phone %>
     <%= f.time_select :opening_time %>
     <%= f.check_box :delivery_receipt %>
+    <%= f.collection_select(:invoice_type_id, WholesaleCustomer.invoice_types.values, :id, :name) %>
     <% button_label = @wholesale_customer.persisted? ? "Update" : "Create" %>
     <%= f.submit button_label, class: "btn btn-default btn-success" %>
 <% end %>

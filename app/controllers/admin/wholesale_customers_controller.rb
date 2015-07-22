@@ -38,6 +38,6 @@ class Admin::WholesaleCustomersController < Admin::BaseController
     end
 
     def wholesale_customer_params
-      params.require(:wholesale_customer).permit(:name, :address, :phone, :opening_time, :delivery_receipt)
+      params.require(:wholesale_customer).permit(:name, :address, :phone, :opening_time, :delivery_receipt, :invoice_type_id)
     end
 end

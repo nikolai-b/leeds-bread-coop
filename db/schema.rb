@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150627104054) do
+ActiveRecord::Schema.define(version: 20150722173541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,7 +68,6 @@ ActiveRecord::Schema.define(version: 20150627104054) do
   create_table "orders", force: true do |t|
     t.integer  "wholesale_customer_id"
     t.date     "date"
-    t.boolean  "invoiced",              default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "regular",               default: true
@@ -116,6 +115,7 @@ ActiveRecord::Schema.define(version: 20150627104054) do
     t.integer  "holidays_count",            default: 0,     null: false
     t.string   "last_name"
     t.text     "notes"
+    t.integer  "payment_type_id"
   end
 
   add_index "subscribers", ["collection_point_id"], name: "index_subscribers_on_collection_point_id", using: :btree
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 20150627104054) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "delivery_receipt", default: false
+    t.integer  "invoice_type_id"
   end
 
 end
