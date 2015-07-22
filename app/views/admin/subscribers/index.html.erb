@@ -5,13 +5,23 @@
   </h1>
 </div>
 
-<div class="btn-group">
-  <%= link_to 'Pays with Stripe', params.merge(pays_with_stripe: true, pays_with_bacs: false, page: 1), class: "btn btn-default" %>
-  <%= link_to 'Pays with BACS', params.merge(pays_with_stripe: false, pays_with_bacs: true, page: 1), class: "btn btn-default" %>
-  <%= link_to 'All', params.merge(pays_with_stripe: false, pays_with_bacs: false), class: "btn btn-default" %>
-</div>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="btn-group">
+      <%= link_to 'Stripe', params.merge(pays_with: :stripe, page: 1), class: "btn btn-default navbar-btn" %>
+      <%= link_to 'BACS', params.merge(pays_with: :bacs, page: 1), class: "btn btn-default navbar-btn" %>
+      <%= link_to 'Standing Order', params.merge(pays_with: :so, page: 1), class: "btn btn-default navbar-btn" %>
+      <%= link_to 'All', params.merge(pays_with: false), class: "btn btn-default navbar-btn" %>
+    </div>
 
-</br>
+    <div class="navbar-right">
+      <%= bootstrap_form_tag(url: admin_subscribers_path, method: :get) do %>
+          <%= text_field_tag :search, params[:search] %>
+          <%= submit_tag "Search", :name => nil, class: "btn btn-default navbar-btn" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
 
 <%= bootstrap_form_tag(url: admin_subscribers_path, method: :get) do %>
   <%= text_field_tag :search, params[:search] %>

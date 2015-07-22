@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
   def allowed_subscriber_params
     [:first_name, :last_name, :address, :phone, :collection_point_id, :quantity,
-     :notes, subscriptions_attributes: allowed_subscription_params]
+     subscriptions_attributes: allowed_subscription_params]
   end
 
   def allowed_subscription_params

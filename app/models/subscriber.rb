@@ -5,11 +5,21 @@ class Subscriber < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
+  class_attribute :payment_types
+
+  PaymentType = Struct.new(:id, :name)
+
+  self.payment_types = [
+    PaymentType.new(1, 'Standing Order'),
+    PaymentType.new(2, 'BACS'),
+  ].index_by(&:id).freeze
+
   validates :collection_point, presence: true
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
   validates :first_name, length: {minimum: 3}
   validates :last_name, length: {minimum: 2}
   validates :phone, length: {in: 10..13}
+  validates :payment_type_id, inclusion: { in: payment_types.keys, allow_blank: true }
 
   belongs_to :collection_point
   has_many :holidays, dependent: :destroy
@@ -23,11 +33,25 @@ class Subscriber < ActiveRecord::Base
 
   scope :active_on, ->(date) { includes(:holidays, :subscriptions).where('holidays_count = 0 OR DATE(?) NOT BETWEEN holidays.start_date AND holidays.end_date', date).
                                where("subscriptions.paid_till >= ?", date).where('subscriptions.collection_day' => date.wday).references(:subscriptions, :holidays) }
-  scope :ordered,          -> { order(:last_name, :first_name) }
-  scope :pays_with_stripe, -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].not_eq(nil)) }
-  scope :pays_with_bacs,   -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].eq(nil)) }
-  scope :not_admin,        -> { where(admin: false) }
-  scope :search, -> (search)  { where("LOWER(CONCAT(first_name, ' ', last_name)) LIKE :s", s: "%#{search.downcase}%") }
+  scope :ordered,             -> { order(:last_name, :first_name) }
+  scope :pays_with_stripe,    -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].not_eq(nil)) }
+  scope :pays_without_stripe, -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].eq(nil)) }
+  scope :pays_with_bacs,      -> { pays_without_stripe.where(payment_type_id: 2) }
+  scope :pays_with_so,        -> { pays_without_stripe.where(payment_type_id: 1) }
+  scope :not_admin,           -> { where(admin: false) }
+  scope :search,              -> (search)  { where("LOWER(CONCAT(first_name, ' ', last_name)) LIKE :s", s: "%#{search.downcase}%") }
+
+
+  class << self
+
+    def pays_with(type)
+      if type.in? %w(stripe bacs so)
+        send("pays_with_#{type}")
+      else
+        all
+      end
+    end
+  end
 
   def full_name
     "#{first_name} #{last_name}"
@@ -47,6 +71,16 @@ class Subscriber < ActiveRecord::Base
 
   def pays_with_stripe?
     stripe_account.try(:customer_id).present?
+  end
+
+  def payment_type
+    if stripe_account.try(:customer_id).present?
+      PaymentType.new(3, 'Stripe')
+    elsif payment_type_id
+      payment_types[payment_type_id]
+    else
+      PaymentType.new(4, 'Unknown')
+    end
   end
 
   def self.import(file)
@@ -98,14 +132,14 @@ class Subscriber < ActiveRecord::Base
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
-      csv << ['Name', 'Collection point', 'Email', 'Phone', '(S)tripe or (B)ACS']
+      csv << ['Name', 'Collection point', 'Email', 'Phone', 'Payment Type']
       all.ordered.find_each do |subscriber|
         csv << [
           subscriber.full_name,
           subscriber.collection_point.name,
           subscriber.email,
           subscriber.phone,
-          subscriber.pays_with_stripe? ? 'S' : 'B',
+          subscriber.payment_type,
         ]
       end
     end

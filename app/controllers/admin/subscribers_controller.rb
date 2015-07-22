@@ -1,8 +1,7 @@
 class Admin::SubscribersController < Admin::BaseController
   before_action :set_subscriber, only: [:edit_all, :update_all, :show, :edit, :update, :destroy]
   skip_before_action :authenticate_admin, only: [:show]
-  has_scope :pays_with_stripe, type: :boolean, default: false
-  has_scope :pays_with_bacs, type: :boolean, default: false
+  has_scope :pays_with, default: false
   has_scope :search
 
   def index

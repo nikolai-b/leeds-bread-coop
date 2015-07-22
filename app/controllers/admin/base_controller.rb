@@ -11,7 +11,7 @@ class Admin::BaseController < ApplicationController
   end
 
   def allowed_subscriber_params
-    super + [:email, :password, :notes]
+    super + [:email, :password, :notes, :payment_type_id]
   end
 
   def allowed_subscription_params
