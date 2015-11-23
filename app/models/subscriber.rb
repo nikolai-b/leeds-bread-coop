@@ -179,8 +179,8 @@ class Subscriber < ActiveRecord::Base
 
   def self.csv_collection_day
     {
-      "Wed" => 3,
-      "Fri" => 5,
+      "Tue" => 2,
+      "Thu" => 4,
     }.freeze
   end
 end

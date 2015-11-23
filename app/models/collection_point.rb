@@ -13,7 +13,7 @@ class CollectionPoint < ActiveRecord::Base
   private
 
   def valid_days_in_weekdays
-    errors.add(:valid_days, 'must be Wed or Fri') unless valid_days.reject(&:blank?).all? {|vd| vd == 5 || vd == 3 }
+    errors.add(:valid_days, 'must be Tue or Thu') unless valid_days.reject(&:blank?).all? {|vd| vd == 4 || vd == 2 }
   end
 
   def normalize_valid_days

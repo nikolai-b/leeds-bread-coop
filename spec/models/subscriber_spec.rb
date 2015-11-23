@@ -16,11 +16,11 @@ describe Subscriber do
 
       expect(ursula.bread_types[0].name).to eq('Vollkornbrot (100% rye)')
       expect(ursula.collection_point.name).to eq('Green Action Food Co-op')
-      expect(ursula.subscriptions[0].collection_day_name).to eq('Wednesday')
+      expect(ursula.subscriptions[0].collection_day_name).to eq('Tuesday')
 
       expect(rachel.bread_types[0].name).to eq('Weekly Special')
       expect(rachel.collection_point.name).to eq('Fabrication')
-      expect(rachel.subscriptions[0].collection_day_name).to eq('Friday')
+      expect(rachel.subscriptions[0].collection_day_name).to eq('Thursday')
     end
   end
 
@@ -45,7 +45,7 @@ describe Subscriber do
     end
 
     it 'should return the collection days' do
-      expect(subject.collection_days).to eq([5,5])
+      expect(subject.collection_days).to eq([4,4])
     end
   end
 
@@ -59,12 +59,12 @@ describe Subscriber do
       end
 
       it 'excludes the subscribers on holiday' do
-        expect(described_class.active_on(Date.tomorrow.beginning_of_week + 18.days).count).to eq 1
+        expect(described_class.active_on(Date.tomorrow.beginning_of_week + 17.days).count).to eq 1
       end
 
       it 'excludes unpaid subscribers' do
         subject.subscriptions[0].update_attribute :paid_till, Date.yesterday
-        expect(described_class.active_on(Date.tomorrow.beginning_of_week + 18.days).count).to eq 0
+        expect(described_class.active_on(Date.tomorrow.beginning_of_week + 17.days).count).to eq 0
       end
     end
   end

@@ -3,7 +3,7 @@ FactoryGirl.define do
     name "Green Action Food Co-op"
     address "LUU"
     post_code "LS2 .."
-    valid_days [3, 5]
+    valid_days [2, 4]
   end
 end
 

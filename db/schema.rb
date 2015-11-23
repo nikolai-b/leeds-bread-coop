@@ -107,14 +107,15 @@ ActiveRecord::Schema.define(version: 20150722173541) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.text     "notes"
     t.integer  "failed_attempts",           default: 0,     null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.boolean  "admin",                     default: false
+    t.string   "zzz_stripe_customer_id"
     t.date     "collection_day_updated_at"
     t.integer  "holidays_count",            default: 0,     null: false
     t.string   "last_name"
-    t.text     "notes"
     t.integer  "payment_type_id"
   end
 
@@ -148,5 +149,16 @@ ActiveRecord::Schema.define(version: 20150722173541) do
     t.boolean  "delivery_receipt", default: false
     t.integer  "invoice_type_id"
   end
+
+  create_table "zzz_payment_cards", force: true do |t|
+    t.integer  "subscriber_id"
+    t.integer  "exp_month"
+    t.integer  "exp_year"
+    t.integer  "last4"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "zzz_payment_cards", ["subscriber_id"], name: "index_zzz_payment_cards_on_subscriber_id", using: :btree
 
 end

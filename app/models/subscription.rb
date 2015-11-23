@@ -41,7 +41,7 @@ class Subscription < ActiveRecord::Base
   def instant_change?
     if (bread_type_id_changed? || collection_day_changed?)
       wday = Date.today.wday
-      if ((wday..wday + 3).to_a & [collection_day, collection_day_was]).present?
+      if ((wday..(wday + 3)).to_a & [collection_day, collection_day_was]).present?
         return false
       end
     end

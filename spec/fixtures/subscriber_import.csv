@@ -1,6 +1,6 @@
 Name,Email,Address,Phone,Drop-off,Bread,Days
-"Lee, Isaac",isaac@test.com,"Leeds",07777 222222,I,SS,Fri
-"Mae, George",george@test.com ,"Leeds",,D,SP,Wed
-"Ker, Ursula ",ursula@test.com,"Leeds",07777 111111,I,RY,Wed
-"Ppp, Rachel ",rachel@test.com,,07777 555555,D,SP,Fri
-"Prt, Rachel ",rachel@test.com,,07777 555555,D,RY,Fri
+"Lee, Isaac",isaac@test.com,"Leeds",07777 222222,I,SS,Thu
+"Mae, George",george@test.com ,"Leeds",,D,SP,Tue
+"Ker, Ursula ",ursula@test.com,"Leeds",07777 111111,I,RY,Tue
+"Ppp, Rachel ",rachel@test.com,,07777 555555,D,SP,Thu
+"Prt, Rachel ",rachel@test.com,,07777 555555,D,RY,Thu
