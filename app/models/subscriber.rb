@@ -113,7 +113,7 @@ class Subscriber < ActiveRecord::Base
         end
 
         unless subscriber.valid?
-          raise "Could not save #{subscriber.attributes}"
+          raise "Could not save #{subscriber.attributes} because #{subscriber.errors.full_messages.join(', ')}"
         end
 
         subscriber.subscriptions.build(
@@ -165,6 +165,8 @@ class Subscriber < ActiveRecord::Base
       "G" => "Opposite (Chapel Allerton)",
       "H" => "Cafe 164",
       "I" => "Green Action Food Co-op",
+      "J" => "Name of collection point",
+      "K" => "Must be exactly the same as on website",
     }.freeze
   end
 
@@ -174,6 +176,7 @@ class Subscriber < ActiveRecord::Base
       "SS" => "Seedy Sourdough",
       "RY" => "Vollkornbrot (100% rye)",
       "SP" => "Weekly Special",
+      "MH" => "Malthouse Sourdough",
     }.freeze
   end
 
