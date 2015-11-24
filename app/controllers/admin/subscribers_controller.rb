@@ -45,7 +45,7 @@ class Admin::SubscribersController < Admin::BaseController
 
   def destroy
     @subscriber.destroy
-    redirect_to admin_subscribers_url, notice: 'Subscriber was successfully destroyed.'
+    redirect_to admin_subscribers_url, notice: 'Subscriber was successfully deleted.'
   end
 
   def import

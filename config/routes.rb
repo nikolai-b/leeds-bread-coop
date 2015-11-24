@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     get "/production_reports/:date", :to => "production_reports#show"
     get "/production_reports/", :to => "production_reports#show", as: :production_reports
 
-    resources :wholesale_customers, only: [:new, :create, :edit, :update, :show, :index] do
+    resources :wholesale_customers, only: [:new, :create, :edit, :update, :show, :index, :destroy] do
       resources :orders
     end
 

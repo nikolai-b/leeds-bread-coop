@@ -32,6 +32,11 @@ class Admin::WholesaleCustomersController < Admin::BaseController
     end
   end
 
+  def destroy
+    @wholesale_customer.destroy
+    redirect_to admin_wholesale_customers_path, notice: 'Wholesale customer was successfully deleted.'
+  end
+
   private
     def set_wholesale_customer
       @wholesale_customer = WholesaleCustomer.find(params[:id])
