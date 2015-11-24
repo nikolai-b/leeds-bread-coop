@@ -39,7 +39,7 @@ feature "Place wholesale order", type: :feature,  js: true  do
   end
 
   def fill_in_order_details
-    fill_in "Date", with: (Date.current + 3.days).strftime
+    fill_in "Date", with: "25/11/25"
 
     page.find('.add').trigger('click')
 

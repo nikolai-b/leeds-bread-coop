@@ -10,7 +10,7 @@
                 <%= g.collection_select(:bread_type_id, BreadType.for_subscribers, :id, :name, selected: g.object.next_bread_type_id || g.object.bread_type_id ) %>
               </td>
               <td class="vert-align">
-                <%= g.select(:collection_day, options_for_select(CollectionPoint.all_valid_days.values, selected: g.object.next_collection_day || g.object.collection_day )) %>
+                <%= g.select(:collection_day, options_for_select(CollectionPoint.all_valid_days.values.map { |vd| [vd.name, vd.id]}, selected: g.object.next_collection_day || g.object.collection_day )) %>
               </td>
               <td class="vert-align">
                 <% if current_subscriber.try(:admin?) %>

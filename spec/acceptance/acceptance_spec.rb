@@ -41,19 +41,18 @@ feature "New user, new sign-up", type: :feature,  js: true  do
   def see_new_user_details
     expect(page).to have_content "First name"
     expect(page).to have_content "Phone"
-    expect(page).to have_content "Bread type"
   end
 
   def fill_in_details
+    click_on 'Add bread subscription'
     sleep(3)
     fill_in 'First name', with: 'Lizzie'
-    sleep(30)
     fill_in 'Last name',  with: 'Surname'
     fill_in "Email",      with: 'lizzie@example.com'
     fill_in "Address",    with: 'Somewhere in Leeds'
     fill_in "Phone",      with: '01132222222'
     select 'Green Action Food Co-op', from: :subscriber_collection_point_id
-    select "Wednesday",    from: "Collection day"
+    select "Thursday",    from: "Collection day"
     select 'White Sourdough'
     fill_in "Password",   with: 'password'
 
