@@ -33,9 +33,8 @@ class SubscriberNotifier
   def stripe_dispute(charge)
     @emailer.send_mail(to: "info@leedsbread.coop",
                  subject: "Stripe Dispute!",
-                 body: "Someone is disputing a payment on Stipe, best log into the Stipe account to find out more -\n #{charge}")
+                 body: "Someone is disputing a payment on Stripe, best log into the Stripe account to find out more -\n #{charge}")
   end
-
 
   private
 

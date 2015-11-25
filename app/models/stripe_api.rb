@@ -1,4 +1,4 @@
-class StripeAPI
+class StripeApi
   include Stripe::Callbacks
 
   after_customer_subscription_deleted! do |stripe_data, event|
@@ -27,7 +27,7 @@ class StripeAPI
 
     def after_invoice_created(stripe_data, event)
       if subscriber = retrieve_subsciber(stripe_data)
-        invoice = Invoice.new(stripe_data)
+        invoice = StripeApi::Invoice.new(stripe_data)
         SubscriberNotifier.new(subscriber, invoice).stripe_invoice
       end
     end
@@ -46,33 +46,4 @@ class StripeAPI
     end
   end
 
-  class Invoice
-    def initialize(invoice)
-      @invoice = invoice
-    end
-
-    def total
-      (@invoice.total.to_f / 100.0).to_s
-    end
-
-    def amount_due
-      (@invoice.amount_due.to_f / 100.0).to_s
-    end
-
-    def period_start
-      Time.at(@invoice.lines.data[0].period.start).strftime("%d/%m/%Y") #maybe @invoice.period_start
-    end
-
-    def period_end
-      Time.at(@invoice.lines.data[0].period.end).strftime("%d/%m/%Y") #maybe invoice.lines.data[0].period.end
-    end
-
-    def next_payment_attempt
-      Time.at(next_payment_attempt_raw).strftime("%d/%m/%Y")
-    end
-
-    def next_payment_attempt_raw
-      @invoice.next_payment_attempt || Time.new.to_i
-    end
-  end
 end
