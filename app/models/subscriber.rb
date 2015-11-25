@@ -169,8 +169,8 @@ class Subscriber < ActiveRecord::Base
       "G" => "Opposite (Chapel Allerton)",
       "H" => "Cafe 164",
       "I" => "Green Action Food Co-op",
-      "J" => "Name of collection point",
-      "K" => "Must be exactly the same as on website",
+      "J" => "Lidgett Lane Larder",
+      "K" => "HEART Cafe",
     }.freeze
   end
 
