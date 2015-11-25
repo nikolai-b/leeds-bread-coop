@@ -185,6 +185,8 @@ GEM
     rest-client (1.7.2)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    rollbar (2.4.0)
+      multi_json
     rspec-collection_matchers (1.1.2)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (2.99.2)
@@ -305,6 +307,7 @@ DEPENDENCIES
   rails (= 4.1.7)
   rails-i18n
   rails_12factor
+  rollbar
   rspec-rails (< 3.0)
   sass-rails
   selenium-webdriver

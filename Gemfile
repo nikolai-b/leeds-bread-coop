@@ -30,6 +30,7 @@ gem 'has_scope'
 gem 'will_paginate-bootstrap'
 
 gem 'awesome_nested_fields'
+gem 'rollbar'
 
 group :development, :test do
   gem 'rspec-rails', '< 3.0'
