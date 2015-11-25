@@ -1,5 +1,6 @@
 class Subscriber < ActiveRecord::Base
   require 'csv'
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -82,6 +83,9 @@ class Subscriber < ActiveRecord::Base
     end
   end
 
+  class ImportError < StandardError
+  end
+
   def self.import(file)
     transaction do
       CSV.foreach(file.path, headers: true) do |row|
@@ -94,7 +98,7 @@ class Subscriber < ActiveRecord::Base
         subscriber.collection_point = CollectionPoint.find_by( name: csv_collection_point[row["Drop-off"]] )
         subscriber.email = email
         subscriber.phone = row['Phone']
-        subscriber.password = subscriber.email
+        subscriber.password = SecureRandom.hex 6
         subscriber.address = row['Address']
         subscriber.first_name = row['Name'].split(' ')[0]
         last_name = row['Name'].split(' ')[1..-1].join(' ')
@@ -113,7 +117,7 @@ class Subscriber < ActiveRecord::Base
         end
 
         unless subscriber.valid?
-          raise "Could not save #{subscriber.attributes} because #{subscriber.errors.full_messages.join(', ')}"
+          raise ImportError, "Could not save #{subscriber.attributes} because #{subscriber.errors.full_messages.join(', ')}"
         end
 
         subscriber.subscriptions.build(
@@ -123,7 +127,7 @@ class Subscriber < ActiveRecord::Base
         )
 
         unless subscriber.save
-          raise "Could not save #{subscriber}"
+          raise ImportError, "Could not save #{subscriber}"
         end
       end
     end

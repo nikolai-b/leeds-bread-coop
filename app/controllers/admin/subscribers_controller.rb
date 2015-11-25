@@ -53,8 +53,10 @@ class Admin::SubscribersController < Admin::BaseController
       Subscriber.import(params[:file])
       redirect_to admin_subscribers_url, notice: "Subscribers imported!"
     else
-      redirect_to admin_subscribers_url, notice: "No file attached"
+      redirect_to admin_subscribers_url, flash: {warning: "No file attached"}
     end
+  rescue Subscriber::ImportError => e
+    redirect_to admin_subscribers_url, flash: {error: e.message}
   end
 
   private
