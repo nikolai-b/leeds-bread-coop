@@ -1,6 +1,6 @@
 describe StripeApi do
   let!(:subscriber) { create :subscriber, :with_subscription }
-  let(:notifier) { double 'notifier' }
+  let(:notifier) { double 'Notifier' }
 
   before do
     create :email_template, name: 'stripe_invoice'
@@ -31,7 +31,9 @@ describe StripeApi do
     expect(notifier).to receive(:sub_deleted)
 
     described_class.after_customer_subscription_deleted(
-      StripeMock.mock_webhook_event('customer.subscription.deleted', {customer: subscriber.stripe_account.customer_id})['data']['object'], 'subscriber.subscription.deleted')
+      StripeMock.mock_webhook_event(
+        'customer.subscription.deleted',
+        {customer: subscriber.stripe_account.customer_id})['data']['object'], 'subscriber.subscription.deleted')
     expect(subscriber.reload.subscriptions[0].paid_till).to be_falsey
   end
 

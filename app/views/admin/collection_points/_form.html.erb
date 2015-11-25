@@ -2,7 +2,8 @@
     <%= f.input :address %>
     <%= f.input :post_code %>
     <%= f.input :notes %>
-    <%= f.input :valid_days, as: :check_boxes, collection: CollectionPoint.all_valid_days.values.map { |vd| [vd.name, vd.id] } %>
+    <%= f.input :valid_days, as: :check_boxes,
+      collection: CollectionPoint.all_valid_days.values.map { |vd| [vd.name, vd.id] } %>
     <%= f.input :name %>
     <%= f.button :submit %>
 <% end %>
