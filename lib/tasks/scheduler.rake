@@ -17,7 +17,7 @@ namespace :scheduler do
   desc "Called once early Saturday"
   task weekly: :environment do
     Order.copy_regular_orders
-    StripeSub.refund_holidays
+    StripeAccount.refund_holidays
     Subscription.apply_defered_changes!
   end
 end
