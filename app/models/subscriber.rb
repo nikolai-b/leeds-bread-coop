@@ -127,7 +127,7 @@ class Subscriber < ActiveRecord::Base
         )
 
         unless subscriber.save
-          raise ImportError, "Could not save #{subscriber}"
+          raise ImportError, "Could not save #{subscriber.attributes} because #{subscriber.errors.full_messages.join(', ')}"
         end
       end
     end
