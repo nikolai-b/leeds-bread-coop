@@ -88,7 +88,7 @@ class Subscriber < ActiveRecord::Base
 
   def self.import(file)
     transaction do
-      CSV.foreach(file.path, headers: true) do |row|
+      CSV.foreach(file.path, encoding: 'ISO-8859-1', headers: true) do |row|
 
         email = row["Email"].strip.downcase
         next if find_by( email: email)
