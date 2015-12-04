@@ -64,14 +64,14 @@ class Subscription < ActiveRecord::Base
   end
 
   def bread_type_for_subscribers
-    unless bread_type_id.in? BreadType.for_subscribers.pluck(:id)
+    unless ([bread_type_id, next_bread_type_id].compact - BreadType.for_subscribers.ids).blank?
       errors.add(:bread_type_id, "must be a bread avaliable to subscribers")
     end
   end
 
   def collection_day_for_subscribers
     return unless subscriber
-    unless collection_day.in? subscriber.collection_point.valid_days
+    unless ([collection_day, next_collection_day].compact - subscriber.collection_point.valid_days).blank?
       errors.add(:collection_day, "must be a collection day avaliable to subscribers")
     end
   end

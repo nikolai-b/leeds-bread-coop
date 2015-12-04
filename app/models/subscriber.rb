@@ -123,7 +123,8 @@ class Subscriber < ActiveRecord::Base
         subscriber.subscriptions.build(
           bread_type_id: BreadType.find_by( name: csv_bread_type[row["Bread"]] ).id,
           collection_day: csv_collection_day[row['Days']],
-          paid_till: 4.weeks.from_now
+          paid_till: 4.weeks.from_now,
+          as_admin: true,
         )
 
         unless subscriber.save
