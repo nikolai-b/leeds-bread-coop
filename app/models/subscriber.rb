@@ -8,11 +8,12 @@ class Subscriber < ActiveRecord::Base
 
   class_attribute :payment_types
 
-  PaymentType = Struct.new(:id, :name)
+  PaymentType = Struct.new(:id, :label, :name)
 
   self.payment_types = [
-    PaymentType.new(1, 'Standing Order'),
-    PaymentType.new(2, 'BACS'),
+    PaymentType.new(1, 'Standing Order', 'so'),
+    PaymentType.new(2, 'BACS', 'bacs'),
+    PaymentType.new(3, 'Donation', 'donation'),
   ].index_by(&:id).freeze
 
   validates :collection_point, presence: true
@@ -37,16 +38,17 @@ class Subscriber < ActiveRecord::Base
   scope :ordered,             -> { order(:last_name, :first_name) }
   scope :pays_with_stripe,    -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].not_eq(nil)) }
   scope :pays_without_stripe, -> { includes(:stripe_account).references(:stripe_account).where(StripeAccount.arel_table[:customer_id].eq(nil)) }
-  scope :pays_with_bacs,      -> { pays_without_stripe.where(payment_type_id: 2) }
-  scope :pays_with_so,        -> { pays_without_stripe.where(payment_type_id: 1) }
   scope :not_admin,           -> { where(admin: false) }
   scope :search,              -> (search)  { where("LOWER(CONCAT(first_name, ' ', last_name)) LIKE :s", s: "%#{search.downcase}%") }
   scope :paid_till_order,     -> { includes(:subscriptions).reorder("subscriptions.paid_till ASC").references(:subscriptions) }
 
   class << self
     def pays_with(type)
-      if type.in? %w(stripe bacs so)
-        send("pays_with_#{type}")
+      case type
+      when *payment_types.values.map(&:name)
+        pays_without_stripe.where(payment_type_id: payment_types.values.find{ |pt| pt.name == type}.id)
+      when 'stripe'
+        pays_with_stripe
       else
         all
       end

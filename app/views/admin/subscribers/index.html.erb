@@ -9,8 +9,9 @@
   <div class="container-fluid">
     <div class="btn-group">
       <%= link_to 'Stripe', params.merge(pays_with: :stripe, page: 1), class: "btn btn-default navbar-btn #{'active' if params[:pays_with] == 'stripe'}" %>
-      <%= link_to 'BACS', params.merge(pays_with: :bacs, page: 1), class: "btn btn-default navbar-btn #{'active' if params[:pays_with] == 'bacs'}" %>
-      <%= link_to 'Standing Order', params.merge(pays_with: :so, page: 1), class: "btn btn-default navbar-btn #{'active' if params[:pays_with] == 'so'}" %>
+      <%- Subscriber.payment_types.values.each do |payment_type| %>
+        <%= link_to payment_type.label, params.merge(pays_with: payment_type.name, page: 1), class: "btn btn-default navbar-btn #{'active' if params[:pays_with] == payment_type.name}" %>
+      <%- end %>
       <%= link_to 'All', params.merge(pays_with: :all), class: "btn btn-default navbar-btn #{'active' if params[:pays_with] == 'all'}" %>
     </div>
 

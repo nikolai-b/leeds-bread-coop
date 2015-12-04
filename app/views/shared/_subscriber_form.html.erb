@@ -31,7 +31,7 @@
   <%= f.text_area :address %>
   <%= f.collection_select(:collection_point_id, CollectionPoint.all, :id, :name) %>
   <% if current_subscriber.try(:admin?)%>
-    <%= f.collection_select(:payment_type_id, Subscriber.payment_types.values, :id, :name) %>
+    <%= f.collection_select(:payment_type_id, Subscriber.payment_types.values, :id, :label) %>
   <% end %>
 
   <% unless @subscriber.persisted? %>
